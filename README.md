@@ -1,8 +1,8 @@
 # Wikipedia machine translation system
 
 ```
-docker build -t wikipedia-mt
-docker run -dp 80:3000 wikipedia-mt
+docker build -t wikipedia-mt .
+docker run -dp 3000:80 wikipedia-mt:latest
 ```
 
 Open http://0.0.0.0:3000/ using browser
