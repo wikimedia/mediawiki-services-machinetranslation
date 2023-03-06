@@ -14,10 +14,10 @@ Jazz has roots in West African cultural and musical expression, and in African-A
 """.strip().splitlines()
 
 tokenizer = SentencePieceProcessor()
-tokenizer.load('NLLB_ctranslate2/sentencepiece.bpe.model')
+tokenizer.load('models/nllb-wikipedia/sentencepiece.bpe.model')
 
 translator = ctranslate2.Translator(
-   "NLLB_ctranslate2",
+   "models/nllb-wikipedia",
    # maximum number of batches executed in parallel.
    # => Increase this value to increase the throughput.
    #inter_threads=multiprocessing.cpu_count(),

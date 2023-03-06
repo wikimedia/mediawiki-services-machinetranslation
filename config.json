@@ -1,6 +1,6 @@
 {
-    "model": "models/nllb-wikipedia",
-    "tokenizer": "models/nllb-wikipedia/sentencepiece.bpe.model",
+    "model": "models/nllb200-600M",
+    "tokenizer": "models/nllb200-600M/sentencepiece.bpe.model",
     "languages": {
         "ace_Arab": "Acehnese (Arabic script)",
         "ace_Latn": "Acehnese (Latin script)",

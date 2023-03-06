@@ -1,10 +1,11 @@
 from collections import OrderedDict
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, abort
 from pathlib import Path
 from sentencepiece import SentencePieceProcessor
 from typing import List
-import ctranslate2
+from ctranslate2 import Translator
 import json
+import yaml
 import multiprocessing
 import os
 import time
@@ -18,35 +19,52 @@ model=None
 tokenizer=None
 config = json.loads(Path("config.json").read_text())
 
+def get_languages()->dict:
+    return OrderedDict(sorted(config.get("languages").items(), key=lambda x: x[1]))
+
 @app.route("/", defaults={"path": ""})
 def index(path):
-    languages= OrderedDict(sorted(config.get("languages").items(), key=lambda x: x[1]))
-    return render_template("index.html", languages=languages)
+    return render_template("index.html", languages=get_languages())
 
 @app.after_request
 def after_request(response):
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
-    response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
+    response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
     return response
 
+@app.route("/api/spec")
+def show_spec():
+    with open('spec.yaml', 'r') as file:
+        spec = yaml.safe_load(file)
+    return jsonify(spec)
 
-@app.route("/api/translate", methods=["POST", "GET"])
-def translate_handler():
-    text = None
-    source_lang = "en"
-    target_lang = "ml"
-    if request.method == "POST":
-        text = request.json.get("text")
-        source_lang = request.json.get("from")
-        target_lang = request.json.get("to")
-    else:
-        text = request.args.get("text")
-        source_lang = request.args.get("from")
-        target_lang = request.args.get("to")
-    src_text_lines = text.strip().splitlines()
+@app.route("/api/languages")
+def list_languages():
+    return get_languages()
+
+@app.route("/healthz")
+def health():
+    translation = translate('eng_Latn', 'ibo_Latn', ['health'])
+    return '' if len(translation) and len(translation[0]) else False
+
+@app.route("/api/translate/<source_lang>/<target_lang>", methods=["POST"])
+def translate_handler(source_lang, target_lang):
+    text = request.json.get("text")
+    supported_languages=get_languages()
+
+    if not source_lang in supported_languages:
+        abort(400, description="Invalid source language.")
+    if not target_lang in supported_languages:
+        abort(400, description="Invalid target language.")
+
+    if len(text)> 10000:
+        abort(413, description="Request too large to handle. Maximum 10000 characters are supported.")
+    sentences = text.strip().splitlines()
+    if len(sentences)> 25:
+        abort(413, description="Request too large to handle. Maximum 25 sentences are supported.")
     start = time.time()
-    tgt_text_lines = translate(source_lang, target_lang, src_text_lines)
+    tgt_text_lines = translate(source_lang, target_lang, sentences)
     end = time.time()
     return jsonify(
         translation='\n'.join(tgt_text_lines),
@@ -69,6 +87,7 @@ def translate(src_lang, tgt_lang, sentences)->List[str]:
         )
         target_prefix.append([tgt_lang])
 
+
     results = model.translate_iterable(
         sentences_tokenized,
         target_prefix=target_prefix,
@@ -81,8 +100,8 @@ def translate(src_lang, tgt_lang, sentences)->List[str]:
         translation.append(tokenizer.decode(result.hypotheses[0][1:]))
     return translation
 
-def getModel():
-    return ctranslate2.Translator(
+def getModel()->Translator:
+    return Translator(
         config.get("model"), # Model
         # maximum number of batches executed in parallel.
         # => Increase this value to increase the throughput.
