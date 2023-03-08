@@ -11,6 +11,8 @@ import os
 import time
 import statsd
 import logging
+import logging.config
+
 logging.config.fileConfig("logging.conf")
 
 

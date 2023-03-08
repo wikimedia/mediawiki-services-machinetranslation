@@ -1,9 +1,22 @@
 [build-system]
-requires = ["hatchling"]
+requires = ["setuptools", "wheel", "hatchling"]
 build-backend = "hatchling.build"
 
 [project]
 name = "machinetranslation"
 classifiers = ["Private :: Do Not Upload"]
 version = "0"
-dependencies = ["ctranslate2", "sentencepiece", "Flask", "gunicorn", "statsd", "ecs-logging"]
+requires-python = ">=3.9"
+dependencies = [
+    "ctranslate2",
+    "sentencepiece",
+    "Flask",
+    "gunicorn",
+    "statsd",
+    "ecs-logging"
+]
+
+[project.optional-dependencies]
+tests = [
+    'pytest'
+]
