@@ -1,0 +1,18 @@
+version: v4
+base: docker-registry.wikimedia.org/python3-build-bullseye
+lives:
+  in: /app
+
+variants:
+  build:
+    copies: [local]
+    apt: { packages: [git, build-essential, wget] }
+    python: { version: python3, requirements: [requirements.txt]}
+  test:
+    includes: [build]
+    entrypoint: ["python3", "-m", "pytest"]
+  production:
+    copies: [build]
+    node: { env: production }
+    apt: { packages: [ca-certificates] }
+    entrypoint: ["bash", "server.sh"]

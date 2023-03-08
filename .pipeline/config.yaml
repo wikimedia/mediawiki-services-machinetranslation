@@ -1,0 +1,16 @@
+pipelines:
+  test:
+    blubberfile: blubber.yaml
+    stages:
+      - name: run-test
+        build: test
+        run: true
+      - name: candidate
+        build: production
+  publish:
+    blubberfile: blubber.yaml
+    stages:
+      - name: production
+        build: production
+        publish:
+          image: true
