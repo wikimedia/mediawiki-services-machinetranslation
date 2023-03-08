@@ -6,4 +6,4 @@ build-backend = "hatchling.build"
 name = "machinetranslation"
 classifiers = ["Private :: Do Not Upload"]
 version = "0"
-dependencies = ["ctranslate2", "sentencepiece", "Flask", "gunicorn"]
+dependencies = ["ctranslate2", "sentencepiece", "Flask", "gunicorn", "statsd", "ecs-logging"]
