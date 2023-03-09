@@ -3,17 +3,23 @@
 # Download models
 mkdir -p models
 
+echo "Downloading models..."
+
 # The big generic model
-wget -N https://people.wikimedia.org/~santhosh/nllb/nllb200-600M/config.json -P models/nllb200-600M
-wget -N https://people.wikimedia.org/~santhosh/nllb/nllb200-600M/model.bin -P models/nllb200-600M
-wget -N https://people.wikimedia.org/~santhosh/nllb/nllb200-600M/sentencepiece.bpe.model -P models/nllb200-600M
-wget -N https://people.wikimedia.org/~santhosh/nllb/nllb200-600M/shared_vocabulary.txt -P models/nllb200-600M
+modelbase=https://people.wikimedia.org/~santhosh/nllb/nllb200-600M
+wget -N --no-verbose --show-progress --progress=bar:force:noscroll $modelbase/config.json -P models/nllb200-600M
+wget -N --no-verbose --show-progress --progress=bar:force:noscroll $modelbase/model.bin -P models/nllb200-600M
+wget -N --no-verbose --show-progress --progress=bar:force:noscroll $modelbase/sentencepiece.bpe.model -P models/nllb200-600M
+wget -N --no-verbose --show-progress --progress=bar:force:noscroll $modelbase/shared_vocabulary.txt -P models/nllb200-600M
 
 
 # Wikipedia optimized model with limited languages
-wget -N https://people.wikimedia.org/~santhosh/nllb/nllb-wikipedia/config.json -P models/nllb-wikipedia
-wget -N https://people.wikimedia.org/~santhosh/nllb/nllb-wikipedia/model.bin s-P models/nllb-wikipedia
-wget -N https://people.wikimedia.org/~santhosh/nllb/nllb-wikipedia/sentencepiece.bpe.model -P models/nllb-wikipedia
-wget -N https://people.wikimedia.org/~santhosh/nllb/nllb-wikipedia/shared_vocabulary.txt -P models/nllb-wikipedia
+wikimodelbase=https://people.wikimedia.org/~santhosh/nllb/nllb-wikipedia
+wget -N --no-verbose --show-progress --progress=bar:force:noscroll $wikimodelbase/config.json -P models/nllb-wikipedia
+wget -N --no-verbose --show-progress --progress=bar:force:noscroll $wikimodelbase/model.bin -P models/nllb-wikipedia
+wget -N --no-verbose --show-progress --progress=bar:force:noscroll $wikimodelbase/sentencepiece.bpe.model -P models/nllb-wikipedia
+wget -N --no-verbose --show-progress --progress=bar:force:noscroll $wikimodelbase/shared_vocabulary.txt -P models/nllb-wikipedia
+
+echo "Models downloaded. Starting server..."
 
 gunicorn
