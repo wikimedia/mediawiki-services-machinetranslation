@@ -19,6 +19,7 @@ logging.config.fileConfig("logging.conf")
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 statsd_host = "statsd.eqiad.wmnet"
+statsd_client = None
 try:
     statsd_client = statsd.StatsClient(statsd_host)
 except Exception:
@@ -99,8 +100,10 @@ def translate_handler(source_lang, target_lang):
     tgt_text_lines = translate(source_lang, target_lang, sentences)
     end = time.time()
     translationtime=end - start
-    statsd_client.incr(f'{APP_NAME.lower()}.mt.{source_lang}.{target_lang}')
-    statsd_client.timing(f'{APP_NAME.lower()}.mt.timing', translationtime)
+    if statsd_client:
+        statsd_client.incr(f'{APP_NAME.lower()}.mt.{source_lang}.{target_lang}')
+        statsd_client.timing(f'{APP_NAME.lower()}.mt.timing', translationtime)
+
     return jsonify(translation="\n".join(tgt_text_lines),translationtime=translationtime)
 
 
