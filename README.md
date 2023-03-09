@@ -2,10 +2,10 @@
 
 ```
 docker build -t wikipedia-mt .
-docker run -dp 3000:80 wikipedia-mt:latest
+docker run -dp 8989:8989 wikipedia-mt:latest
 ```
 
-Open http://0.0.0.0:3000/ using browser
+Open http://0.0.0.0:8989/ using browser
 
 
 ## Monitoring
