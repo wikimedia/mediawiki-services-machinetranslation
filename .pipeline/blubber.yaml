@@ -1,5 +1,7 @@
 version: v4
 base: docker-registry.wikimedia.org/python3-build-bullseye
+# Should allow downloading models. So we need write access on file system
+runs: {insecurely: true}
 lives:
   in: /app
 
@@ -12,7 +14,6 @@ variants:
     includes: [build]
     entrypoint: ["python3", "-m", "pytest"]
   production:
-    copies: [build]
-    node: { env: production }
+    includes: [build]
     apt: { packages: [ca-certificates] }
     entrypoint: ["bash", "server.sh"]
