@@ -1,6 +1,7 @@
 <html lang="en">
+
     <head>
-        <title>NLLB200 Machine translation</title>
+        <title>Wikimedia Machine translation</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,30 +11,18 @@
 
     <body>
         <header>
-            <h1>NLLB200 Machine translation</h1>
+            <h1>Wikimedia Machine translation</h1>
         </header>
         <main>
-         <section class="container">
+            <section class="container">
                 <select id="source_lang">
                     <option value="en">English</option>
-                    {% for lang in languages %}
-                        {% if lang == "eng_Latn" %}
-                        <option value= "{{lang}}" selected>{{languages[lang]}}</option>"
-                        {% else %}
-                        <option value= "{{lang}}">{{languages[lang]}}</option>"
-                        {% endif %}
-                    {% endfor %}
+
                 </select>
                 <select id="target_lang">
-                    {% for lang in languages %}
-                        {% if lang == "spa_Latn" %}
-                        <option value= "{{lang}}" selected>{{languages[lang]}}</option>"
-                        {% else %}
-                        <option value= "{{lang}}">{{languages[lang]}}</option>"
-                        {% endif %}
-                    {% endfor %}
+                    <option value="es">Spanish</option>
                 </select>
-               <textarea id="source_content">
+                <textarea id="source_content">
 Jazz is a music genre that originated in the African-American communities of New Orleans, Louisiana, United States, in the late 19th and early 20th centuries, with its roots in blues and ragtime.
 Since the 1920s Jazz Age, it has been recognized as a major form of musical expression in traditional and popular music, linked by the common bonds of African-American and European-American musical parentage.
 Jazz is characterized by swing and blue notes, complex chords, call and response vocals, polyrhythms and improvisation.
@@ -41,13 +30,21 @@ Jazz has roots in West African cultural and musical expression, and in African-A
                </textarea>
                 <textarea id="target_content" disabled></textarea>
             </section>
-            <button  onclick="doTranslate()">Translate</button>
-            <progress id="progress"></progress>
+            <section class="actions">
+                <button onclick="doTranslate()">Translate</button>
+                <progress id="progress"></progress>
+                <p id="status"></p>
+            </section>
         </main>
 
         <footer>
-            <p>This system uses <a href="https://ai.facebook.com/research/no-language-left-behind/">NLLB language models for translation.</a> converted to <a  href="https://github.com/OpenNMT/CTranslate2">OpenNMT CTranslate2</a> models</p>
-            <p><a href="/api/spec">API Spec</a></p>
+            <p>This system uses <a href="https://ai.facebook.com/research/no-language-left-behind/">NLLB language models
+                    for translation.</a> converted to <a href="https://github.com/OpenNMT/CTranslate2">OpenNMT
+                    CTranslate2</a> models</p>
+            <p>
+                <a href="https://gerrit.wikimedia.org/g/mediawiki/services/machinetranslation">Source code</a>
+                <a href="/api/spec">API Spec</a>
+            </p>
         </footer>
     </body>
 

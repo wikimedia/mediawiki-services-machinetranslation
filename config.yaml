@@ -1,0 +1,288 @@
+# Map model to languages.
+# It is assumed that a model can translate between any of the languages given below
+# Use two letter language codes everywhere.
+models:
+  nllb200-600M:
+  - ace
+  - ace
+  - acm
+  - acq
+  - aeb
+  - af
+  - ajp
+  - ak
+  - am
+  - apc
+  - arb
+  - arb
+  - ars
+  - ary
+  - arz
+  - as
+  - ast
+  - awa
+  - ayr
+  - azb
+  - azj
+  - ba
+  - bm
+  - ban
+  - be
+  - bem
+  - bn
+  - bho
+  - bjn
+  - bjn
+  - bo
+  - bs
+  - bug
+  - bg
+  - ca
+  - ceb
+  - cs
+  - cjk
+  - ckb
+  - crh
+  - cy
+  - da
+  - de
+  - dik
+  - dyu
+  - dz
+  - el
+  - en
+  - eo
+  - et
+  - eu
+  - ee
+  - fo
+  - fj
+  - fi
+  - fon
+  - fr
+  - fur
+  - fuv
+  - gd
+  - ga
+  - gl
+  - gn
+  - gu
+  - ht
+  - ha
+  - he
+  - hi
+  - hne
+  - hr
+  - hu
+  - hy
+  - ig
+  - ilo
+  - id
+  - is
+  - it
+  - jv
+  - ja
+  - kab
+  - kac
+  - kam
+  - kn
+  - ks
+  - ka
+  - knc
+  - knc
+  - kk
+  - kbp
+  - kea
+  - km
+  - ki
+  - rw
+  - ky
+  - kmb
+  - kmr
+  - kg
+  - ko
+  - lo
+  - lij
+  - li
+  - ln
+  - lt
+  - lmo
+  - ltg
+  - lb
+  - lua
+  - lg
+  - luo
+  - lus
+  - lvs
+  - mag
+  - mai
+  - ml
+  - mr
+  - min
+  - min
+  - mk
+  - plt
+  - mt
+  - mni
+  - khk
+  - mos
+  - mi
+  - my
+  - nl
+  - nn
+  - nb
+  - npi
+  - nso
+  - nus
+  - ny
+  - oc
+  - gaz
+  - ory
+  - pag
+  - pa
+  - pap
+  - pes
+  - pl
+  - pt
+  - fa
+  - pbt
+  - quy
+  - ro
+  - rn
+  - ru
+  - sg
+  - sa
+  - sat
+  - scn
+  - shn
+  - si
+  - sk
+  - sl
+  - sm
+  - sn
+  - sd
+  - so
+  - st
+  - es
+  - als
+  - sc
+  - sr
+  - ss
+  - su
+  - sv
+  - swh
+  - szl
+  - ta
+  - tt
+  - te
+  - tg
+  - fil
+  - th
+  - ti
+  - taq
+  - taq
+  - tpi
+  - tn
+  - ts
+  - tk
+  - tum
+  - tr
+  - tw
+  - tzm
+  - ug
+  - uk
+  - umb
+  - ur
+  - uzn
+  - vec
+  - vi
+  - war
+  - wo
+  - xh
+  - ydd
+  - yo
+  - yue
+  - zh
+  - zh
+  - zsm
+  - zu
+# Map languages to model.
+languages:
+  en:
+    - as: nllb-wikipedia
+    - ast: nllb-wikipedia
+    - ay: nllb-wikipedia
+    - ba: nllb-wikipedia
+    - ckb: nllb-wikipedia
+    - ha: nllb-wikipedia
+    - ig: nllb-wikipedia
+    - ilo: nllb-wikipedia
+    - is: nllb-wikipedia
+    - kg: nllb-wikipedia
+    - ln: nllb-wikipedia
+    - lg: nllb-wikipedia
+    - nso: nllb-wikipedia
+    - oc: nllb-wikipedia
+    - om: nllb-wikipedia
+    - ss: nllb-wikipedia
+    - tn: nllb-wikipedia
+    - ts: nllb-wikipedia
+    - wo: nllb-wikipedia
+    - yue: nllb-wikipedia
+    - zh: nllb-wikipedia
+    - zu: nllb-wikipedia
+  ca:
+    - oc: nllb-wikipedia
+  es:
+    - as: nllb-wikipedia
+    - ast: nllb-wikipedia
+    - ay: nllb-wikipedia
+    - ba: nllb-wikipedia
+    - ckb: nllb-wikipedia
+    - ha: nllb-wikipedia
+    - ig: nllb-wikipedia
+    - ilo: nllb-wikipedia
+    - is: nllb-wikipedia
+    - kg: nllb-wikipedia
+    - ln: nllb-wikipedia
+    - lg: nllb-wikipedia
+    - nso: nllb-wikipedia
+    - oc: nllb-wikipedia
+    - om: nllb-wikipedia
+    - ss: nllb-wikipedia
+    - ti: nllb-wikipedia
+    - tn: nllb-wikipedia
+    - ts: nllb-wikipedia
+    - yue: nllb-wikipedia
+    - zh: nllb-wikipedia
+    - zu: nllb-wikipedia
+  fr:
+    - as: nllb-wikipedia
+    - ast: nllb-wikipedia
+    - ay: nllb-wikipedia
+    - ba: nllb-wikipedia
+    - ckb: nllb-wikipedia
+    - ha: nllb-wikipedia
+    - ig: nllb-wikipedia
+    - ilo: nllb-wikipedia
+    - is: nllb-wikipedia
+    - kg: nllb-wikipedia
+    - ln: nllb-wikipedia
+    - lg: nllb-wikipedia
+    - nso: nllb-wikipedia
+    - oc: nllb-wikipedia
+    - om: nllb-wikipedia
+    - ss: nllb-wikipedia
+    - ti: nllb-wikipedia
+    - tn: nllb-wikipedia
+    - ts: nllb-wikipedia
+    - wo: nllb-wikipedia
+    - yue: nllb-wikipedia
+    - zh: nllb-wikipedia
+    - zu: nllb-wikipedia
+  pt:
+    - oc: nllb-wikipedia
+  ru:
+    - ba: nllb-wikipedia
+  zh:
+    - yue: nllb-wikipedia

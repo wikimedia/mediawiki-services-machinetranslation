@@ -1,17 +1,12 @@
 from collections import OrderedDict
 from flask import Flask, jsonify, render_template, request, abort
-from pathlib import Path
-from sentencepiece import SentencePieceProcessor
-from typing import List
-from ctranslate2 import Translator
-import json
 import yaml
-import multiprocessing
-import os
 import time
+import os
 import statsd
 import logging
 import logging.config
+from translator import TranslatorFactory, TranslatorConfig
 
 logging.config.fileConfig("logging.conf")
 
@@ -23,20 +18,16 @@ statsd_client = None
 try:
     statsd_client = statsd.StatsClient(statsd_host)
 except Exception:
-    logging.error(f"Could not connect to statsd host {statsd_host}")
+    logging.warning(f"Could not connect to statsd host {statsd_host}")
 
 APP_NAME = "MachineTranslation"
 
 app = Flask(__name__)
-
-
-model = None
-tokenizer = None
-config = json.loads(Path("config.json").read_text())
+config = TranslatorConfig()
 
 
 def get_languages() -> dict:
-    return OrderedDict(sorted(config.get("languages").items(), key=lambda x: x[1]))
+    return config.get_all_languages()
 
 
 @app.route("/", defaults={"path": ""})
@@ -71,20 +62,16 @@ def list_languages():
 
 @app.route("/healthz")
 def health():
-    translation = translate("eng_Latn", "ibo_Latn", ["health"])
+    test_from = "en"
+    test_to = "ig"
+    translator = TranslatorFactory(config, test_from, test_to)
+    translation = translator.translate(test_from, test_to, ["health"])
     return "" if len(translation) and len(translation[0]) else False
 
 
 @app.route("/api/translate/<source_lang>/<target_lang>", methods=["POST"])
 def translate_handler(source_lang, target_lang):
     text = request.json.get("text")
-    supported_languages = get_languages()
-
-    if not source_lang in supported_languages:
-        abort(400, description="Invalid source language.")
-    if not target_lang in supported_languages:
-        abort(400, description="Invalid target language.")
-
     if len(text) > 10000:
         abort(
             413,
@@ -97,72 +84,22 @@ def translate_handler(source_lang, target_lang):
             description="Request too large to handle. Maximum 25 sentences are supported.",
         )
     start = time.time()
-    tgt_text_lines = translate(source_lang, target_lang, sentences)
+    translator = TranslatorFactory(config, source_lang, target_lang)
+
+    if not translator:
+        abort(400, description="Could not find translator for the given language pair.")
+
+    translated_text_lines = translator.translate(source_lang, target_lang, sentences)
     end = time.time()
-    translationtime=end - start
+    translationtime = end - start
     if statsd_client:
-        statsd_client.incr(f'{APP_NAME.lower()}.mt.{source_lang}.{target_lang}')
-        statsd_client.timing(f'{APP_NAME.lower()}.mt.timing', translationtime)
+        statsd_client.incr(f"{APP_NAME.lower()}.mt.{source_lang}.{target_lang}")
+        statsd_client.timing(f"{APP_NAME.lower()}.mt.timing", translationtime)
 
-    return jsonify(translation="\n".join(tgt_text_lines),translationtime=translationtime)
-
-
-def translate(src_lang, tgt_lang, sentences) -> List[str]:
-    """
-    Translate the text from source lang to target lang
-    """
-    global model, tokenizer
-    sentences_tokenized = []
-    translation = []
-    target_prefix = []
-    if not model:
-        init()
-    for sentence in sentences:
-        sentences_tokenized.append(
-            tokenizer.encode(sentence, out_type=str) + ["</s>", src_lang]
-        )
-        target_prefix.append([tgt_lang])
-
-    results = model.translate_iterable(
-        sentences_tokenized,
-        target_prefix=target_prefix,
-        asynchronous=True,
-        batch_type="tokens",
-        max_batch_size=1024,
-        beam_size=1,
+    return jsonify(
+        translation="\n".join(translated_text_lines),
+        translationtime=translationtime,
+        sourcelanguage=source_lang,
+        targetlanguage=target_lang,
+        model=translator.MODEL,
     )
-    for result in results:
-        translation.append(tokenizer.decode(result.hypotheses[0][1:]))
-    return translation
-
-
-def getModel() -> Translator:
-    return Translator(
-        config.get("model"),  # Model
-        # maximum number of batches executed in parallel.
-        # => Increase this value to increase the throughput.
-        inter_threads=multiprocessing.cpu_count(),
-        #  number of OpenMP threads that is used per batch.
-        # => Increase this value to decrease the latency on CPU.
-        intra_threads=multiprocessing.cpu_count(),
-        device="auto",
-        compute_type="auto",
-    )
-
-
-def getTokenizer() -> SentencePieceProcessor:
-    sp = SentencePieceProcessor()
-    sp.load(config.get("tokenizer"))
-    return sp
-
-
-def init():
-    global model, tokenizer
-    model = getModel()
-    tokenizer = getTokenizer()
-    logging.info("Translator initialized")
-
-
-if __name__ == "__main__":
-    init()
-

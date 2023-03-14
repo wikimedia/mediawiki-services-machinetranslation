@@ -17,4 +17,4 @@ COPY . /app/
 RUN chmod +x ./server.sh
 
 ENTRYPOINT ["./server.sh"]
-EXPOSE 80
+EXPOSE 8989

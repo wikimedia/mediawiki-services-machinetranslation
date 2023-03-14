@@ -13,7 +13,8 @@ dependencies = [
     "Flask",
     "gunicorn",
     "statsd",
-    "ecs-logging"
+    "ecs-logging",
+    "pyyaml",
 ]
 
 [project.optional-dependencies]
