@@ -14,7 +14,7 @@ function doTranslate() {
         })
     }).then(response => response.json())
         .then(result => {
-            document.getElementById('target_content').innerText = result.translation
+            document.getElementById('target_content').textContent = result.translation
             document.getElementById('progress').style.display = "none";
             document.getElementById('status').innerText = `Translated in ${result.translationtime} seconds by ${result.model} model`
         })
@@ -50,4 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 tgt_selector.appendChild(el);
             }
         })
+
+
+        tgt_selector.addEventListener("change", function(){
+            document.getElementById('target_content').innerText = ""
+        });
 });
