@@ -4,7 +4,6 @@
 models:
   nllb200-600M:
   - ace
-  - ace
   - acm
   - acq
   - aeb
@@ -12,12 +11,7 @@ models:
   - ajp
   - ak
   - am
-  - apc
-  - arb
-  - arb
-  - ars
-  - ary
-  - arz
+  - ar
   - as
   - ast
   - awa
@@ -136,6 +130,7 @@ models:
   - nus
   - ny
   - oc
+  - or
   - gaz
   - ory
   - pag
@@ -201,7 +196,6 @@ models:
   - xh
   - ydd
   - yo
-  - yue
   - zh
   - zh
   - zsm
@@ -228,7 +222,6 @@ languages:
     - tn: nllb-wikipedia
     - ts: nllb-wikipedia
     - wo: nllb-wikipedia
-    - yue: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
   ca:
@@ -253,7 +246,6 @@ languages:
     - ti: nllb-wikipedia
     - tn: nllb-wikipedia
     - ts: nllb-wikipedia
-    - yue: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
   fr:
@@ -277,12 +269,9 @@ languages:
     - tn: nllb-wikipedia
     - ts: nllb-wikipedia
     - wo: nllb-wikipedia
-    - yue: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
   pt:
     - oc: nllb-wikipedia
   ru:
     - ba: nllb-wikipedia
-  zh:
-    - yue: nllb-wikipedia
