@@ -6,8 +6,18 @@
 #
 attrs==22.2.0
     # via pytest
+brotli==1.0.9
+    # via geventhttpclient
+certifi==2022.12.7
+    # via
+    #   geventhttpclient
+    #   requests
+charset-normalizer==3.1.0
+    # via requests
 click==8.1.3
     # via flask
+configargparse==1.5.3
+    # via locust
 ctranslate2==3.7.0
     # via machinetranslation (pyproject.toml)
 ecs-logging==2.0.0
@@ -15,39 +25,83 @@ ecs-logging==2.0.0
 exceptiongroup==1.1.0
     # via pytest
 flask==2.2.3
-    # via machinetranslation (pyproject.toml)
+    # via
+    #   flask-basicauth
+    #   flask-cors
+    #   locust
+    #   machinetranslation (pyproject.toml)
+flask-basicauth==0.2.0
+    # via locust
+flask-cors==3.0.10
+    # via locust
+gevent==22.10.2
+    # via
+    #   geventhttpclient
+    #   locust
+geventhttpclient==2.0.9
+    # via locust
+greenlet==2.0.2
+    # via gevent
 gunicorn==20.1.0
     # via machinetranslation (pyproject.toml)
+idna==3.4
+    # via requests
 iniconfig==2.0.0
     # via pytest
 itsdangerous==2.1.2
     # via flask
 jinja2==3.1.2
     # via flask
+locust==2.15.1
+    # via machinetranslation (pyproject.toml)
 markupsafe==2.1.2
     # via
     #   jinja2
     #   werkzeug
+msgpack==1.0.5
+    # via locust
 numpy==1.24.2
     # via ctranslate2
 packaging==23.0
     # via pytest
 pluggy==1.0.0
     # via pytest
+psutil==5.9.4
+    # via locust
 pytest==7.2.2
     # via machinetranslation (pyproject.toml)
 pyyaml==6.0
     # via
     #   ctranslate2
     #   machinetranslation (pyproject.toml)
+pyzmq==25.0.1
+    # via locust
+requests==2.28.2
+    # via locust
+roundrobin==0.0.4
+    # via locust
 sentencepiece==0.1.97
     # via machinetranslation (pyproject.toml)
+six==1.16.0
+    # via
+    #   flask-cors
+    #   geventhttpclient
 statsd==4.0.1
     # via machinetranslation (pyproject.toml)
 tomli==2.0.1
     # via pytest
+typing-extensions==4.5.0
+    # via locust
+urllib3==1.26.15
+    # via requests
 werkzeug==2.2.3
-    # via flask
+    # via
+    #   flask
+    #   locust
+zope-event==4.6
+    # via gevent
+zope-interface==5.5.2
+    # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

@@ -15,6 +15,7 @@ dependencies = [
     "statsd",
     "ecs-logging",
     "pyyaml",
+    "locust",
 ]
 
 [project.optional-dependencies]
