@@ -4,6 +4,7 @@ import logging.config
 from translator.base import BaseTranslator
 from translator.config import TranslatorConfig
 from translator.nllb import NLLBTranslator, NLLBWikipediaTranslator
+from translator.opus import OpusTranslator
 
 logging.config.fileConfig("logging.conf")
 
@@ -12,7 +13,8 @@ translator_cache={}
 def TranslatorFactory(translator_config: TranslatorConfig, src_lang: str, tgt_lang: str) -> BaseTranslator:
     translators = {
         "nllb200-600M": NLLBTranslator,
-        "nllb-wikipedia": NLLBWikipediaTranslator
+        "nllb-wikipedia": NLLBWikipediaTranslator,
+        "opusmt": OpusTranslator
     }
     model = translator_config.language_pair_mapping[src_lang][tgt_lang]
     if model not in translator_cache:

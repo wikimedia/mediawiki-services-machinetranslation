@@ -1,8 +1,9 @@
 # MinT machine translation system
 
-**MinT** is a machine translation system hosted by Wikimedia Foundation. It uses [NLLB](https://ai.facebook.com/research/no-language-left-behind/) language models
-for translation.</a> The models are optimized for performance
-using [OpenNMT CTranslate2](https://github.com/OpenNMT/CTranslate2)
+**MinT** is a machine translation system hosted by Wikimedia Foundation.
+It uses [NLLB](https://ai.facebook.com/research/no-language-left-behind/) and
+[OpusMT](https://github.com/Helsinki-NLP/OPUS-MT) language models for translation.
+The models are optimized for performance using [OpenNMT CTranslate2](https://github.com/OpenNMT/CTranslate2)
 
 ## Usage
 
@@ -51,4 +52,5 @@ docker run -d\
 
 ```
 
-Now change the `statsd_host` in gunicorn.conf.py or use `--statsd-host` commandline option of gunicorn.
+Now change the `statsd_host` in gunicorn.conf.py or use `--statsd-host`
+commandline option of gunicorn.

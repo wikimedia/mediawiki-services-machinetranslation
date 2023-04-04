@@ -213,6 +213,7 @@ languages:
     - ast: nllb-wikipedia
     - ay: nllb-wikipedia
     - ba: nllb-wikipedia
+    - bcl: opusmt
     - ckb: nllb-wikipedia
     - ha: nllb-wikipedia
     - ig: nllb-wikipedia
