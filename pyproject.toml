@@ -16,6 +16,7 @@ dependencies = [
     "ecs-logging",
     "pyyaml",
     "locust",
+    "pycld2",
 ]
 
 [project.optional-dependencies]
