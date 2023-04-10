@@ -24,7 +24,7 @@ wget -N --no-verbose --show-progress --progress=bar:force:noscroll $wikimodelbas
 wikimodelbase=https://people.wikimedia.org/~santhosh/opusmt
 wget -N --no-verbose --show-progress --progress=bar:force:noscroll $wikimodelbase/opusmt-en-bcl.zip -P models
 cd models || exit
-unzip opusmt-en-bcl.zip
+unzip -o opusmt-en-bcl.zip
 rm -rf opusmt-en-bcl.zip
 cd ..
 
