@@ -6,10 +6,10 @@ import os
 import statsd
 import logging
 import logging.config
+import pycld2 as cld2
 from translator import TranslatorFactory, TranslatorConfig
 
 logging.config.fileConfig("logging.conf")
-
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
@@ -102,4 +102,15 @@ def translate_handler(source_lang, target_lang):
         sourcelanguage=source_lang,
         targetlanguage=target_lang,
         model=translator.MODEL,
+    )
+
+@app.route('/api/detectlang', methods=['POST'])
+def detect_language():
+    text = request.json.get('text')
+    reliable, index, top_3_choices = cld2.detect(text, returnVectors=False, bestEffort=False)
+    if not reliable:
+        abort(413, "Try passing a longer snippet of text")
+    return jsonify(
+        language=top_3_choices[0][1],
+        score=top_3_choices[0][2],
     )

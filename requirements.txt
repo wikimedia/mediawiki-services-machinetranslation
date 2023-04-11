@@ -68,6 +68,8 @@ pluggy==1.0.0
     # via pytest
 psutil==5.9.4
     # via locust
+pycld2==0.41
+    # via machinetranslation (pyproject.toml)
 pytest==7.2.2
     # via machinetranslation (pyproject.toml)
 pyyaml==6.0
