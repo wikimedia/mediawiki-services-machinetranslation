@@ -14,7 +14,7 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY . /app/
-RUN chmod +x ./server.sh
+RUN chmod +x ./entrypoint.sh
 
-ENTRYPOINT ["./server.sh"]
+ENTRYPOINT ["./entrypoint.sh"]
 EXPOSE 8989

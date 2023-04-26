@@ -18,7 +18,7 @@ pip install -r requirments.txt
 Then run the service:
 
 ```bash
-./server.sh
+./entrypoint.sh
 ```
 
 By default it will run in `http://0.0.0.0:8989`.

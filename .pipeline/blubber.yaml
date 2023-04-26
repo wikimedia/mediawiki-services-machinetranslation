@@ -8,12 +8,12 @@ lives:
 variants:
   build:
     copies: [local]
-    apt: { packages: [git, build-essential, wget, unzip] }
-    python: { version: python3, requirements: [requirements.txt]}
+    apt: {packages: [git, build-essential, wget, unzip]}
+    python: {version: python3, requirements: [requirements.txt]}
   test:
     includes: [build]
     entrypoint: ["python3", "-m", "pytest"]
   production:
     includes: [build]
-    apt: { packages: [ca-certificates] }
-    entrypoint: ["bash", "server.sh"]
+    apt: {packages: [ca-certificates]}
+    entrypoint: ["/app/entrypoint.sh"]
