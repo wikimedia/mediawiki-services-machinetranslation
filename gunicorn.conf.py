@@ -7,5 +7,5 @@ wsgi_app  = "translate:app"
 
 # Metrics logging to statsd exporter
 statsd_prefix = "machinetranslation"
-statsd_host = "statsd.eqiad.wmnet:8125"
+statsd_host = "localhost:8125"
 logconfig = "logging.conf"
