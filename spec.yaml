@@ -2,7 +2,8 @@ openapi: 3.0.1
 info:
   version: 0.2.1
   title: Machine translation service
-  description: Machine translation service for translating content between languages.
+  description: Machine translation service for translating content between
+    languages.
   termsOfService: https://wikimediafoundation.org/wiki/Terms_of_Use
   contact:
     name: the Wikimedia Language team
@@ -33,11 +34,13 @@ paths:
               spec: true
           response:
             status: 200
-  /translate/{from}/{to}:
+  /api/translate/{from}/{to}:
     post:
       tags:
         - Machine translation
-      description: Fetches the machine translation. Some providers require an authorization header and it is forbidden to use them outside the Content Translation tool.
+      description: Fetches the machine translation. Some providers require an
+        authorization header and it is forbidden to use them outside the
+        Content Translation tool.
       parameters:
         - $ref: "#/components/parameters/from"
         - $ref: "#/components/parameters/to"
@@ -70,7 +73,8 @@ paths:
               from: en
               to: ig
             body:
-              html: Oxygen is a chemical element with symbol O and atomic number 8
+              html: Oxygen is a chemical element with symbol O and atomic
+                number 8
           response:
             status: 200
             body:
@@ -78,14 +82,15 @@ paths:
             headers:
               content-type: application/json
 
-  /languages:
+  /api/languages:
     get:
       tags:
         - Tools
       description: Lists all languages supported
       responses:
         "200":
-          description: Lists the tools for a given language pair fetched successfully
+          description: Lists the tools for a given language pair fetched
+            successfully
           content:
             application/json:
               schema:
@@ -128,4 +133,3 @@ components:
       schema:
         type: string
       required: true
-
