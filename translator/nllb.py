@@ -10,7 +10,6 @@ logging.config.fileConfig("logging.conf")
 class NLLBTranslator(BaseTranslator):
     MODEL = "nllb200-600M"
     WIKI2NLLBCODES = {
-        "ace": "ace_Arab",
         "ace": "ace_Latn",
         "acm": "acm_Arab",
         "acq": "acq_Arab",
@@ -19,12 +18,7 @@ class NLLBTranslator(BaseTranslator):
         "ajp": "ajp_Arab",
         "ak": "aka_Latn",
         "am": "amh_Ethi",
-        "apc": "apc_Arab",
-        "arb": "arb_Arab",
-        "arb": "arb_Latn",
-        "ars": "ars_Arab",
-        "ary": "ary_Arab",
-        "arz": "arz_Arab",
+        "ar": "arb_Arab",
         "as": "asm_Beng",
         "ast": "ast_Latn",
         "awa": "awa_Deva",
@@ -208,7 +202,6 @@ class NLLBTranslator(BaseTranslator):
         "xh": "xho_Latn",
         "ydd": "ydd_Hebr",
         "yo": "yor_Latn",
-        "yue": "yue_Hant",
         "zh": "zho_Hans",
         "zh": "zho_Hant",
         "zsm": "zsm_Latn",
