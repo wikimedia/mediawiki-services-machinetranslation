@@ -13,14 +13,18 @@ logging.config.fileConfig("logging.conf")
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-statsd_host = "statsd.eqiad.wmnet"
+APP_NAME = "MachineTranslation"
+
+statsd_host = os.getenv('STATSD_HOST', "localhost")
+statsd_port = int(os.getenv('STATSD_PORT', 8125))
+statsd_prefix = os.getenv('STATSD_PREFIX', "machinetranslation")
+
 statsd_client = None
 try:
-    statsd_client = statsd.StatsClient(statsd_host)
+    statsd_client = statsd.StatsClient(statsd_host, port=statsd_port, prefix=statsd_prefix)
 except Exception:
-    logging.warning(f"Could not connect to statsd host {statsd_host}")
+    logging.warning(f"Could not connect to statsd host {statsd_host}:{statsd_port}")
 
-APP_NAME = "MachineTranslation"
 
 app = Flask(__name__)
 config = TranslatorConfig()
@@ -93,8 +97,8 @@ def translate_handler(source_lang, target_lang):
     end = time.time()
     translationtime = end - start
     if statsd_client:
-        statsd_client.incr(f"{APP_NAME.lower()}.mt.{source_lang}.{target_lang}")
-        statsd_client.timing(f"{APP_NAME.lower()}.mt.timing", translationtime)
+        statsd_client.incr(f"mt.{source_lang}.{target_lang}")
+        statsd_client.timing(f"mt.timing", translationtime)
 
     return jsonify(
         translation="\n".join(translated_text_lines),
