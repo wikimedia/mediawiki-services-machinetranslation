@@ -34,6 +34,13 @@ docker run -dp 8989:8989 wikipedia-mt:latest
 
 Open http://0.0.0.0:8989/ using browser
 
+## Environment variables
+
+* `CT2_INTER_THREADS`: maximum number of batches executed in parallel. Refer https://opennmt.net/CTranslate2/parallel.html. Default is `1`
+* `CT2_INTRA_THREADS`: number of computation threads that is used per batch Refer https://opennmt.net/CTranslate2/parallel.html. Default is `1`
+
+For above configurations, Use a value less than or equal to the available CPU cores.
+
 ### Monitoring
 
 Application can be monitored using graphite.
