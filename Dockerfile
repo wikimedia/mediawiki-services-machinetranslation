@@ -5,7 +5,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends wget unzip
+    apt-get install -y --no-install-recommends build-essential unzip wget
 
 # install dependencies
 RUN pip install --upgrade pip
