@@ -52,5 +52,10 @@ docker run -d\
 
 ```
 
-Now change the `statsd_host` in gunicorn.conf.py or use `--statsd-host`
-commandline option of gunicorn.
+Now set the env value `STATSD_HOST` to `localhost` and  `STATSD_PORT` to 8125. STATSD_PREFIX environment variable can be used to override the default
+"machinetranslation" prefix.
+
+Example:
+```
+STATSD_HOST=127.0.0.1 gunicorn
+```
