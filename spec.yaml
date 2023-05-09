@@ -67,8 +67,10 @@ paths:
           description: Internal error
           content: {}
       x-amples:
-        - title: Machine translate.
+        - title: Machine translate
           request:
+            headers:
+              Content-Type: application/json
             params:
               from: en
               to: ig
@@ -78,7 +80,11 @@ paths:
           response:
             status: 200
             body:
-              contents: /.+/
+              model: /.+/
+              sourcelanguage: /.+/
+              targetlanguage: /.+/
+              translation: /.+/
+              translationtime: /.+/
             headers:
               content-type: application/json
 
