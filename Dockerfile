@@ -5,7 +5,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends build-essential unzip wget
+    apt-get install -y --no-install-recommends build-essential unzip wget cmake
 
 # install dependencies
 RUN pip install --upgrade pip

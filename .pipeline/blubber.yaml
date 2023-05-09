@@ -8,7 +8,7 @@ lives:
 variants:
   build:
     copies: [local]
-    apt: {packages: [git, build-essential, wget, unzip, wmf-certificates]}
+    apt: {packages: [git, build-essential, cmake, wget, unzip, wmf-certificates]}
     python: {version: python3, requirements: [requirements.txt]}
   test:
     includes: [build]

@@ -8,13 +8,21 @@ The models are optimized for performance using [OpenNMT CTranslate2](https://git
 ## Usage
 
 ### Installation
-Clone the repository, create a virtual environment and install dependencies
+
+Clone the repository. Install the system dependencies:
+
+```bash
+sudo apt install wget unzip build-essential cmake
+```
+
+Create a python virtual environment and install dependencies
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
 Then run the service:
 
 ```bash
