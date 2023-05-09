@@ -153,7 +153,7 @@ class NLLBTranslator(BaseTranslator):
         "ru": "rus_Cyrl",
         "sg": "sag_Latn",
         "sa": "san_Deva",
-        "sat": "sat_Olck",
+        "sat": "sat_Beng", # NLLB uses this language code even though the script in corpus is Ol Chiki
         "scn": "scn_Latn",
         "shn": "shn_Mymr",
         "si": "sin_Sinh",
