@@ -13,7 +13,7 @@ Clone the repository, create a virtual environment and install dependencies
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirments.txt
+pip install -r requirements.txt
 ```
 Then run the service:
 
