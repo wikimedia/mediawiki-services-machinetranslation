@@ -49,11 +49,11 @@ paths:
           application/json:
             schema:
               required:
-                - html
+                - text
               properties:
-                html:
+                text:
                   type: string
-                  description: The HTML content to translate
+                  description: The text to translate
                   x-textarea: true
         required: true
       responses:
@@ -73,7 +73,7 @@ paths:
               from: en
               to: ig
             body:
-              html: Oxygen is a chemical element with symbol O and atomic
+              text: Oxygen is a chemical element with symbol O and atomic
                 number 8
           response:
             status: 200
