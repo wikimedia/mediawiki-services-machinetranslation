@@ -288,9 +288,8 @@ class NLLBWikipediaTranslator(NLLBTranslator):
         return None
 
     def tokenize(self, src_lang: str, tgt_lang: str, content):
-        src = "__" + self.WIKI2ISO[src_lang] + "__"
         target = "__" + self.WIKI2ISO[tgt_lang] + "__"
-        return [target] + self.tokenizer.encode(content, out_type=str) + ["</s>", src]
+        return [target] + self.tokenizer.encode(content, out_type=str) + ["</s>" ]
 
 
 sentences = """
