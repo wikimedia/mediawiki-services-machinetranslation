@@ -69,11 +69,13 @@ Jazz has roots in West African cultural and musical expression, and in African-A
 
 if __name__ == "__main__":
     import yaml
+    import time
 
     with open("./models.yaml") as f:
         models = yaml.load(f, Loader=yaml.SafeLoader)
-    print(
-        NLLBWikipediaTranslator(models[NLLBWikipediaTranslator.MODEL]).translate(
-            "en", "ig", sentences
-        )
-    )
+
+    translator=NLLBWikipediaTranslator(models[NLLBWikipediaTranslator.MODEL])
+    start = time.time()
+    print(translator.translate("en", "ig", sentences))
+    end = time.time()
+    print(f"Translated in {end-start} seconds")

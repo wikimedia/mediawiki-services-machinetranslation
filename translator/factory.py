@@ -30,9 +30,15 @@ Jazz has roots in West African cultural and musical expression, and in African-A
 """.strip().splitlines()
 
 if __name__ == "__main__":
+    import time
     config = TranslatorConfig()
+
+    translator=TranslatorFactory(config, "en", "es")
+    start = time.time()
     print(
-        TranslatorFactory(config, "en", "ig").translate(
-           "en", "ig", sentences
+       translator.translate(
+           "en", "es", sentences
         )
     )
+    end = time.time()
+    print(f"Translated in {end-start} seconds")

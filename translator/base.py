@@ -4,17 +4,17 @@ from sentencepiece import SentencePieceProcessor
 import logging
 from typing import List
 import logging.config
+import multiprocessing
 
 logging.config.fileConfig("logging.conf")
-
 
 class BaseTranslator:
     def __init__(self, config):
         self.config = config
         self.model = None
         self.tokenizer = None
-        self.inter_threads = int(os.getenv("CT2_INTER_THREADS", 1))
-        self.intra_threads = int(os.getenv("CT2_INTRA_THREADS", 1))
+        self.inter_threads = int(os.getenv("CT2_INTER_THREADS", multiprocessing.cpu_count()))
+        self.intra_threads = int(os.getenv("CT2_INTRA_THREADS", 0))
         self.init()
 
     def getModel(self) -> Translator:
@@ -25,6 +25,7 @@ class BaseTranslator:
             inter_threads=self.inter_threads,
             #  number of OpenMP threads that is used per batch.
             # => Increase this value to decrease the latency on CPU.
+            # 0 to use a default value
             intra_threads=self.intra_threads,
             device="auto",
             compute_type="auto",
