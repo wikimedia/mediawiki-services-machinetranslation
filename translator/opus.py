@@ -33,6 +33,7 @@ class OpusTranslator(BaseTranslator):
             batch_type="tokens",
             max_batch_size=1024,
             beam_size=1,
+            repetition_penalty=2,
         )
 
         for result in results:
