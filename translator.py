@@ -3,7 +3,6 @@ from ctranslate2 import Translator
 from sentencepiece import SentencePieceProcessor
 import logging
 import json
-from langcodes import Language
 from pathlib import Path
 from typing import List
 import logging.config
@@ -12,7 +11,8 @@ logging.config.fileConfig("logging.conf")
 models = json.loads(Path("models.json").read_text())
 config = json.loads(Path("config.json").read_text())
 
-translator_cache=[]
+translator_cache = []
+
 
 class BaseTranslator:
     def __init__(self, config):
@@ -43,8 +43,6 @@ class BaseTranslator:
         self.model = self.getModel()
         self.tokenizer = self.getTokenizer()
         logging.info(f"{self.__class__.__name__} initialized")
-
-
 
     def translate(self, src_lang, tgt_lang, sentences) -> List[str]:
         raise Exception("Not implemented")

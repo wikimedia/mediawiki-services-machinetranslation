@@ -1,7 +1,9 @@
 from locust import HttpUser, between, task
 import random
 
-languages = ['ig','ml', 'bn', 'es', 'mr', 'hi', 'fi', 'he']
+languages = ['ig', 'ml', 'bn', 'es', 'mr', 'hi', 'fi', 'he']
+
+
 class WebsiteUser(HttpUser):
     wait_time = between(5, 15)
 
@@ -17,9 +19,8 @@ Since the 1920s Jazz Age, it has been recognized as a major form of musical expr
 Jazz is characterized by swing and blue notes, complex chords, call and response vocals, polyrhythms and improvisation.
 Jazz has roots in West African cultural and musical expression, and in African-American music traditions.
       """
-        src  = 'en'
-        tgt  = random.choice(languages)
+        src = 'en'
+        tgt = random.choice(languages)
         self.client.post(f"/api/translate/{src}/{tgt}", json={
             "text": text
         })
-

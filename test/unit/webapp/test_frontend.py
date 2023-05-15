@@ -1,6 +1,6 @@
-
 from test.unit.webapp import client
 import json
+
 
 def test_home_page(client):
     """
@@ -14,4 +14,3 @@ def test_home_page(client):
     assert "Translate" in html
 
     assert landing.status_code == 200
-

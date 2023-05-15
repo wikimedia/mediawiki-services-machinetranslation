@@ -1,5 +1,4 @@
 import logging
-
 import logging.config
 from translator.base import BaseTranslator
 from translator.config import TranslatorConfig
@@ -8,7 +7,8 @@ from translator.opus import OpusTranslator
 
 logging.config.fileConfig("logging.conf")
 
-translator_cache={}
+translator_cache = {}
+
 
 def TranslatorFactory(translator_config: TranslatorConfig, src_lang: str, tgt_lang: str) -> BaseTranslator:
     translators = {
@@ -18,8 +18,9 @@ def TranslatorFactory(translator_config: TranslatorConfig, src_lang: str, tgt_la
     }
     model = translator_config.language_pair_mapping[src_lang][tgt_lang]
     if model not in translator_cache:
-        translator_cache[model] = translators.get(model)(translator_config.models.get(model));
+        translator_cache[model] = translators.get(model)(translator_config.models.get(model))
     return translator_cache[model]
+
 
 sentences = """
 Jazz is a music genre that originated in the African-American communities of New Orleans, Louisiana, United States, in the late 19th and early 20th centuries, with its roots in blues and ragtime.

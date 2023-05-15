@@ -2,6 +2,7 @@
 import pytest
 from translate import app
 
+
 @pytest.fixture
 def client():
     """Configures the app for testing
@@ -11,7 +12,7 @@ def client():
     :return: App for testing
     """
 
-    #app.config['TESTING'] = True
+    # app.config['TESTING'] = True
     client = app.test_client()
 
     yield client

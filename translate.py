@@ -1,4 +1,3 @@
-from collections import OrderedDict
 from flask import Flask, jsonify, render_template, request, abort
 import yaml
 import time
@@ -108,7 +107,8 @@ def translate_handler(source_lang, target_lang):
         model=translator.MODEL,
     )
 
-@app.route('/api/detectlang', methods=['POST'])
+
+@app.route("/api/detectlang", methods=['POST'])
 def detect_language():
     text = request.json.get('text')
     reliable, index, top_3_choices = cld2.detect(text, returnVectors=False, bestEffort=False)
