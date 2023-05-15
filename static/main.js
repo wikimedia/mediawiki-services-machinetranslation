@@ -88,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     sourceElement.addEventListener("input", () => {
         detectLanguage(sourceElement.value).then(language => {
             src_selector.value = language;
+            src_selector.dispatchEvent(new Event('change'));
         })
     });
 });
