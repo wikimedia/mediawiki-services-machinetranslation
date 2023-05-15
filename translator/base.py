@@ -8,6 +8,12 @@ import multiprocessing
 
 logging.config.fileConfig("logging.conf")
 
+# As per https://opennmt.net/CTranslate2/performance.html
+# By default CTranslate2 is compiled with intel MKL.
+# It is observed that this setting has a significant positive performance impact.
+os.environ["CT2_USE_EXPERIMENTAL_PACKED_GEMM"] = "1"
+
+
 class BaseTranslator:
     def __init__(self, config):
         self.config = config
