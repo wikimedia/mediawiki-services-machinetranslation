@@ -52,7 +52,7 @@ For above configurations, Use a value less than or equal to the available CPU co
 ### Monitoring
 
 Application can be monitored using graphite.
-Dun the graphite-statsd docker, and point the statsd-host to it
+Run the graphite-statsd docker, and point the statsd-host to it
 
 ```bash
 docker run -d\
