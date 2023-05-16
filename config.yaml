@@ -12,194 +12,189 @@ models:
   - ak
   - am
   - ar
+  - ary
+  - arz
   - as
   - ast
   - awa
-  - ayr
+  - az
   - azb
-  - azj
   - ba
-  - bm
   - ban
   - be
   - bem
+  - bg
+  - bh
+  - bjn
+  - bm
   - bn
-  - bho
-  - bjn
-  - bjn
   - bo
   - bs
   - bug
-  - bg
   - ca
   - ceb
-  - cs
   - cjk
   - ckb
   - crh
+  - cs
   - cy
   - da
   - de
-  - dik
+  - din
   - dyu
   - dz
+  - ee
   - el
   - en
   - eo
+  - es
   - et
   - eu
-  - ee
-  - fo
-  - fj
+  - fa
+  - ff
   - fi
+  - fj
+  - fo
   - fon
   - fr
   - fur
-  - fuv
-  - gd
   - ga
+  - gd
   - gl
   - gn
   - gu
-  - ht
   - ha
   - he
   - hi
   - hne
   - hr
+  - ht
   - hu
   - hy
+  - id
   - ig
   - ilo
-  - id
   - is
   - it
-  - jv
   - ja
+  - jv
+  - ka
   - kab
   - kac
   - kam
-  - kn
-  - ks
-  - ka
-  - knc
-  - knc
-  - kk
   - kbp
   - kea
-  - km
-  - ki
-  - rw
-  - ky
-  - kmb
-  - kmr
   - kg
+  - khk
+  - ki
+  - kk
+  - km
+  - kmb
+  - kn
+  - knc
   - ko
-  - lo
-  - lij
-  - li
-  - ln
-  - lt
-  - lmo
-  - ltg
+  - ks
+  - ku
+  - ky
   - lb
-  - lua
   - lg
+  - li
+  - lij
+  - lmo
+  - ln
+  - lo
+  - lt
+  - ltg
+  - lua
   - luo
   - lus
-  - lvs
+  - lv
   - mag
   - mai
-  - ml
-  - mr
-  - min
+  - mg
+  - mi
   - min
   - mk
-  - plt
-  - mt
+  - ml
   - mni
-  - khk
   - mos
-  - mi
+  - mr
+  - ms
+  - mt
   - my
+  - nb
+  - ne
   - nl
   - nn
-  - nb
-  - npi
   - nso
   - nus
   - ny
   - oc
+  - om
   - or
-  - gaz
-  - ory
-  - pag
   - pa
+  - pag
   - pap
-  - pes
   - pl
+  - ps
   - pt
-  - fa
-  - pbt
-  - quy
-  - ro
+  - qu
   - rn
+  - ro
   - ru
-  - sg
+  - rw
   - sa
   - sat
+  - sc
   - scn
+  - sd
+  - sg
   - shn
   - si
   - sk
   - sl
   - sm
   - sn
-  - sd
   - so
-  - st
-  - es
-  - als
-  - sc
+  - sq
   - sr
   - ss
+  - st
   - su
   - sv
-  - swh
+  - sw
   - szl
   - ta
-  - tt
+  - taq
   - te
   - tg
-  - fil
   - th
   - ti
-  - taq
-  - taq
-  - tpi
-  - tn
-  - ts
   - tk
-  - tum
+  - tl
+  - tn
+  - tpi
   - tr
+  - ts
+  - tt
+  - tum
   - tw
   - tzm
   - ug
   - uk
   - umb
   - ur
-  - uzn
+  - uz
   - vec
   - vi
   - war
   - wo
   - xh
-  - ydd
+  - yi
   - yo
   - zh
-  - zh
-  - zsm
   - zu
+
 # Map languages to model.
 languages:
   en:
