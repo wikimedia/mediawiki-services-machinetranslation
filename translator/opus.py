@@ -1,10 +1,10 @@
 import logging
-from pathlib import Path
 from typing import List
 import logging.config
-from translator.base import BaseTranslator
+from translator import BaseTranslator
 
 logging.config.fileConfig("logging.conf")
+
 
 class OpusTranslator(BaseTranslator):
     MODEL = "opusmt"
@@ -13,7 +13,7 @@ class OpusTranslator(BaseTranslator):
         return self.tokenizer.encode(content, out_type=str)
 
     def detokenize(self, content: str) -> str:
-        return self.tokenizer.decode(content).replace('▁',' ').strip()
+        return self.tokenizer.decode(content).replace('▁', ' ').strip()
 
     def translate(
         self, src_lang: str, tgt_lang: str, sentences: List[str]
@@ -21,8 +21,8 @@ class OpusTranslator(BaseTranslator):
         """
         Translate the text from source lang to target lang
         """
-        translation:List[str]= []
-        sentences_tokenized:List[str] = []
+        translation: List[str] = []
+        sentences_tokenized: List[str] = []
 
         for sentence in sentences:
             sentences_tokenized.append(self.tokenize(src_lang, tgt_lang, sentence))
@@ -39,6 +39,7 @@ class OpusTranslator(BaseTranslator):
         for result in results:
             translation.append(self.detokenize(result.hypotheses[0][1:]))
         return translation
+
 
 sentences = """
 Jazz is a music genre that originated in the African-American communities of New Orleans, Louisiana, United States, in the late 19th and early 20th centuries, with its roots in blues and ragtime.
