@@ -16,7 +16,7 @@ do
 		continue
 	else
 		echo "Downloading $MODEL_BASE_URL/${i}"
-		wget -N --no-verbose --show-progress --progress=bar:force:noscroll ${MODEL_BASE_URL}/${i} -P $MODEL_DIR
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
 	fi
 done
 
@@ -29,7 +29,7 @@ do
 		continue
 	else
 		echo "Downloading $MODEL_BASE_URL/${i}"
-		wget -N --no-verbose --show-progress --progress=bar:force:noscroll ${MODEL_BASE_URL}/${i} -P $MODEL_DIR
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
 	fi
 done
 
@@ -42,7 +42,7 @@ do
 		continue
 	else
 		echo "Downloading $MODEL_BASE_URL/${i}"
-		wget -N --no-verbose --show-progress --progress=bar:force:noscroll ${MODEL_BASE_URL}/${i} -P $MODEL_DIR
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
 		# Extract the OpusMT optimized model
 		pushd $BASE_MODEL_DIR
 		unzip opusmt-en-bcl.zip
@@ -53,4 +53,4 @@ done
 
 echo "Starting server..."
 # We exec in order to allow gunicorn to handle signals and not have them caught by bash
-exec gunicorn $*
+exec gunicorn "$@"
