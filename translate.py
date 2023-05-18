@@ -86,12 +86,13 @@ def translate_handler(source_lang, target_lang):
             413,
             description="Request too large to handle. Maximum 25 sentences are supported.",
         )
-    start = time.time()
+
     translator = TranslatorFactory(config, source_lang, target_lang)
 
     if not translator:
         abort(400, description="Could not find translator for the given language pair.")
 
+    start = time.time()
     translated_text_lines = translator.translate(source_lang, target_lang, sentences)
     end = time.time()
     translationtime = end - start
