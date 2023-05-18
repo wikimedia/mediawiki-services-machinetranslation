@@ -98,7 +98,7 @@ def translate_handler(source_lang, target_lang):
     translationtime = end - start
     if statsd_client:
         statsd_client.incr(f"mt.{source_lang}.{target_lang}")
-        statsd_client.timing(f"mt.timing", translationtime)
+        statsd_client.timing(f"mt.timing", int(translationtime * 1000))
 
     return jsonify(
         translation="\n".join(translated_text_lines),
