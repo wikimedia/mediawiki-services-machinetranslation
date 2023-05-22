@@ -81,10 +81,10 @@ def translate_handler(source_lang, target_lang):
             description="Request too large to handle. Maximum 10000 characters are supported.",
         )
     sentences = text.strip().splitlines()
-    if len(sentences) > 25:
+    if len(sentences) > 100:
         abort(
             413,
-            description="Request too large to handle. Maximum 25 sentences are supported.",
+            description="Request too large to handle. Maximum 100 sentences are supported.",
         )
 
     translator = TranslatorFactory(config, source_lang, target_lang)
