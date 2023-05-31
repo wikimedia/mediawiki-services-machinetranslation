@@ -74,3 +74,12 @@ Example:
 ```
 STATSD_HOST=127.0.0.1 gunicorn
 ```
+
+## License
+
+MinT is licensed under MIT license. See [License.txt](./LICENSE.txt)
+
+MinT uses multiple machine translation models internally.
+
+* NLLB models are licensed under [CC-BY-NC](https://creativecommons.org/licenses/by-nc/4.0/).
+* OpusMT models are licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
