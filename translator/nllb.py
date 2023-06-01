@@ -30,6 +30,7 @@ class NLLBTranslator(BaseTranslator):
         target_prefixes = []
         assert self.model
         for sentence in sentences:
+            sentence = self.preprocess(src_lang, sentence)
             sentences_tokenized.append(self.tokenize(src_lang, tgt_lang, sentence))
             target_prefix = self.get_target_prefixes(tgt_lang)
             if target_prefix:
@@ -45,7 +46,9 @@ class NLLBTranslator(BaseTranslator):
             no_repeat_ngram_size=2,
         )
         for result in results:
-            translation.append(self.detokenize(result.hypotheses[0][1:]))
+            translated_sentence = self.detokenize(result.hypotheses[0][1:])
+            translated_sentence = self.postprocess(tgt_lang, translated_sentence)
+            translation.append(translated_sentence)
         return translation
 
 
@@ -74,7 +77,7 @@ if __name__ == "__main__":
     with open("./models.yaml") as f:
         models = yaml.load(f, Loader=yaml.SafeLoader)
 
-    translator=NLLBWikipediaTranslator(models[NLLBWikipediaTranslator.MODEL])
+    translator = NLLBWikipediaTranslator(models[NLLBWikipediaTranslator.MODEL])
     start = time.time()
     print(translator.translate("en", "ig", sentences))
     end = time.time()
