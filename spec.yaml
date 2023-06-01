@@ -92,7 +92,7 @@ paths:
     get:
       tags:
         - Tools
-      description: Lists all languages supported
+      description: Lists all languages supported. The language codes are language codes used by Wikipedia.
       responses:
         "200":
           description: Lists the tools for a given language pair fetched
@@ -128,14 +128,14 @@ components:
     from:
       name: from
       in: path
-      description: The source language code
+      description: The source language code. Always follows the Wikipedia language codes.
       schema:
         type: string
       required: true
     to:
       name: to
       in: path
-      description: The target language code
+      description: The target language code. Always follows the Wikipedia language codes.
       schema:
         type: string
       required: true
