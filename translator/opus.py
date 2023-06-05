@@ -25,6 +25,7 @@ class OpusTranslator(BaseTranslator):
         sentences_tokenized: List[str] = []
 
         for sentence in sentences:
+            sentence = self.preprocess(src_lang, sentence)
             sentences_tokenized.append(self.tokenize(src_lang, tgt_lang, sentence))
 
         results = self.model.translate_iterable(
@@ -37,7 +38,9 @@ class OpusTranslator(BaseTranslator):
         )
 
         for result in results:
-            translation.append(self.detokenize(result.hypotheses[0][1:]))
+            translated_sentence = self.detokenize(result.hypotheses[0][1:])
+            translated_sentence = self.postprocess(tgt_lang, translated_sentence)
+            translation.append(translated_sentence)
         return translation
 
 
