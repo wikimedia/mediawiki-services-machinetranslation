@@ -1,3 +1,4 @@
+# NLLB model's language codes are different from Wikipedia's codes.
 WIKI2NLLBCODES = {
     "ace": "ace_Latn",
     "acm": "acm_Arab",
@@ -199,6 +200,8 @@ WIKI2NLLBCODES = {
     "zu": "zul_Latn",
 }
 
+# NLLB Wikipedia optimized model uses 3 letter language codes.
+# Map them from wikipedia codes to NLLB codes
 WIKI2ISO = {
     "as": "asm",  # Assamese
     "ast": "ast",  # Asturian
