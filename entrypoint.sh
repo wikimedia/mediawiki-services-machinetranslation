@@ -51,6 +51,24 @@ do
 	fi
 done
 
+# Softcatala NMT model for English to Catalan
+MODEL_BASE_URL=${BASE_URL}/softcatala
+MODEL_DIR=${BASE_MODEL_DIR}
+for i in softcatala-en-ca.zip
+do
+	if [ -d "${MODEL_DIR}/${i%.zip}" ]; then
+		continue
+	else
+		echo "Downloading $MODEL_BASE_URL/${i}"
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
+		# Extract the Softcatala optimized model
+		pushd $BASE_MODEL_DIR
+		unzip softcatala-en-ca.zip
+		rm -rf softcatala-en-ca.zip
+		popd
+	fi
+done
+
 echo "Starting server..."
 # We exec in order to allow gunicorn to handle signals and not have them caught by bash
 exec gunicorn "$@"

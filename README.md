@@ -1,8 +1,14 @@
 # MinT machine translation system
 
 **MinT** is a machine translation system hosted by Wikimedia Foundation.
-It uses [NLLB](https://ai.facebook.com/research/no-language-left-behind/) and
-[OpusMT](https://github.com/Helsinki-NLP/OPUS-MT) language models for translation.
+It uses multiple Neural Machine translation models to provide translation between large number of languages.
+
+Currently used models:
+
+* [NLLB](https://ai.facebook.com/research/no-language-left-behind/)
+* [OpusMT](https://github.com/Helsinki-NLP/OPUS-MT)
+* [SoftCatala](https://github.com/Softcatala/nmt-models)
+
 The models are optimized for performance using [OpenNMT CTranslate2](https://github.com/OpenNMT/CTranslate2)
 
 ## Usage
@@ -83,3 +89,4 @@ MinT uses multiple machine translation models internally.
 
 * NLLB models are licensed under [CC-BY-NC](https://creativecommons.org/licenses/by-nc/4.0/).
 * OpusMT models are licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
+* Softcatala models are [MIT licensed](https://github.com/Softcatala/nmt-models/blob/master/LICENSE).
