@@ -198,32 +198,62 @@ models:
 
 # Map languages to model.
 languages:
+  as:
+    - en: indictrans2-indic-en
+  bn:
+    - en: indictrans2-indic-en
+  brx:
+    - en: indictrans2-indic-en
+  ca:
+    - oc: nllb-wikipedia
+  doi:
+    - en: indictrans2-indic-en
   en:
+    - as: indictrans2-en-indic
     - as: nllb-wikipedia
     - ast: nllb-wikipedia
     - ay: nllb-wikipedia
     - ba: nllb-wikipedia
     - bcl: opusmt
+    - bn: indictrans2-en-indic
+    - brx: indictrans2-en-indic  # Bodo
     - ca: softcatala
     - ckb: nllb-wikipedia
+    - doi: indictrans2-en-indic  # Dogri
+    - gom: indictrans2-en-indic
+    - gu: indictrans2-en-indic
     - ha: nllb-wikipedia
+    - hi: indictrans2-en-indic
     - ig: nllb-wikipedia
     - ilo: nllb-wikipedia
     - is: nllb-wikipedia
     - kg: nllb-wikipedia
-    - ln: nllb-wikipedia
+    - kn: indictrans2-en-indic
+    - ks: indictrans2-en-indic
     - lg: nllb-wikipedia
+    - ln: nllb-wikipedia
+    - mai: indictrans2-en-indic
+    - ml: indictrans2-en-indic
+    - mni: indictrans2-en-indic
+    - mr: indictrans2-en-indic
+    - ne: indictrans2-en-indic
     - nso: nllb-wikipedia
     - oc: nllb-wikipedia
     - om: nllb-wikipedia
+    - or: indictrans2-en-indic
+    - pa: indictrans2-en-indic
+    - sa: indictrans2-en-indic
+    - sat: indictrans2-en-indic
+    - sd: indictrans2-en-indic
     - ss: nllb-wikipedia
+    - ta: indictrans2-en-indic
+    - te: indictrans2-en-indic
     - tn: nllb-wikipedia
     - ts: nllb-wikipedia
+    - ur: indictrans2-en-indic
     - wo: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
-  ca:
-    - oc: nllb-wikipedia
   es:
     - as: nllb-wikipedia
     - ast: nllb-wikipedia
@@ -269,7 +299,43 @@ languages:
     - wo: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
+  gom:
+    - en: indictrans2-indic-en
+  gu:
+    - en: indictrans2-indic-en
+  hi:
+    - en: indictrans2-indic-en
+  kn:
+    - en: indictrans2-indic-en
+  ks:
+    - en: indictrans2-indic-en
+  mai:
+    - en: indictrans2-indic-en
+  ml:
+    - en: indictrans2-indic-en
+  mr:
+    - en: indictrans2-indic-en
+  mni:
+    - en: indictrans2-indic-en
+  ne:
+    - en: indictrans2-indic-en
+  or:
+    - en: indictrans2-indic-en
+  pa:
+    - en: indictrans2-indic-en
   pt:
     - oc: nllb-wikipedia
+  sa:
+    - en: indictrans2-indic-en
+  sat:
+    - en: indictrans2-indic-en
+  sd:
+    - en: indictrans2-indic-en
   ru:
     - ba: nllb-wikipedia
+  ta:
+    - en: indictrans2-indic-en
+  te:
+    - en: indictrans2-indic-en
+  ur:
+    - en: indictrans2-indic-en

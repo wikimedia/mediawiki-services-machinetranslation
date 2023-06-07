@@ -17,6 +17,7 @@ dependencies = [
     "pyyaml",
     "locust",
     "pycld2",
+    "indic-nlp-library",
 ]
 
 [project.optional-dependencies]

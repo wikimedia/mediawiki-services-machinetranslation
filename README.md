@@ -8,6 +8,7 @@ Currently used models:
 * [NLLB](https://ai.facebook.com/research/no-language-left-behind/)
 * [OpusMT](https://github.com/Helsinki-NLP/OPUS-MT)
 * [SoftCatala](https://github.com/Softcatala/nmt-models)
+* [IndicTrans2](https://github.com/AI4Bharat/IndicTrans2)
 
 The models are optimized for performance using [OpenNMT CTranslate2](https://github.com/OpenNMT/CTranslate2)
 
@@ -90,3 +91,4 @@ MinT uses multiple machine translation models internally.
 * NLLB models are licensed under [CC-BY-NC](https://creativecommons.org/licenses/by-nc/4.0/).
 * OpusMT models are licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
 * Softcatala models are [MIT licensed](https://github.com/Softcatala/nmt-models/blob/master/LICENSE).
+* IndicTrans2 models are [MIT licensed](https://github.com/AI4Bharat/IndicTrans2)

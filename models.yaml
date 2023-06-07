@@ -10,3 +10,7 @@ opusmt:
 softcatala:
   model: models/softcatala-en-ca
   tokenizer: models/softcatala-en-ca/sp_m.model
+indictrans2-indic-en:
+  model: models/indictrans2-indic-en
+indictrans2-en-indic:
+  model: models/indictrans2-en-indic
