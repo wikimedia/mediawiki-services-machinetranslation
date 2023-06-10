@@ -4,6 +4,7 @@ from translator.base import BaseTranslator
 from translator.config import TranslatorConfig
 from translator.nllb import NLLBTranslator, NLLBWikipediaTranslator
 from translator.opus import OpusTranslator
+from translator.softcatala import SoftCatalaTranslator
 
 logging.config.fileConfig("logging.conf")
 
@@ -14,7 +15,8 @@ def TranslatorFactory(translator_config: TranslatorConfig, src_lang: str, tgt_la
     translators = {
         "nllb200-600M": NLLBTranslator,
         "nllb-wikipedia": NLLBWikipediaTranslator,
-        "opusmt": OpusTranslator
+        "opusmt": OpusTranslator,
+        "softcatala": SoftCatalaTranslator,
     }
     model = translator_config.language_pair_mapping[src_lang][tgt_lang]
     if model not in translator_cache:
