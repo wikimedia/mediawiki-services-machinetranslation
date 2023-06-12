@@ -40,6 +40,7 @@ function doTranslate() {
 
 function listSupportedTargetLanguages(sourceLang, allPairs) {
     const tgt_selector = document.getElementById('target_lang');
+    const currentSelection = tgt_selector.value || 'es';
     tgt_selector.innerHTML = '';
     const targetLangs = allPairs[sourceLang];
     for (lang in targetLangs) {
@@ -48,7 +49,7 @@ function listSupportedTargetLanguages(sourceLang, allPairs) {
         const el = document.createElement("option");
         el.textContent = displayName;
         el.value = lang;
-        if (lang == 'es') {
+        if (lang == currentSelection ) {
             el.selected = true;
         }
         tgt_selector.appendChild(el);
