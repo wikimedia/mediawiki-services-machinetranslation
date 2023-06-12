@@ -69,6 +69,34 @@ do
 	fi
 done
 
+
+
+# Indictrans2 models for Indic languages to English
+MODEL_BASE_URL="${BASE_URL}/indictrans2/indictrans-indic-en"
+MODEL_DIR="${BASE_MODEL_DIR}/indictrans2-indic-en"
+for i in config.json model.bin model.SRC model.TGT source_vocabulary.txt target_vocabulary.txt
+do
+	if [ -f "${MODEL_DIR}/${i}" ]; then
+		continue
+	else
+		echo "Downloading $MODEL_BASE_URL/${i}"
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
+	fi
+done
+
+# Indictrans2 models for English to Indic languages
+MODEL_BASE_URL="${BASE_URL}/indictrans2/indictrans-en-indic"
+MODEL_DIR="${BASE_MODEL_DIR}/indictrans2-en-indic"
+for i in config.json model.bin model.SRC model.TGT source_vocabulary.txt target_vocabulary.txt
+do
+	if [ -f "${MODEL_DIR}/${i}" ]; then
+		continue
+	else
+		echo "Downloading $MODEL_BASE_URL/${i}"
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
+	fi
+done
+
 echo "Starting server..."
 # We exec in order to allow gunicorn to handle signals and not have them caught by bash
 exec gunicorn "$@"
