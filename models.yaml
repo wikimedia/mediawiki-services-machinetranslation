@@ -12,5 +12,7 @@ softcatala:
   tokenizer: models/softcatala-en-ca/sp_m.model
 indictrans2-indic-en:
   model: models/indictrans2-indic-en
+  tokenizer: models/indictrans2-indic-en/model.SRC
 indictrans2-en-indic:
   model: models/indictrans2-en-indic
+  tokenizer: models/indictrans2-en-indic/model.SRC

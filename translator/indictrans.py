@@ -2,10 +2,8 @@ import logging
 from typing import List
 import logging.config
 from translator import BaseTranslator
-from sentencepiece import SentencePieceProcessor
 from indicnlp.transliterate import unicode_transliterate
 from translator import languages
-import os
 
 logging.config.fileConfig("logging.conf")
 
@@ -13,30 +11,24 @@ logging.config.fileConfig("logging.conf")
 class IndicTransTranslator(BaseTranslator):
     MODEL = "indictrans2-en-indic"
 
+    def __init__(self, config):
+        super().__init__(config)
+        self.transliterator = unicode_transliterate.UnicodeIndicTransliterator()
+
     def tokenize(self, src_lang: str, tgt_lang: str, content):
         return [
             languages.get_wikicode_from_nllb(src_lang),
             languages.get_wikicode_from_nllb(tgt_lang),
-        ] + self.tokenizer.get("src").encode(content, out_type=str)
+        ] + self.tokenizer.encode(content, out_type=str)
 
-    def detokenize(self, content: str) -> str:
-        return self.tokenizer.get("tgt").decode(content).replace("▁", " ").strip()
-
-    def getTokenizer(self):
-        src_sp = SentencePieceProcessor()
-        src_sp.load(os.path.join(self.config.get("model"), "model.SRC"))
-
-        tgt_sp = SentencePieceProcessor()
-        tgt_sp.load(os.path.join(self.config.get("model"), "model.TGT"))
-        return {"src": src_sp, "tgt": tgt_sp}
+    def detokenize(self, content: List[str]) -> str:
+        return "".join(content).replace("▁", " ").strip()
 
     def transliterate_to_devanagari(self, sentence: str, src_lang) -> str:
-        xliterator = unicode_transliterate.UnicodeIndicTransliterator()
-        return xliterator.transliterate(sentence, src_lang, "hi").replace(" ् ", "्")
+        return self.transliterator.transliterate(sentence, src_lang, "hi").replace(" ् ", "्")
 
     def transliterate_from_devanagari(self, sentence: str, tgt_lang) -> str:
-        xliterator = unicode_transliterate.UnicodeIndicTransliterator()
-        return xliterator.transliterate(sentence, "hi", tgt_lang)
+        return self.transliterator.transliterate(sentence, "hi", tgt_lang)
 
     def translate(
         self, src_lang: str, tgt_lang: str, sentences: List[str]
@@ -52,7 +44,6 @@ class IndicTransTranslator(BaseTranslator):
             if src_lang != "en":
                 sentence = self.transliterate_to_devanagari(sentence, src_lang)
             sentences_tokenized.append(self.tokenize(src_lang, tgt_lang, sentence))
-
         results = self.model.translate_iterable(
             sentences_tokenized,
             asynchronous=True,
@@ -60,7 +51,6 @@ class IndicTransTranslator(BaseTranslator):
             max_batch_size=1024,
             beam_size=1,
         )
-
         for result in results:
             translated_sentence = self.detokenize(result.hypotheses[0])
 

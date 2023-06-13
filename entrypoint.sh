@@ -74,7 +74,7 @@ done
 # Indictrans2 models for Indic languages to English
 MODEL_BASE_URL="${BASE_URL}/indictrans2/indictrans-indic-en"
 MODEL_DIR="${BASE_MODEL_DIR}/indictrans2-indic-en"
-for i in config.json model.bin model.SRC model.TGT source_vocabulary.txt target_vocabulary.txt
+for i in config.json model.bin model.SRC source_vocabulary.txt target_vocabulary.txt
 do
 	if [ -f "${MODEL_DIR}/${i}" ]; then
 		continue
@@ -87,7 +87,7 @@ done
 # Indictrans2 models for English to Indic languages
 MODEL_BASE_URL="${BASE_URL}/indictrans2/indictrans-en-indic"
 MODEL_DIR="${BASE_MODEL_DIR}/indictrans2-en-indic"
-for i in config.json model.bin model.SRC model.TGT source_vocabulary.txt target_vocabulary.txt
+for i in config.json model.bin model.SRC source_vocabulary.txt target_vocabulary.txt
 do
 	if [ -f "${MODEL_DIR}/${i}" ]; then
 		continue
