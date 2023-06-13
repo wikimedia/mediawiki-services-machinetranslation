@@ -6,13 +6,13 @@
 #
 alabaster==0.7.13
     # via sphinx
-attrs==22.2.0
-    # via pytest
 babel==2.12.1
     # via sphinx
+blinker==1.6.2
+    # via flask
 brotli==1.0.9
     # via geventhttpclient
-certifi==2022.12.7
+certifi==2023.5.7
     # via
     #   geventhttpclient
     #   requests
@@ -22,15 +22,15 @@ click==8.1.3
     # via flask
 configargparse==1.5.3
     # via locust
-ctranslate2==3.7.0
+ctranslate2==3.15.1
     # via machinetranslation (pyproject.toml)
 docutils==0.18.1
     # via
     #   sphinx
     #   sphinx-rtd-theme
-ecs-logging==2.0.0
+ecs-logging==2.0.2
     # via machinetranslation (pyproject.toml)
-flask==2.2.3
+flask==2.3.2
     # via
     #   flask-basicauth
     #   flask-cors
@@ -66,7 +66,7 @@ jinja2==3.1.2
     #   sphinx
 locust==2.15.1
     # via machinetranslation (pyproject.toml)
-markupsafe==2.1.2
+markupsafe==2.1.3
     # via
     #   jinja2
     #   werkzeug
@@ -74,12 +74,12 @@ morfessor==2.0.6
     # via indic-nlp-library
 msgpack==1.0.5
     # via locust
-numpy==1.24.2
+numpy==1.24.3
     # via
     #   ctranslate2
     #   indic-nlp-library
     #   pandas
-packaging==23.0
+packaging==23.1
     # via
     #   pytest
     #   sphinx
@@ -87,13 +87,13 @@ pandas==2.0.2
     # via indic-nlp-library
 pluggy==1.0.0
     # via pytest
-psutil==5.9.4
+psutil==5.9.5
     # via locust
 pycld2==0.41
     # via machinetranslation (pyproject.toml)
 pygments==2.15.1
     # via sphinx
-pytest==7.2.2
+pytest==7.3.2
     # via machinetranslation (pyproject.toml)
 python-dateutil==2.8.2
     # via pandas
@@ -103,15 +103,15 @@ pyyaml==6.0
     # via
     #   ctranslate2
     #   machinetranslation (pyproject.toml)
-pyzmq==25.0.1
+pyzmq==25.1.0
     # via locust
-requests==2.28.2
+requests==2.31.0
     # via
     #   locust
     #   sphinx
 roundrobin==0.0.4
     # via locust
-sentencepiece==0.1.97
+sentencepiece==0.1.99
     # via machinetranslation (pyproject.toml)
 six==1.16.0
     # via
@@ -127,7 +127,7 @@ sphinx==6.2.1
     #   sphinxcontrib-jquery
 sphinx-argparse==0.4.0
     # via indic-nlp-library
-sphinx-rtd-theme==1.2.1
+sphinx-rtd-theme==1.2.2
     # via indic-nlp-library
 sphinxcontrib-applehelp==1.0.4
     # via sphinx
@@ -145,19 +145,19 @@ sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
 statsd==4.0.1
     # via machinetranslation (pyproject.toml)
-typing-extensions==4.5.0
+typing-extensions==4.6.3
     # via locust
 tzdata==2023.3
     # via pandas
-urllib3==1.26.15
+urllib3==2.0.3
     # via requests
-werkzeug==2.2.3
+werkzeug==2.3.6
     # via
     #   flask
     #   locust
 zope-event==4.6
     # via gevent
-zope-interface==5.5.2
+zope-interface==6.0
     # via gevent
 
 # The following packages are considered to be unsafe in a requirements file:
