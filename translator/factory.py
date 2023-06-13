@@ -23,25 +23,3 @@ def TranslatorFactory(translator_config: TranslatorConfig, src_lang: str, tgt_la
     if model not in translator_cache:
         translator_cache[model] = translators.get(model)(translator_config.models.get(model))
     return translator_cache[model]
-
-
-sentences = """
-Jazz is a music genre that originated in the African-American communities of New Orleans, Louisiana, United States, in the late 19th and early 20th centuries, with its roots in blues and ragtime.
-Since the 1920s Jazz Age, it has been recognized as a major form of musical expression in traditional and popular music, linked by the common bonds of African-American and European-American musical parentage.
-Jazz is characterized by swing and blue notes, complex chords, call and response vocals, polyrhythms and improvisation.
-Jazz has roots in West African cultural and musical expression, and in African-American music traditions.
-""".strip().splitlines()
-
-if __name__ == "__main__":
-    import time
-    config = TranslatorConfig()
-
-    translator = TranslatorFactory(config, "en", "es")
-    start = time.time()
-    print(
-       translator.translate(
-           "en", "es", sentences
-        )
-    )
-    end = time.time()
-    print(f"Translated in {end-start} seconds")

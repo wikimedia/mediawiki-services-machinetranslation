@@ -61,24 +61,3 @@ class NLLBWikipediaTranslator(NLLBTranslator):
     def tokenize(self, src_lang: str, tgt_lang: str, content):
         target = "__" + languages.get_wikicode_to_iso(tgt_lang) + "__"
         return [target] + self.tokenizer.encode(content, out_type=str) + ["</s>"]
-
-
-sentences = """
-Jazz is a music genre that originated in the African-American communities of New Orleans, Louisiana, United States, in the late 19th and early 20th centuries, with its roots in blues and ragtime.
-Since the 1920s Jazz Age, it has been recognized as a major form of musical expression in traditional and popular music, linked by the common bonds of African-American and European-American musical parentage.
-Jazz is characterized by swing and blue notes, complex chords, call and response vocals, polyrhythms and improvisation.
-Jazz has roots in West African cultural and musical expression, and in African-American music traditions.
-""".strip().splitlines()
-
-if __name__ == "__main__":
-    import yaml
-    import time
-
-    with open("./models.yaml") as f:
-        models = yaml.load(f, Loader=yaml.SafeLoader)
-
-    translator = NLLBWikipediaTranslator(models[NLLBWikipediaTranslator.MODEL])
-    start = time.time()
-    print(translator.translate("en", "ig", sentences))
-    end = time.time()
-    print(f"Translated in {end-start} seconds")

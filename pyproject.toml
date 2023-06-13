@@ -24,3 +24,6 @@ dependencies = [
 tests = [
     'pytest'
 ]
+
+[project.scripts]
+mint = "translator:main"

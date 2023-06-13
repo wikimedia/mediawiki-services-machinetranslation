@@ -72,35 +72,3 @@ class IndicEnTransTranslator(IndicTransTranslator):
 class EnIndicTransTranslator(IndicTransTranslator):
     MODEL = "indictrans2-en-indic"
 
-
-if __name__ == "__main__":
-    import yaml
-
-    sentences = {
-        "en": """
-    All plants, animals, and fungi need oxygen for cellular respiration, which extracts energy by the reaction of oxygen with molecules derived from food and produces carbon dioxide as a waste product.
-    """,
-        "ml": """
-    കേരളത്തിൽ സാധാരണ കണ്ടുവരുന്ന ഒരു പക്ഷിയാണ് ആറ്റകുരുവി.
-    കൂരിയാറ്റ, തൂക്കണാംകുരുവി എന്നീ പേരുകളിലും ഇത് അറിയപ്പെടുന്നു.
-    ഇത് അങ്ങാടിക്കുരുവിയോട് വളരെയധികം സാദൃശ്യമുള്ള പക്ഷിയാണ്.
-    അങ്ങാടിക്കുരുവിയുടെ വലിപ്പം ഉള്ള ഈ പക്ഷി പൊതുവേ വയലുകൾക്ക് സമീപമാണ് കാണപ്പെടുന്നത്.
-    പ്രജനനകാലത്തൊഴിച്ച് കിളികളിൽ ആണും പെണ്ണും തമ്മിൽ നിറവ്യത്യാസങ്ങൾ ഇല്ല.
-    വയലുകളോട് ചേർന്നുനിൽക്കുന്ന ഉയരമുള്ള മരങ്ങളിൽ നെല്ലോല കൊണ്ട് നെയ്തെടുക്കുന്ന നീളവും ഉറപ്പും ഏറിയ കൂടുകളാണ് ഈ പക്ഷിയുടെ പ്രത്യേകത.
-    തൂക്കണാം കുരുവികൾ ശരിക്കും ഒന്നിലധികം ഇണകളെ സ്വീകരിക്കുന്ന പക്ഷിയാണ്‌.
-    കുരുവിയുടെ ആ മനോഹരമായ കൂട് നിർമിക്കുന്നത് ആൺപക്ഷിയാണ്.
-    """,
-    }
-
-    with open("./models.yaml") as f:
-        models = yaml.load(f, Loader=yaml.SafeLoader)
-    print(
-        EnIndicTransTranslator(models[EnIndicTransTranslator.MODEL]).translate(
-            "en", "ml", sentences["en"].strip().splitlines()
-        )
-    )
-    print(
-        IndicEnTransTranslator(models[IndicEnTransTranslator.MODEL]).translate(
-            "ml", "en", sentences["ml"].strip().splitlines()
-        )
-    )
