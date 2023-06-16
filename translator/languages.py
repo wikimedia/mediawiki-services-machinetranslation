@@ -148,7 +148,7 @@ WIKI2NLLBCODES = {
     "ru": "rus_Cyrl",
     "rw": "kin_Latn",
     "sa": "san_Deva",
-    "sat": "sat_Beng",  # NLLB uses this language code even though the script in corpus is Ol Chiki
+    "sat": "sat_Olck",
     "scn": "scn_Latn",
     "sc": "srd_Latn",
     "sd": "snd_Arab",
