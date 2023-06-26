@@ -64,6 +64,7 @@ WIKI2NLLBCODES = {
     "gd": "gla_Latn",
     "gl": "glg_Latn",
     "gn": "grn_Latn",
+    "gom": "gom_Deva",
     "gu": "guj_Gujr",
     "ha": "hau_Latn",
     "he": "heb_Hebr",
