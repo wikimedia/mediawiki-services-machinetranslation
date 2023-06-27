@@ -50,6 +50,7 @@ class IndicTransTranslator(BaseTranslator):
             batch_type="tokens",
             max_batch_size=1024,
             beam_size=1,
+            no_repeat_ngram_size=4,
         )
         for result in results:
             translated_sentence = self.detokenize(result.hypotheses[0])
@@ -71,4 +72,3 @@ class IndicEnTransTranslator(IndicTransTranslator):
 
 class EnIndicTransTranslator(IndicTransTranslator):
     MODEL = "indictrans2-en-indic"
-
