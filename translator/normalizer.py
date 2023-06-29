@@ -54,6 +54,12 @@ patterns_replacements["de"] = {
     r"„": '"',  # Replaces German opening quotation mark with English double quote
 }
 
+patterns_replacements["ur"] = {
+    r" ۔": "۔",  # Removes extra space before Arabic full stop
+}
+
+patterns_replacements["ks"] = patterns_replacements["ur"]
+
 
 def normalize(language: str, text: str) -> str:
     if language in patterns_replacements:
