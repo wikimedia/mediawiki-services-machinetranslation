@@ -68,6 +68,12 @@ patterns_replacements["pa"] = {
     " ।": "।",  # Removes extra space before Devanagari Danda
 }
 
+patterns_replacements["gu"] = {
+    # Replace English numerical with Gujarati numericals in MT.
+    # 0x0AE6 is Gujarati number 0
+    r"([0-9])": lambda match: chr(int(match.group(1)) + 0x0AE6)
+}
+
 
 def normalize(language: str, text: str) -> str:
     if language in patterns_replacements:
