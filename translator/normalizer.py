@@ -60,6 +60,14 @@ patterns_replacements["ur"] = {
 
 patterns_replacements["ks"] = patterns_replacements["ur"]
 
+patterns_replacements["hi"] = {
+    " ।": "।",  # Removes extra space before Devanagari Danda
+}
+
+patterns_replacements["pa"] = {
+    " ।": "।",  # Removes extra space before Devanagari Danda
+}
+
 
 def normalize(language: str, text: str) -> str:
     if language in patterns_replacements:
