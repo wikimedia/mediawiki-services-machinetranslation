@@ -4,7 +4,7 @@ nllb200-600M:
 nllb-wikipedia:
   model: models/nllb-wikipedia
   tokenizer: models/nllb-wikipedia/sentencepiece.bpe.model
-opusmt:
+opusmt-en-bcl:
   model: models/opusmt-en-bcl
   tokenizer: models/opusmt-en-bcl/source.spm
 softcatala:
