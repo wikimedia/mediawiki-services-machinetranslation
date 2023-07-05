@@ -213,7 +213,7 @@ languages:
     - ast: nllb-wikipedia
     - ay: nllb-wikipedia
     - ba: nllb-wikipedia
-    - bcl: opusmt
+    - bcl: opusmt-en-bcl
     - bn: indictrans2-en-indic
     - brx: indictrans2-en-indic  # Bodo
     - ca: softcatala
