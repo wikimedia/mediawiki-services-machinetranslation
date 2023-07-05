@@ -23,7 +23,7 @@ WIKI2NLLBCODES = {
     "bem": "bem_Latn",
     "bg": "bul_Cyrl",
     "bh": "bho_Deva",
-    "bjn": "bjn_Arab",
+    # "bjn": "bjn_Arab", Wikipidia basa Banjar uses Latin script
     "bjn": "bjn_Latn",
     "bm": "bam_Latn",
     "bn": "ben_Beng",
@@ -51,8 +51,8 @@ WIKI2NLLBCODES = {
     "es": "spa_Latn",
     "et": "est_Latn",
     "eu": "eus_Latn",
-    "fa": "pes_Arab",
-    "fa": "prs_Arab",
+    "fa": "pes_Arab",  # Iranian Persian
+    # "fa": "prs_Arab",  # Dari Persian
     "ff": "fuv_Latn",
     "fi": "fin_Latn",
     "fj": "fij_Latn",
@@ -81,7 +81,7 @@ WIKI2NLLBCODES = {
     "it": "ita_Latn",
     "ja": "jpn_Jpan",
     "jv": "jav_Latn",
-    "kab": "kab_Latn",
+    "kab": "kab_Latn", # Kabyle
     "kac": "kac_Latn",
     "ka": "kat_Geor",
     "kam": "kam_Latn",
@@ -92,8 +92,8 @@ WIKI2NLLBCODES = {
     "kk": "kaz_Cyrl",
     "kmb": "kmb_Latn",
     "km": "khm_Khmr",
-    "knc": "knc_Arab",
-    "knc": "knc_Latn",
+    # "knc": "knc_Arab", Kanuri - https://kr.wikipedia.org/ - wiki closed.
+    # "knc": "knc_Latn", Kanuri - https://kr.wikipedia.org/ - wiki closed.
     "kn": "kan_Knda",
     "ko": "kor_Hang",
     "ks": "kas_Arab",
@@ -116,7 +116,7 @@ WIKI2NLLBCODES = {
     "mai": "mai_Deva",
     "mg": "plt_Latn",
     "mi": "mri_Latn",
-    "min": "min_Arab",
+    # "min": "min_Arab", Minangkabau uses latin in min.wikipedia.org
     "min": "min_Latn",
     "mk": "mkd_Cyrl",
     "ml": "mal_Mlym",
@@ -169,8 +169,8 @@ WIKI2NLLBCODES = {
     "sv": "swe_Latn",
     "sw": "swh_Latn",
     "szl": "szl_Latn",
-    "taq": "taq_Latn",
-    "taq": "taq_Tfng",
+    # "taq": "taq_Latn", # Taqbaylit
+    # "taq": "taq_Tfng", # Tamazight
     "ta": "tam_Taml",
     "te": "tel_Telu",
     "tg": "tgk_Cyrl",
@@ -198,8 +198,8 @@ WIKI2NLLBCODES = {
     "xh": "xho_Latn",
     "yi": "ydd_Hebr",
     "yo": "yor_Latn",
-    "zh": "zho_Hans",
-    "zh": "zho_Hant",
+    # "zh": "zho_Hans", # Chinese Simplified
+    "zh": "zho_Hant",  # Chinese Traditional
     "zu": "zul_Latn",
 }
 
@@ -230,7 +230,6 @@ WIKI2ISO = {
     "qu": "que",  # Quechua
     "ru": "rus",  # Russian
     "es": "spa",  # Spanish
-    "ss": "ssw",  # Swati
     "ti": "tir",  # Tigrinya
     "tn": "tsn",  # Tswana
     "ts": "tso",  # Tswana
