@@ -1,11 +1,10 @@
-from translator import TranslatorFactory, TranslatorConfig
-from argparse import ArgumentParser
 import fileinput
+from argparse import ArgumentParser
+
+from translator import TranslatorConfig, TranslatorFactory
 
 if __name__ == "__main__":
-    parser = ArgumentParser(
-        prog="mint", description="Translate text between any languages"
-    )
+    parser = ArgumentParser(prog="mint", description="Translate text between any languages")
     parser.add_argument("source")
     parser.add_argument("target")
     parser.add_argument(

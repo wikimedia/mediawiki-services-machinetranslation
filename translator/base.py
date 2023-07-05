@@ -1,10 +1,12 @@
-import os
-from ctranslate2 import Translator
-from sentencepiece import SentencePieceProcessor
 import logging
-from typing import List
 import logging.config
 import multiprocessing
+import os
+from typing import List
+
+from ctranslate2 import Translator
+from sentencepiece import SentencePieceProcessor
+
 from translator.normalizer import normalize
 
 logging.config.fileConfig("logging.conf")
@@ -20,9 +22,7 @@ class BaseTranslator:
         self.config = config
         self.model = None
         self.tokenizer = None
-        self.inter_threads = int(
-            os.getenv("CT2_INTER_THREADS", multiprocessing.cpu_count())
-        )
+        self.inter_threads = int(os.getenv("CT2_INTER_THREADS", multiprocessing.cpu_count()))
         self.intra_threads = int(os.getenv("CT2_INTRA_THREADS", 0))
         self.init()
 
@@ -49,9 +49,7 @@ class BaseTranslator:
         self.model = self.getModel()
         self.tokenizer = self.getTokenizer()
         logging.info(f"{self.__class__.__name__} initialized.")
-        logging.info(
-            f"inter_threads: { self.inter_threads}, intra_threads: {self.intra_threads} "
-        )
+        logging.info(f"inter_threads: { self.inter_threads}, intra_threads: {self.intra_threads} ")
 
     def translate(self, src_lang, tgt_lang, sentences) -> List[str]:
         raise Exception("Not implemented")

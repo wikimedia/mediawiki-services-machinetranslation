@@ -22,8 +22,10 @@ patterns_replacements["en"] = {
     r"–": "-",  # Replaces en dash with hyphen
     r"—": " - ",  # Replaces em dash with space, hyphen, and space
     r"´": "'",  # Replaces acute accent with apostrophe
-    r"([a-z])‘([a-z])": r"\1'\2",  # Replaces left single quotation mark with apostrophe between lowercase letters
-    r"([a-z])’([a-z])": r"\1'\2",  # Replaces right single quotation mark with apostrophe between lowercase letters
+    # Replaces left single quotation mark with apostrophe between lowercase letters
+    r"([a-z])‘([a-z])": r"\1'\2",
+    # Replaces right single quotation mark with apostrophe between lowercase letters
+    r"([a-z])’([a-z])": r"\1'\2",
     r"‘": "'",  # Replaces left single quotation mark with apostrophe
     r"‚": "'",  # Replaces lower single quotation mark with apostrophe
     r"’": '"',  # Replaces right single quotation mark with English double quote

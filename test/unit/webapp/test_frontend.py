@@ -1,7 +1,3 @@
-from test.unit.webapp import client
-import json
-
-
 def test_home_page(client):
     """
     GIVEN a Flask application configured for testing

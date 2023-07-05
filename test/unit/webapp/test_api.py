@@ -1,4 +1,3 @@
-from test.unit.webapp import client
 import json
 
 

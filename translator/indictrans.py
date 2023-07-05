@@ -1,9 +1,10 @@
 import logging
-from typing import List
 import logging.config
-from translator import BaseTranslator
+from typing import List
+
 from indicnlp.transliterate import unicode_transliterate
-from translator import languages
+
+from translator import BaseTranslator, languages
 
 logging.config.fileConfig("logging.conf")
 
@@ -30,9 +31,7 @@ class IndicTransTranslator(BaseTranslator):
     def transliterate_from_devanagari(self, sentence: str, tgt_lang) -> str:
         return self.transliterator.transliterate(sentence, "hi", tgt_lang)
 
-    def translate(
-        self, src_lang: str, tgt_lang: str, sentences: List[str]
-    ) -> List[str]:
+    def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """
         Translate the text from source lang to target lang
         """

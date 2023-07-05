@@ -1,8 +1,8 @@
 import logging
-from typing import List
 import logging.config
-from translator import BaseTranslator
-from translator import languages
+from typing import List
+
+from translator import BaseTranslator, languages
 
 logging.config.fileConfig("logging.conf")
 
@@ -11,7 +11,10 @@ class NLLBTranslator(BaseTranslator):
     MODEL = "nllb200-600M"
 
     def tokenize(self, src_lang: str, tgt_lang: str, content):
-        return self.tokenizer.encode(content, out_type=str) + ["</s>", languages.get_wikicode_from_nllb(src_lang)]
+        return self.tokenizer.encode(content, out_type=str) + [
+            "</s>",
+            languages.get_wikicode_from_nllb(src_lang),
+        ]
 
     def detokenize(self, content: str) -> str:
         return self.tokenizer.decode(content)
@@ -19,9 +22,7 @@ class NLLBTranslator(BaseTranslator):
     def get_target_prefixes(self, tgt_lang: str):
         return [languages.get_wikicode_from_nllb(tgt_lang)]
 
-    def translate(
-        self, src_lang: str, tgt_lang: str, sentences: List[str]
-    ) -> List[str]:
+    def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """
         Translate the text from source lang to target lang
         """

@@ -1,6 +1,7 @@
 import logging
-from typing import List
 import logging.config
+from typing import List
+
 from translator import BaseTranslator
 
 logging.config.fileConfig("logging.conf")
@@ -13,11 +14,9 @@ class OpusTranslator(BaseTranslator):
         return self.tokenizer.encode(content, out_type=str)
 
     def detokenize(self, content: str) -> str:
-        return self.tokenizer.decode(content).replace('▁', ' ').strip()
+        return self.tokenizer.decode(content).replace("▁", " ").strip()
 
-    def translate(
-        self, src_lang: str, tgt_lang: str, sentences: List[str]
-    ) -> List[str]:
+    def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """
         Translate the text from source lang to target lang
         """
@@ -42,4 +41,3 @@ class OpusTranslator(BaseTranslator):
             translated_sentence = self.postprocess(tgt_lang, translated_sentence)
             translation.append(translated_sentence)
         return translation
-

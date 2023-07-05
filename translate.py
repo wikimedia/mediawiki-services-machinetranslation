@@ -1,12 +1,14 @@
-from flask import Flask, jsonify, render_template, request, abort
-import yaml
-import time
-import os
-import statsd
 import logging
 import logging.config
+import os
+import time
+
 import pycld2 as cld2
-from translator import TranslatorFactory, TranslatorConfig
+import statsd
+import yaml
+from flask import Flask, abort, jsonify, render_template, request
+
+from translator import TranslatorConfig, TranslatorFactory
 
 logging.config.fileConfig("logging.conf")
 
@@ -14,9 +16,9 @@ os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 APP_NAME = "MachineTranslation"
 
-statsd_host = os.getenv('STATSD_HOST', "localhost")
-statsd_port = int(os.getenv('STATSD_PORT', 8125))
-statsd_prefix = os.getenv('STATSD_PREFIX', "machinetranslation")
+statsd_host = os.getenv("STATSD_HOST", "localhost")
+statsd_port = int(os.getenv("STATSD_PORT", 8125))
+statsd_prefix = os.getenv("STATSD_PREFIX", "machinetranslation")
 
 statsd_client = None
 try:
@@ -90,7 +92,10 @@ def translate_handler(source_lang, target_lang):
     translator = TranslatorFactory(config, source_lang, target_lang)
 
     if not translator:
-        abort(400, description="Could not find translator for the given language pair.")
+        abort(
+            400,
+            description="Could not find translator for the given language pair.",
+        )
 
     start = time.time()
     translated_text_lines = translator.translate(source_lang, target_lang, sentences)
@@ -98,7 +103,7 @@ def translate_handler(source_lang, target_lang):
     translationtime = end - start
     if statsd_client:
         statsd_client.incr(f"mt.{source_lang}.{target_lang}")
-        statsd_client.timing(f"mt.timing", int(translationtime * 1000))
+        statsd_client.timing("mt.timing", int(translationtime * 1000))
 
     return jsonify(
         translation="\n".join(translated_text_lines),
@@ -109,9 +114,9 @@ def translate_handler(source_lang, target_lang):
     )
 
 
-@app.route("/api/detectlang", methods=['POST'])
+@app.route("/api/detectlang", methods=["POST"])
 def detect_language():
-    text = request.json.get('text')
+    text = request.json.get("text")
     reliable, index, top_3_choices = cld2.detect(text, returnVectors=False, bestEffort=False)
     if not reliable:
         abort(413, "Try passing a longer snippet of text")
