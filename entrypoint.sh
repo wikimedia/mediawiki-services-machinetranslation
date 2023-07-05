@@ -36,7 +36,7 @@ done
 # OpusMT optimized model with limited languages
 MODEL_BASE_URL=${BASE_URL}/opusmt
 MODEL_DIR=${BASE_MODEL_DIR}
-for i in opusmt-en-bcl.zip
+for i in opusmt-en-bcl.zip opusmt-en-to.zip opusmt-en-chr.zip
 do
 	if [ -d "${MODEL_DIR}/${i%.zip}" ]; then
 		continue
@@ -45,8 +45,8 @@ do
 		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
 		# Extract the OpusMT optimized model
 		pushd $BASE_MODEL_DIR
-		unzip opusmt-en-bcl.zip
-		rm -rf opusmt-en-bcl.zip
+		unzip ${i}
+		rm -rf ${i}
 		popd
 	fi
 done

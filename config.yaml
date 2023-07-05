@@ -217,6 +217,7 @@ languages:
     - bn: indictrans2-en-indic
     - brx: indictrans2-en-indic  # Bodo
     - ca: softcatala
+    - chr: opusmt-en-chr
     - ckb: nllb-wikipedia
     - doi: indictrans2-en-indic  # Dogri
     - gom: indictrans2-en-indic
@@ -248,6 +249,7 @@ languages:
     - ta: indictrans2-en-indic
     - te: indictrans2-en-indic
     - tn: nllb-wikipedia
+    - to: opusmt-en-to
     - ts: nllb-wikipedia
     - ur: indictrans2-en-indic
     - wo: nllb-wikipedia

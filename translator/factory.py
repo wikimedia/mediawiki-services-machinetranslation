@@ -26,6 +26,8 @@ def TranslatorFactory(
         "indictrans2-en-indic": EnIndicTransTranslator,
         "nllb-wikipedia": NLLBWikipediaTranslator,
         "opusmt-en-bcl": OpusTranslator,
+        "opusmt-en-chr": OpusTranslator,
+        "opusmt-en-to": OpusTranslator,
         "softcatala": SoftCatalaTranslator,
     }
     model = translator_config.language_pair_mapping[src_lang][tgt_lang]

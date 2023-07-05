@@ -7,6 +7,12 @@ nllb-wikipedia:
 opusmt-en-bcl:
   model: models/opusmt-en-bcl
   tokenizer: models/opusmt-en-bcl/source.spm
+opusmt-en-to:
+  model: models/opusmt-en-to
+  tokenizer: models/opusmt-en-to/source.spm
+opusmt-en-chr:
+  model: models/opusmt-en-chr
+  tokenizer: models/opusmt-en-chr/source.spm
 softcatala:
   model: models/softcatala-en-ca
   tokenizer: models/softcatala-en-ca/sp_m.model
