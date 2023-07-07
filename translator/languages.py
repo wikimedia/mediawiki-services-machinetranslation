@@ -111,7 +111,7 @@ WIKI2NLLBCODES = {
     "lua": "lua_Latn",
     "lu": "lus_Latn",
     "luo": "luo_Latn",
-    "lvs": "lvs_Latn",
+    "lv": "lvs_Latn",
     "mag": "mag_Deva",
     "mai": "mai_Deva",
     "mg": "plt_Latn",
