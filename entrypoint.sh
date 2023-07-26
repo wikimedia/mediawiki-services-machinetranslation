@@ -97,6 +97,7 @@ do
 	fi
 done
 
+
 echo "Starting server..."
 # We exec in order to allow gunicorn to handle signals and not have them caught by bash
 exec gunicorn "$@"

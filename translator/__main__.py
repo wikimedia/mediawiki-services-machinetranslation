@@ -17,6 +17,6 @@ if __name__ == "__main__":
 
     config = TranslatorConfig()
     translator = TranslatorFactory(config, args.source, args.target)
-    for line in fileinput.input(files=args.files):
-        translation = translator.translate(args.source, args.target, line.splitlines())
-        print("".join(translation))
+    for text in fileinput.input(files=args.files):
+        translation = translator.translate(args.source, args.target, text)
+        print(translation)

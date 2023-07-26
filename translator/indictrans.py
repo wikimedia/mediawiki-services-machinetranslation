@@ -5,6 +5,7 @@ from typing import List
 from indicnlp.transliterate import unicode_transliterate
 
 from translator import BaseTranslator, languages
+from translator.segmenter import segment
 
 logging.config.fileConfig("logging.conf")
 
@@ -31,12 +32,23 @@ class IndicTransTranslator(BaseTranslator):
     def transliterate_from_devanagari(self, sentence: str, tgt_lang) -> str:
         return self.transliterator.transliterate(sentence, "hi", tgt_lang)
 
-    def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
+    def translate(self, src_lang: str, tgt_lang: str, text: str) -> str:
         """
-        Translate the text from source lang to target lang
+        Translates text from source language to target language using a machine translation model.
+
+        Args:
+        - src_lang: A string representing the source language of the input text.
+          Must be a valid language code.
+        - tgt_lang: A string representing the target language for the translation output.
+          Must be a valid language code.
+        - text: A string representing the input text to be translated.
+
+        Returns:
+        - A string representing the translated text in the target language.
         """
-        translation: List[str] = []
+        sentences: List[str] = segment(src_lang, text)
         sentences_tokenized: List[str] = []
+        translated_sentences: List[str] = []
 
         for sentence in sentences:
             sentence = self.preprocess(src_lang, sentence)
@@ -61,8 +73,9 @@ class IndicTransTranslator(BaseTranslator):
 
             translated_sentence = translated_sentence.replace(" .", ".")
             translated_sentence = self.postprocess(tgt_lang, translated_sentence)
-            translation.append(translated_sentence)
-        return translation
+            translated_sentences.append(translated_sentence)
+
+        return self.compose_text(sentences, translated_sentences)
 
 
 class IndicEnTransTranslator(IndicTransTranslator):

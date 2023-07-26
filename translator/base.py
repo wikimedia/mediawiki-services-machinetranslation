@@ -51,7 +51,20 @@ class BaseTranslator:
         logging.info(f"{self.__class__.__name__} initialized.")
         logging.info(f"inter_threads: { self.inter_threads}, intra_threads: {self.intra_threads} ")
 
-    def translate(self, src_lang, tgt_lang, sentences) -> List[str]:
+    def translate(self, src_lang: str, tgt_lang: str, text: str) -> str:
+        """
+        Translates text from source language to target language using a machine translation model.
+
+        Args:
+        - src_lang: A string representing the source language of the input text.
+          Must be a valid language code.
+        - tgt_lang: A string representing the target language for the translation output.
+          Must be a valid language code.
+        - text: A string representing the input text to be translated.
+
+        Returns:
+        - A string representing the translated text in the target language.
+        """
         raise Exception("Not implemented")
 
     def preprocess(self, src_lang, text) -> str:
@@ -59,3 +72,28 @@ class BaseTranslator:
 
     def postprocess(self, tgt_lang, text) -> str:
         return normalize(tgt_lang, text)
+
+    def compose_text(
+        self,
+        sentences: List[str],
+        translated_sentences: List[str],
+    ) -> str:
+        """
+        Composes translated text by joining its sentences.
+
+        Args:
+        - sentences: A list of strings which represent the original sentences of the text.
+        - translated_sentences: A list of strings which represent the machine-translated
+          sentences of the text.
+
+        Returns:
+        - A single string that represents the translated text by joining
+          individual translated sentences.
+        """
+        translation: str = ""
+        for index, sentence in enumerate(translated_sentences):
+            if sentences[index] == "\n":
+                translation += sentences[index]
+            else:
+                translation += sentence + " "
+        return translation.strip()

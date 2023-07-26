@@ -3,6 +3,7 @@ import logging.config
 from typing import List
 
 from translator import BaseTranslator
+from translator.segmenter import segment
 
 logging.config.fileConfig("logging.conf")
 
@@ -16,11 +17,22 @@ class SoftCatalaTranslator(BaseTranslator):
     def detokenize(self, content: str) -> str:
         return self.tokenizer.decode(content).replace("▁", " ").strip()
 
-    def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
+    def translate(self, src_lang: str, tgt_lang: str, text: str) -> str:
         """
-        Translate the text from source lang to target lang
+        Translates text from source language to target language using a machine translation model.
+
+        Args:
+        - src_lang: A string representing the source language of the input text.
+          Must be a valid language code.
+        - tgt_lang: A string representing the target language for the translation output.
+          Must be a valid language code.
+        - text: A string representing the input text to be translated.
+
+        Returns:
+        - A string representing the translated text in the target language.
         """
-        translation: List[str] = []
+        sentences: List[str] = segment(src_lang, text)
+        translated_sentences: List[str] = []
         sentences_tokenized: List[str] = []
 
         for sentence in sentences:
@@ -38,5 +50,6 @@ class SoftCatalaTranslator(BaseTranslator):
         for result in results:
             translated_sentence = self.detokenize(result.hypotheses[0])
             translated_sentence = self.postprocess(tgt_lang, translated_sentence)
-            translation.append(translated_sentence)
-        return translation
+            translated_sentences.append(translated_sentence)
+
+        return self.compose_text(sentences, translated_sentences)
