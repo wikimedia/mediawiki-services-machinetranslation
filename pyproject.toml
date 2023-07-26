@@ -49,4 +49,4 @@ ignore = [
 ]
 
 [project.scripts]
-mint = "translator:main"
+mint = "translator.models:main"

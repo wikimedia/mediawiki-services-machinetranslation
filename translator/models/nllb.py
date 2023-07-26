@@ -2,13 +2,12 @@ import logging
 import logging.config
 from typing import List
 
-from translator import BaseTranslator, languages
-from translator.segmenter import segment
+from translator.models import BaseModel, languages
 
 logging.config.fileConfig("logging.conf")
 
 
-class NLLBTranslator(BaseTranslator):
+class NLLBModel(BaseModel):
     MODEL = "nllb200-600M"
 
     def tokenize(self, src_lang: str, tgt_lang: str, content):
@@ -23,7 +22,7 @@ class NLLBTranslator(BaseTranslator):
     def get_target_prefixes(self, tgt_lang: str):
         return [languages.get_wikicode_from_nllb(tgt_lang)]
 
-    def translate(self, src_lang: str, tgt_lang: str, text: str) -> str:
+    def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """
         Translates text from source language to target language using a machine translation model.
 
@@ -32,12 +31,11 @@ class NLLBTranslator(BaseTranslator):
           Must be a valid language code.
         - tgt_lang: A string representing the target language for the translation output.
           Must be a valid language code.
-        - text: A string representing the input text to be translated.
+        - sentences: List of sentences to be translated.
 
         Returns:
-        - A string representing the translated text in the target language.
+        - List of translated sentences.
         """
-        sentences: List[str] = segment(src_lang, text)
         sentences_tokenized = []
         translated_sentences: List[str] = []
         target_prefixes = []
@@ -63,10 +61,10 @@ class NLLBTranslator(BaseTranslator):
             translated_sentence = self.postprocess(tgt_lang, translated_sentence)
             translated_sentences.append(translated_sentence)
 
-        return self.compose_text(sentences, translated_sentences)
+        return translated_sentences
 
 
-class NLLBWikipediaTranslator(NLLBTranslator):
+class NLLBWikipediaModel(NLLBModel):
     MODEL = "nllb-wikipedia"
 
     def get_target_prefixes(self, tgt_lang: str):

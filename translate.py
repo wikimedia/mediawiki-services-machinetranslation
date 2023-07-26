@@ -8,7 +8,8 @@ import statsd
 import yaml
 from flask import Flask, abort, jsonify, render_template, request
 
-from translator import TranslatorConfig, TranslatorFactory
+from translator import PlainTextTranslator
+from translator.models import ModelConfig, ModelFactory
 
 logging.config.fileConfig("logging.conf")
 
@@ -28,7 +29,7 @@ except Exception:
 
 
 app = Flask(__name__)
-config = TranslatorConfig()
+config = ModelConfig()
 
 
 def get_languages() -> dict:
@@ -69,7 +70,7 @@ def list_languages():
 def health():
     test_from = "en"
     test_to = "ig"
-    translator = TranslatorFactory(config, test_from, test_to)
+    translator = ModelFactory(config, test_from, test_to)
     translation = translator.translate(test_from, test_to, ["health"])
     return "" if len(translation) and len(translation[0]) else False
 
@@ -83,16 +84,10 @@ def translate_handler(source_lang, target_lang):
             description="Request too large to handle. Maximum 10000 characters are supported.",
         )
 
-    translator = TranslatorFactory(config, source_lang, target_lang)
-
-    if not translator:
-        abort(
-            400,
-            description="Could not find translator for the given language pair.",
-        )
+    translator = PlainTextTranslator(config, source_lang, target_lang)
 
     start = time.time()
-    translation = translator.translate(source_lang, target_lang, text)
+    translation = translator.translate(text)
     end = time.time()
     translationtime = end - start
     if statsd_client:
@@ -104,7 +99,7 @@ def translate_handler(source_lang, target_lang):
         translationtime=translationtime,
         sourcelanguage=source_lang,
         targetlanguage=target_lang,
-        model=translator.MODEL,
+        model=translator.model_name,
     )
 
 
