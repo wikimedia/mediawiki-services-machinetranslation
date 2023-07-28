@@ -20,7 +20,12 @@ function doTranslate() {
     document.getElementById('progress').style.display = "block";
     const from = document.getElementById('source_lang').value;
     const to = document.getElementById('target_lang').value;
-    const text = document.getElementById('source_content').value;
+    let text;
+    if (mint_format=='html'){
+        text = document.getElementById('source_content').innerHTML;
+    }else{
+        text = document.getElementById('source_content').value;
+    }
     document.getElementById('status').innerText = '';
     fetch(`/api/translate/${from}/${to}`, {
         method: 'POST',
@@ -28,11 +33,23 @@ function doTranslate() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            text
+            [mint_format]:text
         })
     }).then(response => response.json())
         .then(result => {
-            document.getElementById('target_content').textContent = result.translation
+            if (mint_format=='html'){
+                document.getElementById('target_content').innerHTML= result.translation.trim()
+            }
+            else if (mint_format=='webpage'){
+                const downloadLink = document.createElement('a')
+                downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(result.translation));
+                downloadLink.setAttribute('download', 'translation.html');
+                downloadLink.textContent = 'Download';
+                document.getElementById('results').appendChild(downloadLink)
+            }
+            else{
+                document.getElementById('target_content').textContent = result.translation
+            }
             document.getElementById('progress').style.display = "none";
             document.getElementById('status').innerText = `Translated in ${result.translationtime.toFixed(2)} seconds by ${result.model} model`
         })
