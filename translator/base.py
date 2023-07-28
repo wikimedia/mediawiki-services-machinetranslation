@@ -2,13 +2,39 @@ from __future__ import annotations
 
 import logging
 import logging.config
+from dataclasses import dataclass
+from typing import List, Optional
 
 from translator.models import BaseModel, ModelFactory, ModelNotFoundException
 
 logging.config.fileConfig("logging.conf")
 
 
-class BaseTranslator:
+@dataclass
+class TranslatorMeta:
+    name: str
+    format: str
+    description: str
+
+    def __str__(self) -> str:
+        return f"{self.name}: {self.description}"
+
+
+class TranslatorRegistry(type):
+    translators: List[type] = []
+
+    def __init__(cls, name, bases, attrs):
+        if name != "BaseTranslator":
+            TranslatorRegistry.translators.append(cls)
+
+    @classmethod
+    def get_translators(self):
+        return self.translators
+
+
+class BaseTranslator(object, metaclass=TranslatorRegistry):
+    meta: Optional[TranslatorMeta] = None
+
     def __init__(self, config, source_lang, target_lang):
         self.config = config
         self.source_lang = source_lang

@@ -2,6 +2,7 @@ import logging
 import logging.config
 import multiprocessing
 import os
+from math import ceil
 from typing import List
 
 from ctranslate2 import Translator
@@ -72,6 +73,28 @@ class BaseModel:
 
     def postprocess(self, tgt_lang, text) -> str:
         return normalize(tgt_lang, text)
+
+    def batch_translate(
+        self, src_lang: str, tgt_lang: str, sentences: List[str], batch_size=100
+    ) -> List[str]:
+        num_batches = ceil(len(sentences) / batch_size)  # Calculate the number of batches
+
+        translated_sentences = []
+
+        for i in range(num_batches):
+            start = i * batch_size
+            end = (i + 1) * batch_size
+
+            batch = sentences[start:end]  # Get a batch of sentences
+
+            batch_translations = self.translate(
+                src_lang, tgt_lang, batch
+            )  # Translate the batch of sentences
+
+            # Append the translated sentences to the result list
+            translated_sentences.extend(batch_translations)
+
+        return translated_sentences
 
 
 class ModelNotFoundException(Exception):

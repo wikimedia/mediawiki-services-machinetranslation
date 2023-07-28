@@ -8,6 +8,7 @@ classifiers = ["Private :: Do Not Upload"]
 version = "0"
 requires-python = ">=3.9"
 dependencies = [
+    "beautifulsoup4",
     "ctranslate2",
     "sentencepiece",
     "Flask",
@@ -18,6 +19,8 @@ dependencies = [
     "locust",
     "pycld2",
     "indic-nlp-library",
+    "markdown",
+    "markdownify",
 ]
 
 [project.optional-dependencies]

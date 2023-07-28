@@ -5,12 +5,16 @@ import logging
 import logging.config
 from typing import Dict
 
-from translator import BaseTranslator, InvalidContentException
+from translator import BaseTranslator, InvalidContentException, TranslatorMeta
 
 logging.config.fileConfig("logging.conf")
 
 
 class JSONTranslator(BaseTranslator):
+    meta = TranslatorMeta(
+        name="JSONTranslator", format="json", description="Translate json content"
+    )
+
     def __init__(self, config, source_lang, target_lang):
         super().__init__(config, source_lang, target_lang)
         self.translatables: Dict[str, str] = {}
