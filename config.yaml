@@ -209,7 +209,6 @@ languages:
     - en: indictrans2-indic-en
   en:
     - as: indictrans2-en-indic
-    - as: nllb-wikipedia
     - ast: nllb-wikipedia
     - ay: nllb-wikipedia
     - ba: nllb-wikipedia
