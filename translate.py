@@ -8,7 +8,7 @@ import statsd
 import yaml
 from flask import Flask, abort, jsonify, render_template, request
 
-from translator import PlainTextTranslator
+from translator import TranslatorRegistry
 from translator.models import ModelConfig, ModelFactory
 
 logging.config.fileConfig("logging.conf")
@@ -30,15 +30,28 @@ except Exception:
 
 app = Flask(__name__)
 config = ModelConfig()
+translator_classes = TranslatorRegistry.get_translators()
+# Supported formats
+formats = [translator_class.meta.format for translator_class in translator_classes]
 
 
 def get_languages() -> dict:
     return config.get_all_languages()
 
 
-@app.route("/", defaults={"path": ""})
-def index(path):
-    return render_template("index.html", languages=get_languages())
+@app.route("/")
+def index():
+    return render_template("index.html", format="text", formats=formats, languages=get_languages())
+
+
+@app.route("/<string:format>")
+def format_page(format: str):
+    if format in formats:
+        return render_template(
+            "index.html", format=format, formats=formats, languages=get_languages()
+        )
+    else:
+        abort(404)
 
 
 @app.before_request
@@ -77,17 +90,34 @@ def health():
 
 @app.route("/api/translate/<source_lang>/<target_lang>", methods=["POST"])
 def translate_handler(source_lang, target_lang):
-    text = request.json.get("text")
-    if len(text) > 10000:
+    content = None
+    translator_class = None
+    for format in formats:
+        if format in request.json:
+            translators = [
+                translator_class
+                for translator_class in translator_classes
+                if translator_class.meta.format == format
+            ]
+            if len(translators):
+                translator_class = translators[0]
+                content = request.json.get(format)
+                break
+    if not translator_class:
+        abort(
+            413,
+            description="No translator found for the passed content",
+        )
+
+    if len(content) > 10000:
         abort(
             413,
             description="Request too large to handle. Maximum 10000 characters are supported.",
         )
 
-    translator = PlainTextTranslator(config, source_lang, target_lang)
-
+    translator = translator_class(config, source_lang, target_lang)
     start = time.time()
-    translation = translator.translate(text)
+    translation = translator.translate(content)
     end = time.time()
     translationtime = end - start
     if statsd_client:

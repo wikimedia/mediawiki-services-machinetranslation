@@ -35,6 +35,16 @@ header {
   padding: 1em;
 }
 
+nav {
+  grid-area: header;
+  padding: 1em;
+}
+
+nav > a {
+  font-size: 1.2em;
+  padding-right: 1em;
+}
+
 a {
   color: var(--primary-color);
 }
@@ -76,10 +86,21 @@ textarea {
   grid-template-rows: auto 1fr auto;
 }
 
-#source_content {
+input#source_content {
+  height: 3em;
+  grid-column: span 2;
+}
+
+
+textarea#source_content {
   height: 50vh;
 }
 
+#source_url {
+  grid-column: span 2;
+}
+
+#source_url,
 #source_content,
 #target_content {
   padding: 1em;
@@ -111,4 +132,8 @@ progress {
   width: 100%;
   display: none;
   min-width: 50%;
+}
+
+.text-monospace {
+  font-family: monospace;
 }
