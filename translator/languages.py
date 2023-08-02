@@ -81,7 +81,7 @@ WIKI2NLLBCODES = {
     "it": "ita_Latn",
     "ja": "jpn_Jpan",
     "jv": "jav_Latn",
-    "kab": "kab_Latn", # Kabyle
+    "kab": "kab_Latn",  # Kabyle
     "kac": "kac_Latn",
     "ka": "kat_Geor",
     "kam": "kam_Latn",
