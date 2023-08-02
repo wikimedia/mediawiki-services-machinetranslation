@@ -1,7 +1,7 @@
 import fileinput
 from argparse import ArgumentParser
 
-from translator import TranslatorConfig, TranslatorFactory
+from translator.models import ModelConfig, ModelFactory
 
 if __name__ == "__main__":
     parser = ArgumentParser(prog="mint", description="Translate text between any languages")
@@ -15,8 +15,8 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
 
-    config = TranslatorConfig()
-    translator = TranslatorFactory(config, args.source, args.target)
+    config = ModelConfig()
+    translator = ModelFactory(config, args.source, args.target)
     for text in fileinput.input(files=args.files):
         translation = translator.translate(args.source, args.target, text)
         print(translation)

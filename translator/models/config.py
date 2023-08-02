@@ -1,7 +1,7 @@
 import yaml
 
 
-class TranslatorConfig:
+class ModelConfig:
     def __init__(self):
         self.models = None
         self.config = None

@@ -11,9 +11,9 @@ abbreviations = [
     "Mr",
     "Ms",
     "Mrs",
-    "ശ്രീ", # Formal addressing - male
-    "ശ്രീമതി", # Formal addressing - female
-    "ബഹു", # Respected
+    "ശ്രീ",  # Formal addressing - male
+    "ശ്രീമതി",  # Formal addressing - female
+    "ബഹു",  # Respected
     # Transliteration of English alphabets
     "എ",
     "ബി",

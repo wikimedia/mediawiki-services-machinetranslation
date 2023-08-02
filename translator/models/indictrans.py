@@ -4,13 +4,12 @@ from typing import List
 
 from indicnlp.transliterate import unicode_transliterate
 
-from translator import BaseTranslator, languages
-from translator.segmenter import segment
+from translator.models import BaseModel, languages
 
 logging.config.fileConfig("logging.conf")
 
 
-class IndicTransTranslator(BaseTranslator):
+class IndicTransModel(BaseModel):
     MODEL = "indictrans2-en-indic"
 
     def __init__(self, config):
@@ -32,7 +31,7 @@ class IndicTransTranslator(BaseTranslator):
     def transliterate_from_devanagari(self, sentence: str, tgt_lang) -> str:
         return self.transliterator.transliterate(sentence, "hi", tgt_lang)
 
-    def translate(self, src_lang: str, tgt_lang: str, text: str) -> str:
+    def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """
         Translates text from source language to target language using a machine translation model.
 
@@ -41,12 +40,12 @@ class IndicTransTranslator(BaseTranslator):
           Must be a valid language code.
         - tgt_lang: A string representing the target language for the translation output.
           Must be a valid language code.
-        - text: A string representing the input text to be translated.
+        - sentences: List of sentences to be translated.
 
         Returns:
-        - A string representing the translated text in the target language.
+        - List of translated sentences.
         """
-        sentences: List[str] = segment(src_lang, text)
+
         sentences_tokenized: List[str] = []
         translated_sentences: List[str] = []
 
@@ -75,12 +74,12 @@ class IndicTransTranslator(BaseTranslator):
             translated_sentence = self.postprocess(tgt_lang, translated_sentence)
             translated_sentences.append(translated_sentence)
 
-        return self.compose_text(sentences, translated_sentences)
+        return translated_sentences
 
 
-class IndicEnTransTranslator(IndicTransTranslator):
+class IndicEnTransModel(IndicTransModel):
     MODEL = "indictrans2-indic-en"
 
 
-class EnIndicTransTranslator(IndicTransTranslator):
+class EnIndicTransModel(IndicTransModel):
     MODEL = "indictrans2-en-indic"

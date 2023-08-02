@@ -2,14 +2,13 @@ import logging
 import logging.config
 from typing import List
 
-from translator import BaseTranslator
-from translator.segmenter import segment
+from translator.models import BaseModel
 
 logging.config.fileConfig("logging.conf")
 
 
-class SoftCatalaTranslator(BaseTranslator):
-    MODEL = "softcatala"
+class OpusModel(BaseModel):
+    MODEL = "opusmt"
 
     def tokenize(self, src_lang: str, tgt_lang: str, content):
         return self.tokenizer.encode(content, out_type=str)
@@ -17,7 +16,7 @@ class SoftCatalaTranslator(BaseTranslator):
     def detokenize(self, content: str) -> str:
         return self.tokenizer.decode(content).replace("▁", " ").strip()
 
-    def translate(self, src_lang: str, tgt_lang: str, text: str) -> str:
+    def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """
         Translates text from source language to target language using a machine translation model.
 
@@ -26,12 +25,11 @@ class SoftCatalaTranslator(BaseTranslator):
           Must be a valid language code.
         - tgt_lang: A string representing the target language for the translation output.
           Must be a valid language code.
-        - text: A string representing the input text to be translated.
+        - sentences: List of sentences to be translated.
 
         Returns:
-        - A string representing the translated text in the target language.
+        - List of translated sentences.
         """
-        sentences: List[str] = segment(src_lang, text)
         translated_sentences: List[str] = []
         sentences_tokenized: List[str] = []
 
@@ -45,11 +43,12 @@ class SoftCatalaTranslator(BaseTranslator):
             batch_type="tokens",
             max_batch_size=1024,
             beam_size=1,
+            repetition_penalty=2,
         )
 
         for result in results:
-            translated_sentence = self.detokenize(result.hypotheses[0])
+            translated_sentence = self.detokenize(result.hypotheses[0][1:])
             translated_sentence = self.postprocess(tgt_lang, translated_sentence)
             translated_sentences.append(translated_sentence)
 
-        return self.compose_text(sentences, translated_sentences)
+        return translated_sentences
