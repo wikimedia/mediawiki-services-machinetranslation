@@ -39,3 +39,8 @@ class BaseTranslator:
     @property
     def model_name(self) -> str:
         return self.translation_model.MODEL
+
+
+class InvalidContentException(Exception):
+    "Raised when content is not in expected format"
+    pass

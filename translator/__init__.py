@@ -1,4 +1,5 @@
-from .base import BaseTranslator
+from .base import BaseTranslator, InvalidContentException
+from .json import JSONTranslator
 from .plaintext import PlainTextTranslator
 
-__all__ = ["BaseTranslator", "PlainTextTranslator"]
+__all__ = ["BaseTranslator", "PlainTextTranslator", "JSONTranslator", "InvalidContentException"]
