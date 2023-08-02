@@ -23,7 +23,9 @@ function doTranslate() {
     let text;
     if (mint_format=='html'){
         text = document.getElementById('source_content').innerHTML;
-    }else{
+    }else if (mint_format=='svg'){
+        text = document.getElementById('source_content').innerHTML;
+    } else{
         text = document.getElementById('source_content').value;
     }
     document.getElementById('status').innerText = '';
@@ -37,6 +39,7 @@ function doTranslate() {
         })
     }).then(response => response.json())
         .then(result => {
+            document.getElementById('target_content').setAttribute("lang", to)
             if (mint_format=='html'){
                 document.getElementById('target_content').innerHTML= result.translation.trim()
             }
@@ -46,8 +49,9 @@ function doTranslate() {
                 downloadLink.setAttribute('download', 'translation.html');
                 downloadLink.textContent = 'Download';
                 document.getElementById('results').appendChild(downloadLink)
-            }
-            else{
+            }else if (mint_format=='svg'){
+                document.getElementById('target_content').innerHTML= result.translation.trim()
+            } else{
                 document.getElementById('target_content').textContent = result.translation
             }
             document.getElementById('progress').style.display = "none";

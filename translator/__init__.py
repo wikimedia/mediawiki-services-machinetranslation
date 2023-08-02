@@ -3,6 +3,7 @@ from .html import HTMLTranslator
 from .json import JSONTranslator
 from .markdown import MarkdownTranslator
 from .plaintext import PlainTextTranslator
+from .svg import SVGTranslator
 from .webpage import WebPageTranslator
 
 __all__ = [
@@ -14,5 +15,6 @@ __all__ = [
     "JSONTranslator",
     "MarkdownTranslator",
     "InvalidContentException",
+    "SVGTranslator",
     "WebPageTranslator",
 ]

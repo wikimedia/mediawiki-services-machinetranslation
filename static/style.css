@@ -137,3 +137,8 @@ progress {
 .text-monospace {
   font-family: monospace;
 }
+
+svg {
+  background-color: white;
+
+}
