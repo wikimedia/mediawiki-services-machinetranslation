@@ -4,13 +4,17 @@ import logging
 import logging.config
 from typing import List
 
-from translator import BaseTranslator
+from translator import BaseTranslator, TranslatorMeta
 from translator.segmenter import segment
 
 logging.config.fileConfig("logging.conf")
 
 
 class PlainTextTranslator(BaseTranslator):
+    meta = TranslatorMeta(
+        name="PlainTextTranslator", format="text", description="Translate plain text content"
+    )
+
     def translate(self, text: str) -> str:
         """
         Translates text from source language to target language using a machine translation model.
