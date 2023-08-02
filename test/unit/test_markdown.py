@@ -6,9 +6,9 @@ from translator import MarkdownTranslator
 
 config = {}
 with patch.object(
-    MarkdownTranslator, 'getModel', return_value=ReverseTransModel(config)
+    MarkdownTranslator, "getModel", return_value=ReverseTransModel(config)
 ) as mock_method:
-    translator = MarkdownTranslator(config, 'en', 'reverse')
+    translator = MarkdownTranslator(config, "en", "reverse")
 
 testmd = """# Introduction
 
@@ -25,6 +25,7 @@ translated_md = """# Introduction.
  [extinct.](./Extinction "Extinction") an is **dodo.** The.
 
 """
+
 
 def test_translator():
     translation = translator.translate(testmd)
