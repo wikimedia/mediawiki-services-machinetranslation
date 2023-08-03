@@ -22,7 +22,7 @@ test_svg = """
 translated_svg = """
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"\
  viewBox="0 0 240 80">
-  <text x="20" y="35" class="small">grumpy! is cat My.</text>
+  <text x="20" y="35" class="small">grumpy! is cat My</text>
   <path id="my_path" d="M 20,20 C 40,40 80,40 100,20" />
   <text>
     <textPath xlink:href="#my_path">curve a follows text This.</textPath>

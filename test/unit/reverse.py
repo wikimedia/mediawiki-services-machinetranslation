@@ -32,7 +32,9 @@ class ReverseTransModel(BaseModel):
         translated_sentences: List[str] = []
         for sentence in sentences:
             words: List[str] = re.split(r"[\s]+", sentence.strip(". "))
-            translation = words[::-1]
-            translated_sentences.append(" ".join(translation) + ".")
+            translation = " ".join(words[::-1])
+            if "." in sentence:
+                translation += "."
+            translated_sentences.append(translation)
 
         return translated_sentences

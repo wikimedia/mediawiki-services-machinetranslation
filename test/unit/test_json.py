@@ -20,9 +20,9 @@ biryani = {
 
 biryani_reverse = {
     "id": 1,
-    "title": "Biryani Chicken.",
-    "description": "dish rice and chicken savory a is Biryani Chicken.",
-    "ingredients": ["oil Vegetable.", "Garlic.", "Ginger.", "Rice."],
+    "title": "Biryani Chicken",
+    "description": "dish rice and chicken savory a is Biryani Chicken",
+    "ingredients": ["oil Vegetable", "Garlic", "Ginger", "Rice"],
 }
 
 

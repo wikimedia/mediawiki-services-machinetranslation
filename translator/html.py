@@ -2,9 +2,11 @@
 
 import logging
 import logging.config
+import re
 from typing import Dict, List, Tuple
 
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString, PageElement
+from Levenshtein import distance
 
 from translator import BaseTranslator, TranslatorMeta
 from translator.segmenter import segment
@@ -12,6 +14,60 @@ from translator.segmenter import segment
 logging.config.fileConfig("logging.conf")
 
 WORD_STOPS = " !\"#$%&'()*+,-./:;<=>?@\\^_`|~"
+# Non Translatable tags. Do not traverse through the child nodes of these nodes.
+NON_TRANSLATABLE_TAGS = [
+    "head",
+    "script",
+    "style",
+    "link",
+    "sup",
+    "acronym",
+    "abbrev",
+    "address",
+    "area",
+    "audio",
+    "base",
+    "bdi",
+    "bdo",
+    "br",
+    "hr",
+    "canvas",
+    "code",
+    "data",
+    "datalist",
+    "embed",
+    "iframe",
+    "img",
+    "ins",
+    "kbd",
+    "meter",
+    "noscript",
+    "template",
+    "slot",
+]
+
+
+def ngram(sentence: str, n: int) -> List[str]:
+    """
+    Returns a list of n-grams (contiguous sublists of length n) from the sentence.
+
+    Parameters:
+    sentence (str): The input sentence
+    n (int): The length of the n-grams
+
+    Returns:
+    list: The list of n-grams
+    """
+
+    # Split the sentence into individual words
+    # NOTE: This works only for languages that use space as word seperator
+    # For other languages, this method has no effect
+    words = sentence.split()
+
+    # Create n-grams by iterating over the words list and selecting sublists of length n
+    ngrams = [words[i : i + n] for i in range(len(words) - n + 1)]
+
+    return ngrams
 
 
 def fuzzy_find(text, key, search_start=0) -> Tuple[int, str]:
@@ -24,36 +80,78 @@ def fuzzy_find(text, key, search_start=0) -> Tuple[int, str]:
         search_start (int): The index to start the search from in the text. Defaults to 0.
 
     Returns:
-        Tuple[int, str]: A tuple containing the start index of the
-        fuzzy match and the matched substring,
-        or (-1, None) if no match is found.
+        Tuple[str, int, int]: A tuple containing the matched substring, the start index of the
+        fuzzy match and end index of fuzzy match,
+        or (None, -1, -1) if no match is found.
 
     """
+    # Quick test
+    if key.strip().lower() == text.strip().lower():
+        return (key, 0, len(key))
 
-    key = key.strip()
-    context = text[search_start:]
+    key = key.strip().lower()
+    context = text[search_start:].lower()
+
     if not len(key):
-        return (-1, None)
+        # logging.debug(f"Error: Could not locate [{key}] in [{context}]")
+        return (None, -1, -1)
 
-    candidates = [
-        key,  # Exact match
-        key.lower(),  # Lower case
-        key[0].lower() + key[1:],  # lower case the first letter and the rest
-        key[:-1],  # Suffix inflection at last letter
-        key[:-2],  # Suffix inflection at last two letters
-    ]
+    candidates = [key]
+
+    number_of_words_in_key = len(key.split())
+    score_cutoff = 3
+    # Find all ngrams in the text where n = number_of_words_in_key
+    ngram_words: List[str]
+    for ngram_words in ngram(context, number_of_words_in_key):
+        phrase = " ".join(ngram_words)
+        if distance(phrase, key, score_cutoff=score_cutoff) < score_cutoff:
+            candidates.append(phrase)
 
     for candidate in candidates:
         start = search_start + context.find(candidate)
         end = start + len(candidate)
         if start >= 0:
+            if end == len(text):
+                return (text[start:], start, end)
+
             for i in range(end, len(text)):
                 # Find nearest space or terminators
                 if text[i] in WORD_STOPS:
                     selection = text[start:i]
-                    return (start, selection)
+                    return (selection, start, i)
 
-    return (-1, None)
+    # print(f"Error: Could not locate [{key}] in [{context}]")
+    return (None, -1, -1)
+
+
+def is_leaf_node(node):
+    """
+    Check if a given BeautifulSoup node is a leaf node,
+    i.e., it does not have any further child nodes.
+
+    Parameters:
+    node (Tag or NavigableString): The BeautifulSoup node to check
+
+    Returns:
+    bool: True if the node is a leaf node, False otherwise
+    """
+
+    # Check if the node only contains a single NavigableString object, indicating it is a leaf node
+    if len(node.contents) == 1 and isinstance(node.contents[0], NavigableString):
+        return True
+
+    countable_nodes = []
+    for child_node in node.contents:
+        if child_node.get_text() == "\n":  # Skip newline characters
+            continue
+        countable_nodes.append(child_node)
+
+    # Check if the remaining countable nodes are all NavigableString objects,
+    # indicating it is a leaf node
+    if len(countable_nodes) == 1 and isinstance(countable_nodes[0], NavigableString):
+        return True
+
+    return False
 
 
 class HTMLTranslator(BaseTranslator):
@@ -77,83 +175,97 @@ class HTMLTranslator(BaseTranslator):
         Returns:
         - Translated Json in string format
         """
-
-        # Extract all translatables
         doc: BeautifulSoup = BeautifulSoup(html, "html.parser")
+        if doc.find("body"):
+            # If the content is a full webpage with body, just translate body.
+            # to skip other parts of page.
+            self.translate_node(doc.find("body"))
+        else:
+            self.translate_node(doc)
+        return str(doc)
+
+    def translate_node(self, doc: BeautifulSoup) -> None:
+        # Extract all translatables
         self.traverse(doc, mode="extract")
         sentences = list(self.translatables.keys())
-        # sentences = sentences[0:100]
-        # [print(sentence) for sentence in sentences]
         translated_sentences = self.translation_model.batch_translate(
             self.source_lang, self.target_lang, sentences
         )
         self.translatables = dict(zip(sentences, translated_sentences))
         # Now apply the translation on same json object
-        translated_doc = self.traverse(doc, mode="apply")
-        return str(translated_doc)
+        self.traverse(doc, mode="apply")
 
-    def traverse(self, doc: BeautifulSoup, mode="extract"):
+    def traverse(self, doc: BeautifulSoup, mode="extract") -> None:
         extract_mode: bool = mode == "extract"
-        inline_tags = "a, b, strong, i, u, sup, mark, span, small, em, td"
-        # apply_mode: bool = mode == "apply"
-        for heading in doc.css.select("h1, h2, h3, h4, h5, h6"):
-            text = heading.get_text()
-            if extract_mode:
-                self.translatables[text] = text
-            else:
-                heading.string = self.get_translation(text)
 
-        for block in doc.css.select("p, li, option, label"):
-            text = block.get_text()
-            sentences = segment(self.source_lang, text)
-            p_children = block.css.select(inline_tags)
-            if extract_mode:
-                [self.add_to_translatables(sentence) for sentence in sentences]
-            else:
-                p_translation: str = " ".join(
-                    [self.get_translation(sentence) for sentence in sentences]
-                )
-                for p_child in p_children:
-                    search_start = 0
-                    p_child_text = p_child.get_text()
-                    # Locate its translation in paragraph_translation
-                    p_child_translation = self.get_translation(p_child_text)
+        if not self.is_translatable(doc):
+            return
 
-                    if not len(p_child_translation):
-                        continue
-
-                    (p_child_translation_start, match) = fuzzy_find(
-                        p_translation, p_child_translation, search_start=search_start
-                    )
-
-                    if p_child_translation_start >= search_start:
-                        p_child_translation_end = p_child_translation_start + len(match)
-                        p_child.string = match
-                        p_translation = "".join(
-                            [
-                                p_translation[:p_child_translation_start],
-                                str(p_child),
-                                p_translation[p_child_translation_end:],
-                            ]
-                        )
-                        search_start = p_child_translation_start + len(str(p_child))
-                    # else:
-                    #     print(p_child_translation)
-                block.clear()
-                block.insert(0, BeautifulSoup(p_translation, "html.parser"))
-
-        for tag in doc.css.select(inline_tags):
-            # FIXME: What will happen if the link applies
-            # to a long paragraph with multiple sentences?
-            if len(list(tag.children)) > 1:
-                continue
-            text = tag.get_text()
+        # Leaf node
+        if is_leaf_node(doc):
+            text = doc.get_text()
             if extract_mode:
                 self.add_to_translatables(text)
             else:
-                tag.string = self.get_translation(text)
+                doc.string = self.get_translation(text)
+            return doc
 
-        return doc
+        text = doc.get_text()
+        child_nodes = doc.contents
+        # Remove all child nodes that are just new lines.
+        child_nodes = [cnode for cnode in child_nodes if cnode.string != "\n"]
+        is_wrapper_node = not any(isinstance(cnode, NavigableString) for cnode in child_nodes)
+
+        if extract_mode:
+            if not is_wrapper_node:
+                self.add_to_translatables(text)
+            for node in child_nodes:
+                if isinstance(node, NavigableString):
+                    continue
+                self.traverse(node, mode)
+        else:
+            if is_wrapper_node or len(child_nodes) == 1:
+                # If the node is a wrapper for one or more non-text nodes(example: ul, ol, table),
+                # there is no need for fuzzy matching and markup fixing.
+                # Same is the case for a simple node with just one text or non-text child
+                doc_inner_content = ""
+                for cnode in child_nodes:
+                    self.traverse(cnode, mode)
+                    doc_inner_content += str(cnode)
+
+            else:
+                # Mark up fixups
+                doc_inner_content: str = self.get_translation(text)
+                for node in child_nodes:
+                    if isinstance(node, NavigableString):
+                        continue
+
+                    search_start = 0
+                    self.traverse(node, mode)
+                    node_text = node.get_text()
+                    node_html = str(node)
+
+                    # Locate node_child_text in node_translation
+                    # print("\t", doc.name, ">", node.name, ">", node_text)
+                    (match, translation_start, translation_end) = fuzzy_find(
+                        doc_inner_content, node_text, search_start=search_start
+                    )
+
+                    if translation_start < 0:
+                        continue
+
+                    doc_inner_content = "".join(
+                        [
+                            doc_inner_content[:translation_start],
+                            node_html,
+                            doc_inner_content[translation_end:],
+                        ]
+                    )
+                    search_start = translation_start + len(node_html)
+
+            doc.clear()
+            doc.insert(0, BeautifulSoup(doc_inner_content, "html.parser"))
+            # print(doc.name, "===", doc_inner_content)
 
     def add_to_translatables(self, text: str):
         text = text.strip()
@@ -161,12 +273,30 @@ class HTMLTranslator(BaseTranslator):
             return
         if text in self.translatables:
             return
-        if text.isnumeric():
+        if re.sub(r"[^\w]", "", text).isnumeric():
             return
-        self.translatables[text] = text
+        sentences = segment(self.source_lang, text)
+        if len(sentences) == 1:
+            self.translatables[sentences[0]] = sentences[0]
+        for sentence in sentences:
+            self.add_to_translatables(sentence)
 
     def get_translation(self, text: str) -> str:
-        key = text.strip()
+        text = text.strip()
         if len(text) == 0:
             return text
-        return self.translatables.get(key, text)
+
+        sentences = segment(self.source_lang, text)
+        if len(sentences) == 1:
+            return self.translatables.get(sentences[0], sentences[0])
+        return " ".join([self.get_translation(sentence) for sentence in sentences])
+
+    def is_translatable(self, node: PageElement) -> bool:
+        if node.name in NON_TRANSLATABLE_TAGS:
+            return False
+
+        classes: List[str] = node.attrs.get("class")
+        if classes and "notranslate" in classes:
+            return False
+
+        return True

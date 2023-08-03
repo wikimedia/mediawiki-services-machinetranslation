@@ -84,6 +84,8 @@ jinja2==3.1.2
     # via
     #   flask
     #   sphinx
+levenshtein==0.21.1
+    # via machinetranslation (pyproject.toml)
 locust==2.15.1
     # via machinetranslation (pyproject.toml)
 markdown==3.4.4
@@ -145,6 +147,8 @@ pyyaml==6.0
     #   machinetranslation (pyproject.toml)
 pyzmq==25.1.0
     # via locust
+rapidfuzz==3.2.0
+    # via levenshtein
 requests==2.31.0
     # via
     #   locust

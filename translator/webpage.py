@@ -18,7 +18,6 @@ class WebPageTranslator(HTMLTranslator):
     )
 
     def translate(self, url: str) -> str:
-        logging.info(f"Translating {url}")
         # Get the html content for the given URL
         response = requests.get(url)
         return super().translate(response.text)

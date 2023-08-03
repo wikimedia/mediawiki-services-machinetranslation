@@ -19,6 +19,7 @@ dependencies = [
     "locust",
     "pycld2",
     "indic-nlp-library",
+    "levenshtein",
     "markdown",
     "markdownify",
 ]

@@ -31,9 +31,7 @@ if __name__ == "__main__":
         default=sys.stdout,
         help="File to write, if empty, stdout is used",
     )
-    parser.add_argument(
-        "-u", "--url", description="URL if the translator accepts it", required=False
-    )
+    parser.add_argument("-u", "--url", help="URL if the translator accepts it", required=False)
     args = parser.parse_args()
 
     for format in formats:
@@ -50,4 +48,5 @@ if __name__ == "__main__":
             else:
                 content = args.infile.read()
             translation = translator.translate(content)
-            args.outfile.write(translation)
+            args.outfile.write("=" * 80)
+            args.outfile.write("\n" + translation + "\n")

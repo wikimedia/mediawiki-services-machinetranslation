@@ -40,18 +40,17 @@ function doTranslate() {
     }).then(response => response.json())
         .then(result => {
             document.getElementById('target_content').setAttribute("lang", to)
-            if (mint_format=='html'){
+            if (mint_format==='html'){
                 document.getElementById('target_content').innerHTML= result.translation.trim()
-            }
-            else if (mint_format=='webpage'){
+            } else if (mint_format==='webpage'){
                 const downloadLink = document.createElement('a')
                 downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(result.translation));
                 downloadLink.setAttribute('download', 'translation.html');
                 downloadLink.textContent = 'Download';
                 document.getElementById('results').appendChild(downloadLink)
-            }else if (mint_format=='svg'){
+            } else if (mint_format==='svg'){
                 document.getElementById('target_content').innerHTML= result.translation.trim()
-            } else{
+            } else {
                 document.getElementById('target_content').textContent = result.translation
             }
             document.getElementById('progress').style.display = "none";
