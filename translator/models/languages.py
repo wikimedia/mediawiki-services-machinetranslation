@@ -92,8 +92,7 @@ WIKI2NLLBCODES = {
     "kk": "kaz_Cyrl",
     "kmb": "kmb_Latn",
     "km": "khm_Khmr",
-    # "knc": "knc_Arab", Kanuri - https://kr.wikipedia.org/ - wiki closed.
-    # "knc": "knc_Latn", Kanuri - https://kr.wikipedia.org/ - wiki closed.
+    "knc": "knc_Latn",  # Kanuri (kr) WP is closed, see: T336683 for enablement
     "kn": "kan_Knda",
     "ko": "kor_Hang",
     "ks": "kas_Arab",
@@ -220,6 +219,7 @@ WIKI2ISO = {
     "ilo": "ilo",  # Iloko
     "is": "isl",  # Icelandic
     "kg": "kon",  # Kongo
+    "kr": "knc",  # Kanuri
     "ln": "lin",  # Lingala
     "lg": "lug",  # Ganda
     "nso": "nso",  # Norther Sotho
