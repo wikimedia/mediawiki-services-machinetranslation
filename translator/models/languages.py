@@ -8,7 +8,9 @@ WIKI2NLLBCODES = {
     "ajp": "ajp_Arab",
     "ak": "aka_Latn",
     "am": "amh_Ethi",
+    "apc": "apc_Arab",
     "ar": "arb_Arab",
+    "ars": "ars_Arab",
     "ary": "ary_Arab",
     "arz": "arz_Arab",
     "as": "asm_Beng",
@@ -168,8 +170,8 @@ WIKI2NLLBCODES = {
     "sv": "swe_Latn",
     "sw": "swh_Latn",
     "szl": "szl_Latn",
-    # "taq": "taq_Latn", # Taqbaylit
-    # "taq": "taq_Tfng", # Tamazight
+    "taq": "taq_Latn",  # Taqbaylit
+    # "taq": "taq_Tfng",  # Tamazight
     "ta": "tam_Taml",
     "te": "tel_Telu",
     "tg": "tgk_Cyrl",
@@ -197,7 +199,7 @@ WIKI2NLLBCODES = {
     "xh": "xho_Latn",
     "yi": "ydd_Hebr",
     "yo": "yor_Latn",
-    # "zh": "zho_Hans", # Chinese Simplified
+    # "zh": "zho_Hans",  # Chinese Simplified
     "zh": "zho_Hant",  # Chinese Traditional
     "zu": "zul_Latn",
 }
