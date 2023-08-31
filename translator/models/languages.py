@@ -110,7 +110,7 @@ WIKI2NLLBCODES = {
     "ltg": "ltg_Latn",
     "lt": "lit_Latn",
     "lua": "lua_Latn",
-    "lu": "lus_Latn",
+    "lus": "lus_Latn",
     "luo": "luo_Latn",
     "lv": "lvs_Latn",
     "mag": "mag_Deva",
@@ -224,6 +224,7 @@ WIKI2ISO = {
     "kr": "knc",  # Kanuri
     "ln": "lin",  # Lingala
     "lg": "lug",  # Ganda
+    "lu": "lus",  # Mizo
     "nso": "nso",  # Norther Sotho
     "oc": "oci",  # Occitan
     "om": "orm",  # Oromo
