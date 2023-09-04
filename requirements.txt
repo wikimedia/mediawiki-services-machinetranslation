@@ -12,7 +12,7 @@ beautifulsoup4==4.12.2
     # via
     #   machinetranslation (pyproject.toml)
     #   markdownify
-black==23.3.0
+black==23.7.0
     # via machinetranslation (pyproject.toml)
 blinker==1.6.2
     # via flask
@@ -20,37 +20,37 @@ brotli==1.0.9
     # via geventhttpclient
 cachetools==5.3.1
     # via tox
-certifi==2023.5.7
+certifi==2023.7.22
     # via
     #   geventhttpclient
     #   requests
-chardet==5.1.0
+chardet==5.2.0
     # via tox
-charset-normalizer==3.1.0
+charset-normalizer==3.2.0
     # via requests
-click==8.1.3
+click==8.1.7
     # via
     #   black
     #   flask
 colorama==0.4.6
     # via tox
-configargparse==1.5.5
+configargparse==1.7
     # via locust
-ctranslate2==3.16.1
+ctranslate2==3.19.0
     # via machinetranslation (pyproject.toml)
-distlib==0.3.6
+distlib==0.3.7
     # via virtualenv
 docutils==0.18.1
     # via
     #   sphinx
     #   sphinx-rtd-theme
-ecs-logging==2.0.2
+ecs-logging==2.1.0
     # via machinetranslation (pyproject.toml)
-filelock==3.12.2
+filelock==3.12.3
     # via
     #   tox
     #   virtualenv
-flask==2.3.2
+flask==2.3.3
     # via
     #   flask-basicauth
     #   flask-cors
@@ -60,15 +60,15 @@ flask-basicauth==0.2.0
     # via locust
 flask-cors==4.0.0
     # via locust
-gevent==22.10.2
+gevent==23.9.0.post1
     # via
     #   geventhttpclient
     #   locust
-geventhttpclient==2.0.9
+geventhttpclient==2.0.10
     # via locust
 greenlet==2.0.2
     # via gevent
-gunicorn==20.1.0
+gunicorn==21.2.0
     # via machinetranslation (pyproject.toml)
 idna==3.4
     # via requests
@@ -86,7 +86,7 @@ jinja2==3.1.2
     #   sphinx
 levenshtein==0.21.1
     # via machinetranslation (pyproject.toml)
-locust==2.15.1
+locust==2.16.1
     # via machinetranslation (pyproject.toml)
 markdown==3.4.4
     # via machinetranslation (pyproject.toml)
@@ -102,7 +102,7 @@ msgpack==1.0.5
     # via locust
 mypy-extensions==1.0.0
     # via black
-numpy==1.25.0
+numpy==1.25.2
     # via
     #   ctranslate2
     #   indic-nlp-library
@@ -110,20 +110,21 @@ numpy==1.25.0
 packaging==23.1
     # via
     #   black
+    #   gunicorn
     #   pyproject-api
     #   pytest
     #   sphinx
     #   tox
-pandas==2.0.3
+pandas==2.1.0
     # via indic-nlp-library
-pathspec==0.11.1
+pathspec==0.11.2
     # via black
-platformdirs==3.8.0
+platformdirs==3.10.0
     # via
     #   black
     #   tox
     #   virtualenv
-pluggy==1.2.0
+pluggy==1.3.0
     # via
     #   pytest
     #   tox
@@ -131,21 +132,21 @@ psutil==5.9.5
     # via locust
 pycld2==0.41
     # via machinetranslation (pyproject.toml)
-pygments==2.15.1
+pygments==2.16.1
     # via sphinx
-pyproject-api==1.5.2
+pyproject-api==1.6.1
     # via tox
-pytest==7.4.0
+pytest==7.4.1
     # via machinetranslation (pyproject.toml)
 python-dateutil==2.8.2
     # via pandas
 pytz==2023.3
     # via pandas
-pyyaml==6.0
+pyyaml==6.0.1
     # via
     #   ctranslate2
     #   machinetranslation (pyproject.toml)
-pyzmq==25.1.0
+pyzmq==25.1.1
     # via locust
 rapidfuzz==3.2.0
     # via levenshtein
@@ -155,7 +156,7 @@ requests==2.31.0
     #   sphinx
 roundrobin==0.0.4
     # via locust
-ruff==0.0.277
+ruff==0.0.287
     # via machinetranslation (pyproject.toml)
 sentencepiece==0.1.99
     # via machinetranslation (pyproject.toml)
@@ -166,44 +167,49 @@ six==1.16.0
     #   python-dateutil
 snowballstemmer==2.2.0
     # via sphinx
-soupsieve==2.4.1
+soupsieve==2.5
     # via beautifulsoup4
-sphinx==6.2.1
+sphinx==7.2.5
     # via
     #   sphinx-argparse
     #   sphinx-rtd-theme
+    #   sphinxcontrib-applehelp
+    #   sphinxcontrib-devhelp
+    #   sphinxcontrib-htmlhelp
     #   sphinxcontrib-jquery
+    #   sphinxcontrib-qthelp
+    #   sphinxcontrib-serializinghtml
 sphinx-argparse==0.4.0
     # via indic-nlp-library
-sphinx-rtd-theme==1.2.2
+sphinx-rtd-theme==1.3.0
     # via indic-nlp-library
-sphinxcontrib-applehelp==1.0.4
+sphinxcontrib-applehelp==1.0.7
     # via sphinx
-sphinxcontrib-devhelp==1.0.2
+sphinxcontrib-devhelp==1.0.5
     # via sphinx
-sphinxcontrib-htmlhelp==2.0.1
+sphinxcontrib-htmlhelp==2.0.4
     # via sphinx
 sphinxcontrib-jquery==4.1
     # via sphinx-rtd-theme
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
-sphinxcontrib-qthelp==1.0.3
+sphinxcontrib-qthelp==1.0.6
     # via sphinx
-sphinxcontrib-serializinghtml==1.1.5
+sphinxcontrib-serializinghtml==1.1.9
     # via sphinx
 statsd==4.0.1
     # via machinetranslation (pyproject.toml)
-tox==4.6.3
+tox==4.11.1
     # via machinetranslation (pyproject.toml)
 typing-extensions==4.7.1
     # via locust
 tzdata==2023.3
     # via pandas
-urllib3==2.0.3
+urllib3==2.0.4
     # via requests
-virtualenv==20.23.1
+virtualenv==20.24.4
     # via tox
-werkzeug==2.3.6
+werkzeug==2.3.7
     # via
     #   flask
     #   locust
