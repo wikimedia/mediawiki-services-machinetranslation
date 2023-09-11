@@ -15,6 +15,7 @@ class TranslatorMeta:
     name: str
     format: str
     description: str
+    character_limit: int = 10000
 
     def __str__(self) -> str:
         return f"{self.name}: {self.description}"

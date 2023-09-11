@@ -156,7 +156,10 @@ def is_leaf_node(node):
 
 class HTMLTranslator(BaseTranslator):
     meta = TranslatorMeta(
-        name="HTMLTranslator", format="html", description="Translate html content"
+        name="HTMLTranslator",
+        format="html",
+        description="Translate html content",
+        character_limit=100000,
     )
 
     def __init__(self, config, source_lang, target_lang):

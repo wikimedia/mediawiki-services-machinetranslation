@@ -109,10 +109,11 @@ def translate_handler(source_lang, target_lang):
             description="No translator found for the passed content",
         )
 
-    if len(content) > 10000:
+    char_limit = translator_class.meta.character_limit
+    if len(content) > char_limit:
         abort(
-            413,
-            description="Request too large to handle. Maximum 10000 characters are supported.",
+            413,  # Request Entity Too Large
+            description=f"Request size exceeds maximum character limit {char_limit}",
         )
 
     translator = translator_class(config, source_lang, target_lang)
