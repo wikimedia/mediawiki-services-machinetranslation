@@ -5,7 +5,7 @@ import logging.config
 import re
 from typing import Dict, List, Tuple
 
-from bs4 import BeautifulSoup, NavigableString, PageElement
+from bs4 import BeautifulSoup, NavigableString, PageElement, Tag
 from Levenshtein import distance
 
 from translator import BaseTranslator, TranslatorMeta
@@ -45,6 +45,63 @@ NON_TRANSLATABLE_TAGS = [
     "template",
     "slot",
 ]
+
+
+def is_translatable(node: PageElement) -> bool:
+    if node.name in NON_TRANSLATABLE_TAGS:
+        return False
+
+    if isinstance(node, NavigableString):
+        for parent in node.parents:
+            if not is_translatable(parent):
+                return False
+    else:
+        classes: List[str] = node.attrs.get("class")
+        if classes and "notranslate" in classes:
+            return False
+
+    return True
+
+
+class TagToTranslate(Tag):
+    def _all_strings(self, strip=False, types=PageElement.default):
+        """Yield all strings of certain classes, possibly stripping them.
+
+        :param strip: If True, all strings will be stripped before being
+            yielded.
+
+        :param types: A tuple of NavigableString subclasses. Any strings of
+            a subclass not found in this list will be ignored. By
+            default, the subclasses considered are the ones found in
+            self.interesting_string_types. If that's not specified,
+            only NavigableString and CData objects will be
+            considered. That means no comments, processing
+            instructions, etc.
+
+        :yield: A sequence of strings.
+
+        """
+        if types is self.default:
+            types = self.interesting_string_types
+
+        for descendant in self.descendants:
+            if types is None and not isinstance(descendant, NavigableString):
+                continue
+            descendant_type = type(descendant)
+            if isinstance(types, type):
+                if descendant_type is not types:
+                    # We're not interested in strings of this type.
+                    continue
+            elif not is_translatable(descendant):
+                continue
+            elif types is not None and descendant_type not in types:
+                # We're not interested in strings of this type.
+                continue
+            if strip:
+                descendant = descendant.strip()
+                if len(descendant) == 0:
+                    continue
+            yield descendant
 
 
 def ngram(sentence: str, n: int) -> List[str]:
@@ -154,6 +211,9 @@ def is_leaf_node(node):
     return False
 
 
+custom_bs4_classes = {Tag: TagToTranslate}
+
+
 class HTMLTranslator(BaseTranslator):
     meta = TranslatorMeta(
         name="HTMLTranslator",
@@ -178,7 +238,7 @@ class HTMLTranslator(BaseTranslator):
         Returns:
         - Translated Json in string format
         """
-        doc: BeautifulSoup = BeautifulSoup(html, "html.parser")
+        doc: BeautifulSoup = BeautifulSoup(html, "html.parser", element_classes=custom_bs4_classes)
         if doc.find("body"):
             # If the content is a full webpage with body, just translate body.
             # to skip other parts of page.
@@ -201,7 +261,7 @@ class HTMLTranslator(BaseTranslator):
     def traverse(self, doc: BeautifulSoup, mode="extract") -> None:
         extract_mode: bool = mode == "extract"
 
-        if not self.is_translatable(doc):
+        if not is_translatable(doc):
             return
 
         # Leaf node
@@ -239,7 +299,7 @@ class HTMLTranslator(BaseTranslator):
             else:
                 # Mark up fixups
                 doc_inner_content: str = self.get_translation(text)
-                for node in child_nodes:
+                for index, node in enumerate(child_nodes):
                     if isinstance(node, NavigableString):
                         continue
 
@@ -248,13 +308,18 @@ class HTMLTranslator(BaseTranslator):
                     node_text = node.get_text()
                     node_html = str(node)
 
-                    # Locate node_child_text in node_translation
+                    # Locate node_text in doc_inner_content
                     # print("\t", doc.name, ">", node.name, ">", node_text)
                     (match, translation_start, translation_end) = fuzzy_find(
                         doc_inner_content, node_text, search_start=search_start
                     )
 
                     if translation_start < 0:
+                        # Could not locate this node in the translation.
+                        # If this is the last node or if this is a black node, just place
+                        # it at end of doc_inner_content
+                        if index == len(child_nodes) - 1 or len(node_text.strip()) == 0:
+                            doc_inner_content += node_html
                         continue
 
                     doc_inner_content = "".join(
@@ -267,12 +332,14 @@ class HTMLTranslator(BaseTranslator):
                     search_start = translation_start + len(node_html)
 
             doc.clear()
-            doc.insert(0, BeautifulSoup(doc_inner_content, "html.parser"))
+            doc.insert(
+                0,
+                BeautifulSoup(doc_inner_content, "html.parser", element_classes=custom_bs4_classes),
+            )
             # print(doc.name, "===", doc_inner_content)
 
     def add_to_translatables(self, text: str):
-        text = text.strip()
-        if len(text) == 0:
+        if len(text.strip()) == 0:
             return
         if text in self.translatables:
             return
@@ -285,21 +352,10 @@ class HTMLTranslator(BaseTranslator):
             self.add_to_translatables(sentence)
 
     def get_translation(self, text: str) -> str:
-        text = text.strip()
-        if len(text) == 0:
+        if len(text.strip()) == 0:
             return text
 
         sentences = segment(self.source_lang, text)
         if len(sentences) == 1:
             return self.translatables.get(sentences[0], sentences[0])
         return " ".join([self.get_translation(sentence) for sentence in sentences])
-
-    def is_translatable(self, node: PageElement) -> bool:
-        if node.name in NON_TRANSLATABLE_TAGS:
-            return False
-
-        classes: List[str] = node.attrs.get("class")
-        if classes and "notranslate" in classes:
-            return False
-
-        return True

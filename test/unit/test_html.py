@@ -41,14 +41,35 @@ style="counter-reset: mw-Ref 4;">
 </section>
 """
 
+
 translated_span_with_sup_html = """<section data-mw-section-number="0" id="cxTargetSection2">\
 <p id="mwHQ"><span class="cx-segment" data-segmentid="307">\
-ESA an on 2021 December 25 launched was JWST The.   \
-<sup about="#mwt120" class="mw-ref reference" data-cx="{}" data-mw="{}" \
-id="cite_ref-about_11-0" rel="dc:references" typeof="mw:Extension/ref">\
+ESA an on 2021 December 25 launched was JWST The.<sup about="#mwt120" class="mw-ref reference" \
+data-cx="{}" data-mw="{}" id="cite_ref-about_11-0" rel="dc:references" typeof="mw:Extension/ref">
 <a href="./James_Webb_Space_Telescope#cite_note-about-11" id="mwMQ" \
-style="counter-reset: mw-Ref 4;"><span class="mw-reflink-text" id="mwMg">[4]</span>\
-</a></sup></span></p></section>"""
+style="counter-reset: mw-Ref 4;">
+<span class="mw-reflink-text" id="mwMg">[4]</span>
+</a>
+</sup></span></p></section>"""
+
+
+test_span_with_sup_html_dense_format = """\
+<section id="cxTargetSection2" data-mw-section-number="0"><p id="mwHQ"><span data-segmentid="307" \
+class="cx-segment">The JWST was launched 25 December 2021 on an ESA.<sup typeof="mw:Extension/ref" \
+data-mw="{}" class="mw-ref reference" data-cx="{}" about="#mwt120" \
+id="cite_ref-about_11-0" rel="dc:references"><a \
+href="./James_Webb_Space_Telescope#cite_note-about-11" id="mwMQ" \
+style="counter-reset: mw-Ref 4;"><span class="mw-reflink-text" id="mwMg">[4]</span> \
+</a></sup></span></p></section>
+"""
+
+translated_span_with_sup_html_dense_format = """\
+<section data-mw-section-number="0" id="cxTargetSection2"><p id="mwHQ"><span class="cx-segment" \
+data-segmentid="307">ESA an on 2021 December 25 launched was JWST The.<sup about="#mwt120" \
+class="mw-ref reference" data-cx="{}" data-mw="{}" id="cite_ref-about_11-0" rel="dc:references" \
+typeof="mw:Extension/ref"><a href="./James_Webb_Space_Telescope#cite_note-about-11" id="mwMQ" \
+style="counter-reset: mw-Ref 4;"><span class="mw-reflink-text" id="mwMg">[4]</span> </a>\
+</sup></span></p></section>"""
 
 test_list = """<div>\
 <p>Following are some examples of fruits:</p>
@@ -64,11 +85,18 @@ tests = [
     {"source": test_dodo_html, "translation": translated_dodo_html},
     {"source": test_dodo_html, "translation": translated_dodo_html},
     {"source": test_list, "translation": translated_list},
+    {"source": test_span_with_sup_html, "translation": translated_span_with_sup_html},
+    {
+        "source": test_span_with_sup_html_dense_format,
+        "translation": translated_span_with_sup_html_dense_format,
+    },
 ]
 
 
 def test_translator():
     for test in tests:
         translation = translator.translate(test["source"])
-        print(translation)
+        if not translation == test["translation"]:
+            print(test["translation"])
+            print(translation)
         assert translation == test["translation"]
