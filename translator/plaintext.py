@@ -4,8 +4,9 @@ import logging
 import logging.config
 from typing import List
 
+from sentencex import segment
+
 from translator import BaseTranslator, TranslatorMeta
-from translator.segmenter import segment
 
 logging.config.fileConfig("logging.conf")
 
@@ -25,7 +26,7 @@ class PlainTextTranslator(BaseTranslator):
         Returns:
         - A string representing the translated text in the target language.
         """
-        sentences: List[str] = segment(self.source_lang, text)
+        sentences: List[str] = list(segment(self.source_lang, text))
 
         translated_sentences = self.translation_model.translate(
             self.source_lang, self.target_lang, sentences
