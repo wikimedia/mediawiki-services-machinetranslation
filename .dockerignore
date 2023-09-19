@@ -1,1 +1,4 @@
 .venv
+models
+.git
+__pycache__
