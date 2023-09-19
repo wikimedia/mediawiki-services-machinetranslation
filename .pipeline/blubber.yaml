@@ -12,7 +12,7 @@ variants:
     python: {version: python3, requirements: [requirements.txt]}
   test:
     includes: [build]
-    entrypoint: ["tox"]
+    entrypoint: ["python3", "-m", "pytest"]
   production:
     includes: [build]
     apt: {packages: [ca-certificates]}
