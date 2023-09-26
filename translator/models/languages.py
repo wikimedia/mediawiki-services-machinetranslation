@@ -63,6 +63,7 @@ WIKI2NLLBCODES = {
     "fr": "fra_Latn",
     "fur": "fur_Latn",
     "ga": "gle_Latn",
+    "gan": "zho_Hant",
     "gd": "gla_Latn",
     "gl": "glg_Latn",
     "gn": "grn_Latn",
