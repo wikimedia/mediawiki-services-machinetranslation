@@ -11,6 +11,7 @@ dependencies = [
     "beautifulsoup4",
     "ctranslate2",
     "sentencepiece",
+    "sentencex",
     "Flask",
     "gunicorn",
     "statsd",

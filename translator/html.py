@@ -7,9 +7,9 @@ from typing import Dict, List, Tuple
 
 from bs4 import BeautifulSoup, NavigableString, PageElement, Tag
 from Levenshtein import distance
+from sentencex import segment
 
 from translator import BaseTranslator, TranslatorMeta
-from translator.segmenter import segment
 
 logging.config.fileConfig("logging.conf")
 
@@ -345,7 +345,7 @@ class HTMLTranslator(BaseTranslator):
             return
         if re.sub(r"[^\w]", "", text).isnumeric():
             return
-        sentences = segment(self.source_lang, text)
+        sentences = list(segment(self.source_lang, text))
         if len(sentences) == 1:
             self.translatables[sentences[0]] = sentences[0]
         for sentence in sentences:
@@ -355,7 +355,7 @@ class HTMLTranslator(BaseTranslator):
         if len(text.strip()) == 0:
             return text
 
-        sentences = segment(self.source_lang, text)
+        sentences = list(segment(self.source_lang, text))
         if len(sentences) == 1:
             return self.translatables.get(sentences[0], sentences[0])
         return " ".join([self.get_translation(sentence) for sentence in sentences])

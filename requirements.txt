@@ -160,6 +160,8 @@ ruff==0.0.287
     # via machinetranslation (pyproject.toml)
 sentencepiece==0.1.99
     # via machinetranslation (pyproject.toml)
+sentencex==0.4.0
+    # via machinetranslation (pyproject.toml)
 six==1.16.0
     # via
     #   geventhttpclient

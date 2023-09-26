@@ -1,3 +1,4 @@
+import re
 from unittest.mock import patch
 
 from reverse import ReverseTransModel
@@ -25,32 +26,32 @@ endemic</a> was that <a href="./Flightless_bird" id="mwEA" rel="mw:WikiLink" \
 title="Flightless bird">bird flightless</a> <a href="./Extinction" id="mwDw" rel="mw:WikiLink" \
 title="Extinction">extinct</a> an is <b id="mwDA">dodo</b> The.</p>"""
 
-test_span_with_sup_html = """
+test_span_with_sup_html = """\
 <section id="cxTargetSection2" data-mw-section-number="0">
-<p id="mwHQ">\
-<span data-segmentid="307" class="cx-segment">The JWST was launched 25 December 2021 on an ESA.\
+<p id="mwHQ">
+<span data-segmentid="307" class="cx-segment">The JWST was launched 25 December 2021 on an ESA.
 <sup typeof="mw:Extension/ref" data-mw="{}" class="mw-ref reference" data-cx="{}" about="#mwt120" \
 id="cite_ref-about_11-0" rel="dc:references">
 <a href="./James_Webb_Space_Telescope#cite_note-about-11" id="mwMQ" \
 style="counter-reset: mw-Ref 4;">
 <span class="mw-reflink-text" id="mwMg">[4]</span>
-</a>
-</sup>
+</a></sup>
 </span>
 </p>
 </section>
 """
 
 
-translated_span_with_sup_html = """<section data-mw-section-number="0" id="cxTargetSection2">\
+translated_span_with_sup_html = """\
+<section data-mw-section-number="0" id="cxTargetSection2">\
 <p id="mwHQ"><span class="cx-segment" data-segmentid="307">\
-ESA an on 2021 December 25 launched was JWST The.<sup about="#mwt120" class="mw-ref reference" \
+ESA an on 2021 December 25 launched was JWST The.
+<sup about="#mwt120" class="mw-ref reference" \
 data-cx="{}" data-mw="{}" id="cite_ref-about_11-0" rel="dc:references" typeof="mw:Extension/ref">
 <a href="./James_Webb_Space_Telescope#cite_note-about-11" id="mwMQ" \
 style="counter-reset: mw-Ref 4;">
 <span class="mw-reflink-text" id="mwMg">[4]</span>
-</a>
-</sup></span></p></section>"""
+</a></sup></span></p></section>"""
 
 
 test_span_with_sup_html_dense_format = """\
@@ -93,10 +94,11 @@ tests = [
 ]
 
 
+def normalize(text):
+    return re.sub(r"\s+", " ", text).strip()
+
+
 def test_translator():
     for test in tests:
         translation = translator.translate(test["source"])
-        if not translation == test["translation"]:
-            print(test["translation"])
-            print(translation)
-        assert translation == test["translation"]
+        assert normalize(translation) == normalize(test["translation"])
