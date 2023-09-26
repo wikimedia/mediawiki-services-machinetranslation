@@ -63,17 +63,22 @@ function listSupportedTargetLanguages(sourceLang, allPairs) {
     const currentSelection = tgt_selector.value || 'es';
     tgt_selector.innerHTML = '';
     const targetLangs = allPairs[sourceLang];
-    for (lang in targetLangs) {
-        const nameGenerator = new Intl.DisplayNames('en', { type: 'language' });
-        const displayName = nameGenerator.of(lang);
+    let languageNameMap = new Map()
+    const nameGenerator = new Intl.DisplayNames('en', { type: 'language' });
+    for (langCode in targetLangs) {
+        languageNameMap.set(langCode,  nameGenerator.of(langCode) || langCode);
+    }
+    languageNameMap = new Map(Array.from(languageNameMap).sort((a, b) => a[1].toLowerCase() > b[1].toLowerCase()));
+    for (const [langCode, displayName] of languageNameMap) {
         const el = document.createElement("option");
         el.textContent = displayName;
-        el.value = lang;
-        if (lang == currentSelection ) {
+        el.value = langCode;
+        if (langCode == currentSelection ) {
             el.selected = true;
         }
         tgt_selector.appendChild(el);
     }
+
     tgt_selector.addEventListener("change", function () {
         document.getElementById('target_content').innerText = ""
     });
@@ -84,21 +89,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const sourceElement = document.getElementById('source_content');
 
     getSupportedLanguages().then(languages => {
-        allLanguages = languages
         src_selector.innerHTML = '';
 
-        for (lang in languages) {
-            const nameGenerator = new Intl.DisplayNames('en', { type: 'language' });
-            const displayName = nameGenerator.of(lang);
+        let languageNameMap = new Map()
+        const nameGenerator = new Intl.DisplayNames('en', { type: 'language' });
+        for (langCode in languages) {
+            languageNameMap.set(langCode,  nameGenerator.of(langCode) || langCode);
+        }
+        languageNameMap = new Map(Array.from(languageNameMap).sort((a, b) => a[1].toLowerCase() > b[1].toLowerCase()));
+        for (const [langCode, displayName] of languageNameMap) {
             const el = document.createElement("option");
             el.textContent = displayName;
-            el.value = lang;
-            if (lang == 'en') {
+            el.value = langCode;
+            if (langCode == 'en') {
                 el.selected = true;
             }
             src_selector.appendChild(el);
         }
-        listSupportedTargetLanguages('en', allLanguages)
+        listSupportedTargetLanguages('en', languages)
     })
 
     src_selector.addEventListener("change", () => {
