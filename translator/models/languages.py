@@ -122,7 +122,7 @@ WIKI2NLLBCODES = {
     "min": "min_Latn",
     "mk": "mkd_Cyrl",
     "ml": "mal_Mlym",
-    "mni": "mni_Beng",
+    "mni": "mni_Mtei",
     "mn": "khk_Cyrl",
     "mos": "mos_Latn",
     "mr": "mar_Deva",
