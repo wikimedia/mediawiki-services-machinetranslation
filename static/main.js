@@ -1,7 +1,15 @@
 let allLanguages = {}
 
+let languageNames = {}
+
 function getSupportedLanguages() {
     return fetch(`/api/languages`).then(response => response.json())
+}
+
+function getLanguageNames() {
+    return fetch('https://en.wikipedia.org/w/api.php?action=query&liprop=autonym|name&meta=languageinfo&uselang=en&format=json&origin=*')
+        .then(response => response.json())
+        .then(queryResult => queryResult.query.languageinfo)
 }
 
 function detectLanguage(text) {
@@ -64,9 +72,9 @@ function listSupportedTargetLanguages(sourceLang, allPairs) {
     tgt_selector.innerHTML = '';
     const targetLangs = allPairs[sourceLang];
     let languageNameMap = new Map()
-    const nameGenerator = new Intl.DisplayNames('en', { type: 'language' });
+
     for (langCode in targetLangs) {
-        languageNameMap.set(langCode,  nameGenerator.of(langCode) || langCode);
+        languageNameMap.set(langCode,  languageNames[langCode]?.name || langCode);
     }
     languageNameMap = new Map(Array.from(languageNameMap).sort((a, b) => a[1].toLowerCase() > b[1].toLowerCase()));
     for (const [langCode, displayName] of languageNameMap) {
@@ -84,31 +92,30 @@ function listSupportedTargetLanguages(sourceLang, allPairs) {
     });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     const src_selector = document.getElementById('source_lang');
     const sourceElement = document.getElementById('source_content');
+    languageNames = await getLanguageNames()
+    allLanguages = await  getSupportedLanguages()
 
-    getSupportedLanguages().then(languages => {
-        src_selector.innerHTML = '';
-        allLanguages = languages;
-        let languageNameMap = new Map()
-        const nameGenerator = new Intl.DisplayNames('en', { type: 'language' });
-        for (langCode in languages) {
-            languageNameMap.set(langCode,  nameGenerator.of(langCode) || langCode);
-        }
-        languageNameMap = new Map(Array.from(languageNameMap).sort((a, b) => a[1].toLowerCase() > b[1].toLowerCase()));
-        for (const [langCode, displayName] of languageNameMap) {
-            const el = document.createElement("option");
-            el.textContent = displayName;
-            el.value = langCode;
-            if (langCode == 'en') {
-                el.selected = true;
-            }
-            src_selector.appendChild(el);
-        }
-        listSupportedTargetLanguages('en', languages)
-    })
+    src_selector.innerHTML = '';
 
+    let languageNameMap = new Map()
+
+    for (langCode in allLanguages) {
+        languageNameMap.set(langCode, languageNames[langCode]?.name || langCode);
+    }
+    languageNameMap = new Map(Array.from(languageNameMap).sort((a, b) => a[1].toLowerCase() > b[1].toLowerCase()));
+    for (const [langCode, displayName] of languageNameMap) {
+        const el = document.createElement("option");
+        el.textContent = displayName;
+        el.value = langCode;
+        if (langCode == 'en') {
+            el.selected = true;
+        }
+        src_selector.appendChild(el);
+    }
+    listSupportedTargetLanguages('en', allLanguages)
     src_selector.addEventListener("change", () => {
         const from = document.getElementById('source_lang').value;
         listSupportedTargetLanguages(from, allLanguages)
