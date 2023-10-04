@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     getSupportedLanguages().then(languages => {
         src_selector.innerHTML = '';
-
+        allLanguages = languages;
         let languageNameMap = new Map()
         const nameGenerator = new Intl.DisplayNames('en', { type: 'language' });
         for (langCode in languages) {
