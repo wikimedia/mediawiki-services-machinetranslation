@@ -11,10 +11,11 @@ class NLLBModel(BaseModel):
     MODEL = "nllb200-600M"
 
     def tokenize(self, src_lang: str, tgt_lang: str, content):
-        return self.tokenizer.encode(content, out_type=str) + [
-            "</s>",
-            languages.get_wikicode_from_nllb(src_lang),
-        ]
+        return (
+            [languages.get_wikicode_from_nllb(src_lang)]
+            + self.tokenizer.encode(content, out_type=str)
+            + ["</s>"]
+        )
 
     def detokenize(self, content: str) -> str:
         return self.tokenizer.decode(content)
