@@ -36,7 +36,7 @@ done
 # OpusMT optimized model with limited languages
 MODEL_BASE_URL=${BASE_URL}/opusmt
 MODEL_DIR=${BASE_MODEL_DIR}
-for i in opusmt-en-bcl.zip opusmt-en-to.zip opusmt-en-chr.zip opusmt-en-guw.zip
+for i in opusmt-en-bcl.zip opusmt-en-to.zip opusmt-en-chr.zip opusmt-en-guw.zip opusmt-en-ty.zip
 do
 	if [ -d "${MODEL_DIR}/${i%.zip}" ]; then
 		continue
