@@ -254,6 +254,7 @@ languages:
     - te: indictrans2-en-indic
     - tn: nllb-wikipedia
     - to: opusmt-en-to
+    - ty: opusmt-en-ty
     - ts: nllb-wikipedia
     - ur: indictrans2-en-indic
     - wo: nllb-wikipedia
