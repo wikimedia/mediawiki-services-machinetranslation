@@ -26,6 +26,7 @@ def ModelFactory(translator_config: ModelConfig, src_lang: str, tgt_lang: str) -
         "nllb-wikipedia": NLLBWikipediaModel,
         "opusmt-en-bcl": OpusModel,
         "opusmt-en-chr": OpusModel,
+        "opusmt-en-guw": OpusModel,
         "opusmt-en-to": OpusModel,
         "softcatala": SoftCatalaModel,
     }

@@ -224,6 +224,7 @@ languages:
     - ckb: nllb-wikipedia
     - doi: indictrans2-en-indic  # Dogri
     - gom: indictrans2-en-indic
+    - guw: opusmt-en-guw
     - gu: indictrans2-en-indic
     - ha: nllb-wikipedia
     - hi: indictrans2-en-indic
