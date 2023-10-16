@@ -98,6 +98,7 @@ WIKI2NLLBCODES = {
     "knc": "knc_Latn",  # Kanuri (kr) WP is closed, see: T336683 for enablement
     "kn": "kan_Knda",
     "ko": "kor_Hang",
+    "kr": "knc_Latn",  # Kanuri (kr) WP is closed, but enable it as per T336683
     "ks": "kas_Arab",
     "ku": "kmr_Latn",
     "ky": "kir_Cyrl",
