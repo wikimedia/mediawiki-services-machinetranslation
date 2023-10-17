@@ -18,7 +18,6 @@ dependencies = [
     "ecs-logging",
     "pyyaml",
     "locust",
-    "pycld2",
     "indic-nlp-library",
     "levenshtein",
     "markdown",

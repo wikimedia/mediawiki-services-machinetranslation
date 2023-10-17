@@ -130,8 +130,6 @@ pluggy==1.3.0
     #   tox
 psutil==5.9.5
     # via locust
-pycld2==0.41
-    # via machinetranslation (pyproject.toml)
 pygments==2.16.1
     # via sphinx
 pyproject-api==1.6.1

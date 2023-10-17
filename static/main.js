@@ -13,7 +13,7 @@ function getLanguageNames() {
 }
 
 function detectLanguage(text) {
-    return fetch(`/api/detectlang`, {
+    return fetch('https://api.wikimedia.org/service/lw/inference/v1/models/langid:predict', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ function detectLanguage(text) {
         body: JSON.stringify({
             text
         })
-    }).then(response => response.json()).then(result => result.language)
+    }).then(response => response.json()).then(result => result.wikicode)
 }
 
 function doTranslate() {
