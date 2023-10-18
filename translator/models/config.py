@@ -31,3 +31,20 @@ class ModelConfig:
 
     def get_all_languages(self):
         return self.language_pair_mapping
+
+    def is_language_pair_supported(self, source_language, target_language) -> bool:
+        """
+        Determines if a given language pair is supported by the language pair mapping.
+
+        Parameters:
+            source_language (str): The source language.
+            target_language (str): The target language.
+
+        Returns:
+            bool: True if the language pair is supported, False otherwise.
+
+        """
+        return (
+            source_language in self.language_pair_mapping
+            and target_language in self.language_pair_mapping.get(source_language)
+        )

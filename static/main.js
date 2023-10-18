@@ -45,32 +45,37 @@ function doTranslate() {
         body: JSON.stringify({
             [mint_format]:text
         })
-    }).then(response => response.json())
-        .then(result => {
-            document.getElementById('target_content').setAttribute("lang", to)
-            if (mint_format==='html'){
-                document.getElementById('target_content').innerHTML= result.translation.trim()
-            } else if (mint_format==='webpage'){
-                const downloadLink = document.createElement('a')
-                downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(result.translation));
-                downloadLink.setAttribute('download', 'translation.html');
-                downloadLink.textContent = 'Download';
-                document.getElementById('results').appendChild(downloadLink)
-            } else if (mint_format==='svg'){
-                document.getElementById('target_content').innerHTML= result.translation.trim()
-            } else {
-                document.getElementById('target_content').textContent = result.translation
-            }
-            document.getElementById('status').innerText = `Translated in ${result.translationtime.toFixed(2)} seconds by ${result.model} model`
-        })
-        .catch(error => {
-            // Error handling
-            console.error('An error occurred:', error);
-            // Display an error message to the user
-            document.getElementById('status').innerText = 'An error occurred. Please try again.';
-        }).finally(()=>{
-            document.getElementById('progress').style.display = "none";
-        });
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Server returned ' + response.status);
+        }
+        return response.json();
+    })
+    .then(result => {
+        document.getElementById('target_content').setAttribute("lang", to)
+        if (mint_format==='html'){
+            document.getElementById('target_content').innerHTML= result.translation.trim()
+        } else if (mint_format==='webpage'){
+            const downloadLink = document.createElement('a')
+            downloadLink.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(result.translation));
+            downloadLink.setAttribute('download', 'translation.html');
+            downloadLink.textContent = 'Download';
+            document.getElementById('results').appendChild(downloadLink)
+        } else if (mint_format==='svg'){
+            document.getElementById('target_content').innerHTML= result.translation.trim()
+        } else {
+            document.getElementById('target_content').textContent = result.translation
+        }
+        document.getElementById('status').innerText = `Translated in ${result.translationtime.toFixed(2)} seconds by ${result.model} model`
+    })
+    .catch(error => {
+        // Error handling
+        console.error('An error occurred:', error);
+        // Display an error message to the user
+        document.getElementById('status').innerText = 'An error occurred. Please try again.';
+    }).finally(()=>{
+        document.getElementById('progress').style.display = "none";
+    });
 }
 
 function listSupportedTargetLanguages(sourceLang, allPairs) {

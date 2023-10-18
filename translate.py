@@ -91,6 +91,8 @@ def health():
 def translate_handler(source_lang, target_lang):
     content = None
     translator_class = None
+    if not config.is_language_pair_supported(source_lang, target_lang):
+        abort(400, description="No translator found for the given language pair.")
     for format in formats:
         if format in request.json:
             translators = [
@@ -131,4 +133,3 @@ def translate_handler(source_lang, target_lang):
         targetlanguage=target_lang,
         model=translator.model_name,
     )
-
