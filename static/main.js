@@ -61,9 +61,16 @@ function doTranslate() {
             } else {
                 document.getElementById('target_content').textContent = result.translation
             }
-            document.getElementById('progress').style.display = "none";
             document.getElementById('status').innerText = `Translated in ${result.translationtime.toFixed(2)} seconds by ${result.model} model`
         })
+        .catch(error => {
+            // Error handling
+            console.error('An error occurred:', error);
+            // Display an error message to the user
+            document.getElementById('status').innerText = 'An error occurred. Please try again.';
+        }).finally(()=>{
+            document.getElementById('progress').style.display = "none";
+        });
 }
 
 function listSupportedTargetLanguages(sourceLang, allPairs) {
