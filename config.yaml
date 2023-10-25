@@ -217,6 +217,7 @@ languages:
     - ay: nllb-wikipedia
     - ba: nllb-wikipedia
     - bcl: opusmt-en-bcl
+    - bi: opusmt-en-bi
     - bn: indictrans2-en-indic
     - brx: indictrans2-en-indic  # Bodo
     - ca: softcatala
@@ -249,6 +250,7 @@ languages:
     - sa: indictrans2-en-indic
     - sat: indictrans2-en-indic
     - sd: indictrans2-en-indic
+    - srn: opusmt-en-srn
     - ss: nllb-wikipedia
     - ta: indictrans2-en-indic
     - te: indictrans2-en-indic
@@ -257,6 +259,7 @@ languages:
     - ty: opusmt-en-ty
     - ts: nllb-wikipedia
     - ur: indictrans2-en-indic
+    - ve: opusmt-en-ve
     - wo: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia

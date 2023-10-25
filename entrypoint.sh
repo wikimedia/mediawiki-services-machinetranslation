@@ -36,17 +36,18 @@ done
 # OpusMT optimized model with limited languages
 MODEL_BASE_URL=${BASE_URL}/opusmt
 MODEL_DIR=${BASE_MODEL_DIR}
-for i in opusmt-en-bcl.zip opusmt-en-to.zip opusmt-en-chr.zip opusmt-en-guw.zip opusmt-en-ty.zip
+for i in opusmt-en-bcl.zip opusmt-en-bi.zip opusmt-en-chr.zip opusmt-en-guw.zip \
+         opusmt-en-srn.zip opusmt-en-to.zip opusmt-en-ty.zip opusmt-en-ve.zip
 do
 	if [ -d "${MODEL_DIR}/${i%.zip}" ]; then
 		continue
 	else
 		echo "Downloading $MODEL_BASE_URL/${i}"
-		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/"${i}" -P $MODEL_DIR
 		# Extract the OpusMT optimized model
 		pushd $BASE_MODEL_DIR
-		unzip ${i}
-		rm -rf ${i}
+		unzip "${i}"
+		rm -rf "${i}"
 		popd
 	fi
 done
@@ -60,16 +61,14 @@ do
 		continue
 	else
 		echo "Downloading $MODEL_BASE_URL/${i}"
-		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/"${i}" -P $MODEL_DIR
 		# Extract the Softcatala optimized model
 		pushd $BASE_MODEL_DIR
-		unzip softcatala-en-ca.zip
-		rm -rf softcatala-en-ca.zip
+		unzip "${i}"
+		rm -rf "${i}"
 		popd
 	fi
 done
-
-
 
 # Indictrans2 models for Indic languages to English
 MODEL_BASE_URL="${BASE_URL}/indictrans2/indictrans-indic-en"
@@ -96,7 +95,6 @@ do
 		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
 	fi
 done
-
 
 echo "Starting server..."
 # We exec in order to allow gunicorn to handle signals and not have them caught by bash
