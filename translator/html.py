@@ -5,7 +5,7 @@ import logging.config
 import re
 from typing import Dict, List, Tuple
 
-from bs4 import BeautifulSoup, NavigableString, PageElement, Tag
+from bs4 import BeautifulSoup, NavigableString, PageElement
 from Levenshtein import distance
 from sentencex import segment
 
@@ -13,7 +13,7 @@ from translator import BaseTranslator, TranslatorMeta
 
 logging.config.fileConfig("logging.conf")
 
-WORD_STOPS = " !\"#$%&'()*+,-./:;<=>?@\\^_`|~"
+WORD_STOPS = " !\"#$%&'()*+,-./:;<=>?@\\^_`|~[]"
 # Non Translatable tags. Do not traverse through the child nodes of these nodes.
 NON_TRANSLATABLE_TAGS = [
     "head",
@@ -63,47 +63,6 @@ def is_translatable(node: PageElement) -> bool:
     return True
 
 
-class TagToTranslate(Tag):
-    def _all_strings(self, strip=False, types=PageElement.default):
-        """Yield all strings of certain classes, possibly stripping them.
-
-        :param strip: If True, all strings will be stripped before being
-            yielded.
-
-        :param types: A tuple of NavigableString subclasses. Any strings of
-            a subclass not found in this list will be ignored. By
-            default, the subclasses considered are the ones found in
-            self.interesting_string_types. If that's not specified,
-            only NavigableString and CData objects will be
-            considered. That means no comments, processing
-            instructions, etc.
-
-        :yield: A sequence of strings.
-
-        """
-        if types is self.default:
-            types = self.interesting_string_types
-
-        for descendant in self.descendants:
-            if types is None and not isinstance(descendant, NavigableString):
-                continue
-            descendant_type = type(descendant)
-            if isinstance(types, type):
-                if descendant_type is not types:
-                    # We're not interested in strings of this type.
-                    continue
-            elif not is_translatable(descendant):
-                continue
-            elif types is not None and descendant_type not in types:
-                # We're not interested in strings of this type.
-                continue
-            if strip:
-                descendant = descendant.strip()
-                if len(descendant) == 0:
-                    continue
-            yield descendant
-
-
 def ngram(sentence: str, n: int) -> List[str]:
     """
     Returns a list of n-grams (contiguous sublists of length n) from the sentence.
@@ -119,7 +78,7 @@ def ngram(sentence: str, n: int) -> List[str]:
     # Split the sentence into individual words
     # NOTE: This works only for languages that use space as word seperator
     # For other languages, this method has no effect
-    words = sentence.split()
+    words = re.split(r"[\s\W]", sentence)
 
     # Create n-grams by iterating over the words list and selecting sublists of length n
     ngrams = [words[i : i + n] for i in range(len(words) - n + 1)]
@@ -161,7 +120,10 @@ def fuzzy_find(text, key, search_start=0) -> Tuple[int, str]:
     ngram_words: List[str]
     for ngram_words in ngram(context, number_of_words_in_key):
         phrase = " ".join(ngram_words)
-        if distance(phrase, key, score_cutoff=score_cutoff) < score_cutoff:
+        if (
+            distance(phrase.lower(), re.sub(r"[^\w\s]", "", key).lower(), score_cutoff=score_cutoff)
+            < score_cutoff
+        ):
             candidates.append(phrase)
 
     for candidate in candidates:
@@ -211,9 +173,6 @@ def is_leaf_node(node):
     return False
 
 
-custom_bs4_classes = {Tag: TagToTranslate}
-
-
 class HTMLTranslator(BaseTranslator):
     meta = TranslatorMeta(
         name="HTMLTranslator",
@@ -238,7 +197,7 @@ class HTMLTranslator(BaseTranslator):
         Returns:
         - Translated Json in string format
         """
-        doc: BeautifulSoup = BeautifulSoup(html, "html.parser", element_classes=custom_bs4_classes)
+        doc: BeautifulSoup = BeautifulSoup(html, "html.parser")
         if doc.find("body"):
             # If the content is a full webpage with body, just translate body.
             # to skip other parts of page.
@@ -334,7 +293,7 @@ class HTMLTranslator(BaseTranslator):
             doc.clear()
             doc.insert(
                 0,
-                BeautifulSoup(doc_inner_content, "html.parser", element_classes=custom_bs4_classes),
+                BeautifulSoup(doc_inner_content, "html.parser"),
             )
             # print(doc.name, "===", doc_inner_content)
 
