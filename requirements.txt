@@ -148,7 +148,7 @@ ruff==0.1.3
     # via machinetranslation (pyproject.toml)
 sentencepiece==0.1.99
     # via machinetranslation (pyproject.toml)
-sentencex==0.5.0
+sentencex==0.5.1
     # via machinetranslation (pyproject.toml)
 six==1.16.0
     # via
