@@ -70,4 +70,5 @@ class BaseTranslator(object, metaclass=TranslatorRegistry):
 
 class InvalidContentException(Exception):
     "Raised when content is not in expected format"
+
     pass

@@ -99,4 +99,5 @@ class BaseModel:
 
 class ModelNotFoundException(Exception):
     "Raised when model is not found for given languages"
+
     pass

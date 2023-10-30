@@ -30,7 +30,6 @@ tests = [
     'pytest'
 ]
 dev = [
-    "black",
     "ruff",
     "tox",
 ]
