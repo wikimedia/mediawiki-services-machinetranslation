@@ -25,10 +25,13 @@ def ModelFactory(translator_config: ModelConfig, src_lang: str, tgt_lang: str) -
         "indictrans2-en-indic": EnIndicTransModel,
         "nllb-wikipedia": NLLBWikipediaModel,
         "opusmt-en-bcl": OpusModel,
+        "opusmt-en-bi": OpusModel,
         "opusmt-en-chr": OpusModel,
         "opusmt-en-guw": OpusModel,
+        "opusmt-en-srn": OpusModel,
         "opusmt-en-to": OpusModel,
         "opusmt-en-ty": OpusModel,
+        "opusmt-en-ve": OpusModel,
         "softcatala": SoftCatalaModel,
     }
     model = translator_config.language_pair_mapping[src_lang][tgt_lang]

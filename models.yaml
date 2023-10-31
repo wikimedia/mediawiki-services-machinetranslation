@@ -4,6 +4,9 @@ nllb200-600M:
 nllb-wikipedia:
   model: models/nllb-wikipedia
   tokenizer: models/nllb-wikipedia/sentencepiece.bpe.model
+opusmt-en-bi:
+  model: models/opusmt-en-bi
+  tokenizer: models/opusmt-en-bi/source.spm
 opusmt-en-bcl:
   model: models/opusmt-en-bcl
   tokenizer: models/opusmt-en-bcl/source.spm
@@ -16,9 +19,15 @@ opusmt-en-chr:
 opusmt-en-guw:
   model: models/opusmt-en-guw
   tokenizer: models/opusmt-en-guw/source.spm
+opusmt-en-srn:
+  model: models/opusmt-en-srn
+  tokenizer: models/opusmt-en-srn/source.spm
 opusmt-en-ty:
   model: models/opusmt-en-ty
   tokenizer: models/opusmt-en-ty/source.spm
+opusmt-en-ve:
+  model: models/opusmt-en-ve
+  tokenizer: models/opusmt-en-ve/source.spm
 softcatala:
   model: models/softcatala-en-ca
   tokenizer: models/softcatala-en-ca/sp_m.model
