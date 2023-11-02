@@ -12,7 +12,7 @@ beautifulsoup4==4.12.2
     # via
     #   machinetranslation (pyproject.toml)
     #   markdownify
-blinker==1.6.3
+blinker==1.7.0
     # via flask
 brotli==1.1.0
     # via geventhttpclient
@@ -24,7 +24,7 @@ certifi==2023.7.22
     #   requests
 chardet==5.2.0
     # via tox
-charset-normalizer==3.3.1
+charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via flask
@@ -42,7 +42,7 @@ docutils==0.18.1
     #   sphinx-rtd-theme
 ecs-logging==2.1.0
     # via machinetranslation (pyproject.toml)
-filelock==3.13.0
+filelock==3.13.1
     # via
     #   tox
     #   virtualenv
@@ -82,9 +82,9 @@ jinja2==3.1.2
     #   sphinx
 levenshtein==0.23.0
     # via machinetranslation (pyproject.toml)
-locust==2.18.0
+locust==2.18.1
     # via machinetranslation (pyproject.toml)
-markdown==3.5
+markdown==3.5.1
     # via machinetranslation (pyproject.toml)
 markdownify==0.11.6
     # via machinetranslation (pyproject.toml)
@@ -136,7 +136,7 @@ pyyaml==6.0.1
     #   machinetranslation (pyproject.toml)
 pyzmq==25.1.1
     # via locust
-rapidfuzz==3.4.0
+rapidfuzz==3.5.1
     # via levenshtein
 requests==2.31.0
     # via
@@ -148,7 +148,7 @@ ruff==0.1.3
     # via machinetranslation (pyproject.toml)
 sentencepiece==0.1.99
     # via machinetranslation (pyproject.toml)
-sentencex==0.5.1
+sentencex==0.6.0
     # via machinetranslation (pyproject.toml)
 six==1.16.0
     # via
