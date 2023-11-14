@@ -13,13 +13,15 @@ function getLanguageNames() {
 }
 
 function detectLanguage(text) {
+    // langid api expects a single line of text.
+    const firstline = text.split('\n')[0]
     return fetch('https://api.wikimedia.org/service/lw/inference/v1/models/langid:predict', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            text
+            text:firstline
         })
     }).then(response => response.json()).then(result => result.wikicode)
 }
