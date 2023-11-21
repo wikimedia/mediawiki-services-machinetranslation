@@ -88,7 +88,8 @@ class="mw-redirect" title="United States of America">അമേരിക്കൻ
 <a href="/w/index.php?title=Naturalization&amp;action=edit&amp;redlink=1" class="new" \
 title="Naturalization (ഇതുവരെ എഴുതപ്പെട്ടിട്ടില്ല)">പൗരത്വം</a> നേടി.<sup id="cite_ref-NYcourts_95-0" \
 class="reference"><a href="#cite_note-NYcourts-95">[95]</a></sup><sup \
-id="cite_ref-FOOTNOTECarlson2013138_96-0" class="reference"><a href="#cite_note-FOOTNOTECarlson2013138-96">[96]</a>\
+id="cite_ref-FOOTNOTECarlson2013138_96-0" class="reference">\
+<a href="#cite_note-FOOTNOTECarlson2013138-96">[96]</a>\
 </sup> അതേ വർഷം അദ്ദേഹം <a href="/w/index.php?title=Tesla_coil&amp;action=edit&amp;redlink=1" \
 class="new" title="Tesla coil (ഇതുവരെ എഴുതപ്പെട്ടിട്ടില്ല)">ടെസ്‌ല കോയിലിനു</a> പേറ്റന്റും നേടി.\
 <sup id="cite_ref-Uth_97-0" class="reference"><a href="#cite_note-Uth-97" title="">[97]</a></sup>
