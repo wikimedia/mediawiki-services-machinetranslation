@@ -5,7 +5,12 @@ import time
 
 import statsd
 import yaml
-from flask import Flask, abort, jsonify, render_template, request
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from pydantic import BaseModel, Field
 
 from translator import TranslatorRegistry
 from translator.models import ModelConfig, ModelFactory
@@ -26,60 +31,46 @@ try:
 except Exception:
     logging.warning(f"Could not connect to statsd host {statsd_host}:{statsd_port}")
 
-
-app = Flask(__name__)
+app = FastAPI()
 config = ModelConfig()
 translator_classes = TranslatorRegistry.get_translators()
-# Supported formats
+
 formats = [translator_class.meta.format for translator_class in translator_classes]
+
+class TranslationResponse(BaseModel):
+    translation: str = Field(..., description="The translated content")
+    translationtime: float = Field(..., description="Time taken for translation in seconds")
+    sourcelanguage: str = Field(..., description="Source language code")
+    targetlanguage: str = Field(..., description="Target language code")
+    model: str = Field(..., description="Translator model used")
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+)
+
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 
 def get_languages() -> dict:
     return config.get_all_languages()
 
 
-@app.route("/")
-def index():
-    return render_template("index.html", format="text", formats=formats, languages=get_languages())
+@app.get("/", response_class=HTMLResponse)
+async def index(request: Request) -> HTMLResponse:
+    return templates.TemplateResponse(
+        "index.html",
+        {"request": request, "format": "text", "formats": formats, "languages": get_languages()},
+    )
 
 
-@app.route("/<string:format>")
-def format_page(format: str):
-    if format in formats:
-        return render_template(
-            "index.html", format=format, formats=formats, languages=get_languages()
-        )
-    else:
-        abort(404)
-
-
-@app.before_request
-def before_request():
-    request.start_time = time.time()
-
-
-@app.after_request
-def after_request(response):
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
-    response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
-    return response
-
-
-@app.route("/api/spec")
-def show_spec():
-    with open("spec.yaml", "r") as file:
-        spec = yaml.safe_load(file)
-    return jsonify(spec)
-
-
-@app.route("/api/languages")
-def list_languages():
-    return get_languages()
-
-
-@app.route("/healthz")
-def health():
+@app.get("/healthz")
+async def health():
     test_from = "en"
     test_to = "ig"
     translator = ModelFactory(config, test_from, test_to)
@@ -87,34 +78,62 @@ def health():
     return "" if len(translation) and len(translation[0]) else False
 
 
-@app.route("/api/translate/<source_lang>/<target_lang>", methods=["POST"])
-def translate_handler(source_lang, target_lang):
+@app.get("/{format}")
+async def format_page(request: Request, format: str):
+    if format in formats:
+        return templates.TemplateResponse(
+            "index.html",
+            {
+                "request": request,
+                "format": format,
+                "formats": formats,
+                "languages": get_languages(),
+            },
+        )
+    else:
+        raise HTTPException(status_code=404)
+
+
+@app.get("/api/spec")
+async def show_spec():
+    with open("spec.yaml", "r") as file:
+        spec = yaml.safe_load(file)
+    return spec
+
+
+@app.get("/api/languages")
+async def list_languages():
+    return get_languages()
+
+
+@app.post("/api/translate/{source_lang}/{target_lang}")
+async def translate_handler(source_lang, target_lang, request: Request) -> TranslationResponse:
     content = None
     translator_class = None
-    if not config.is_language_pair_supported(source_lang, target_lang):
-        abort(400, description="No translator found for the given language pair.")
+    request_dict = await request.json()
+
     for format in formats:
-        if format in request.json:
+        if format in request_dict:
+            content = request_dict.get(format)
             translators = [
                 translator_class
                 for translator_class in translator_classes
                 if translator_class.meta.format == format
             ]
-            if len(translators):
+            if translators:
                 translator_class = translators[0]
-                content = request.json.get(format)
                 break
     if not translator_class:
-        abort(
-            413,
-            description="No translator found for the passed content",
+        raise HTTPException(
+            status_code=413,
+            detail="No translator found for the passed content",
         )
 
     char_limit = translator_class.meta.character_limit
     if len(content) > char_limit:
-        abort(
-            413,  # Request Entity Too Large
-            description=f"Request size exceeds maximum character limit {char_limit}",
+        raise HTTPException(
+            status_code=413,
+            detail=f"Request size exceeds maximum character limit {char_limit}",
         )
 
     translator = translator_class(config, source_lang, target_lang)
@@ -126,10 +145,11 @@ def translate_handler(source_lang, target_lang):
         statsd_client.incr(f"mt.{source_lang}.{target_lang}")
         statsd_client.timing("mt.timing", int(translationtime * 1000))
 
-    return jsonify(
+    response = TranslationResponse(
         translation=translation,
         translationtime=translationtime,
         sourcelanguage=source_lang,
         targetlanguage=target_lang,
         model=translator.model_name,
     )
+    return response

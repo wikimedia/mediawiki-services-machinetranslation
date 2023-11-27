@@ -1,4 +1,5 @@
 import pytest
+from fastapi.testclient import TestClient
 
 from translate import app
 
@@ -12,7 +13,6 @@ def client():
     :return: App for testing
     """
 
-    # app.config['TESTING'] = True
-    client = app.test_client()
+    client = TestClient(app)
 
     yield client

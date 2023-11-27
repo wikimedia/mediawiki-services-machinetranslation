@@ -4,6 +4,7 @@ bind = "0.0.0.0:8989"
 workers = os.getenv("GUNICORN_WORKERS", 1)
 accesslog = "/tmp/translate.access.log"
 wsgi_app = "translate:app"
+worker_class = "uvicorn.workers.UvicornWorker"
 
 # Metrics logging to statsd exporter
 statsd_prefix = os.getenv("STATSD_PREFIX", "machinetranslation")

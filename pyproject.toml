@@ -12,7 +12,9 @@ dependencies = [
     "ctranslate2",
     "sentencepiece",
     "sentencex",
-    "Flask",
+    "fastapi",
+    "jinja2",
+    "uvicorn",
     "gunicorn",
     "statsd",
     "ecs-logging",
@@ -26,7 +28,8 @@ dependencies = [
 
 [project.optional-dependencies]
 tests = [
-    'pytest'
+    'pytest',
+    'httpx'
 ]
 dev = [
     "ruff",

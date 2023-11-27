@@ -5,7 +5,7 @@ def test_home_page(client):
     THEN check that the response is valid
     """
     landing = client.get("/")
-    html = landing.data.decode()
+    html = landing.text
 
     assert "Translate" in html
 
