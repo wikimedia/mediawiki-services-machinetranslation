@@ -1,5 +1,5 @@
 def test_openapi_spec(client):
-    spec_page = client.get("/api/spec")
+    spec_page = client.get("/openapi.json")
     json_data = spec_page.json()
 
     assert "components" in json_data

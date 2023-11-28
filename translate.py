@@ -2,11 +2,12 @@ import logging
 import logging.config
 import os
 import time
+from typing import Literal
 
 import statsd
-import yaml
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -32,10 +33,58 @@ except Exception:
     logging.warning(f"Could not connect to statsd host {statsd_host}:{statsd_port}")
 
 app = FastAPI()
+
+
+def custom_openapi():
+    if app.openapi_schema:
+        return app.openapi_schema
+
+    openapi_schema = get_openapi(
+        title="MinT Machine Translation service",
+        version="1.0.0",
+        summary="OpenAPI schema",
+        description="""
+MinT is a machine translation system hosted by Wikimedia Foundation.
+It uses multiple Neural Machine translation models to provide translation
+between large number of languages.
+""",
+        routes=app.routes,
+    )
+    # Cache the schema
+    app.openapi_schema = openapi_schema
+    return app.openapi_schema
+
+
+app.openapi = custom_openapi
+
 config = ModelConfig()
 translator_classes = TranslatorRegistry.get_translators()
 
 formats = [translator_class.meta.format for translator_class in translator_classes]
+
+class TranslationRequest(BaseModel):
+    # FIXME Use FormatEnum type once we upgrade to python 3.11+ in production.
+    # FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats)))
+    format: Literal["html", "json", "markdown", "text", "svg", "webpage"] = Field(
+        ..., description="The content format"
+    )
+    content: str = Field(..., description="The content to translate")
+    source_language: str = Field(..., description="The source language")
+    target_language: str = Field(..., description="The target language")
+
+    model_config = {
+        "json_schema_extra": {
+            "examples": [
+                {
+                    "format": "text",
+                    "content": "The Earth rotates around the Sun from west to east.",
+                    "source_language": "en",
+                    "target_language": "ta",
+                }
+            ]
+        }
+    }
+
 
 class TranslationResponse(BaseModel):
     translation: str = Field(..., description="The translated content")
@@ -94,35 +143,22 @@ async def format_page(request: Request, format: str):
         raise HTTPException(status_code=404)
 
 
-@app.get("/api/spec")
-async def show_spec():
-    with open("spec.yaml", "r") as file:
-        spec = yaml.safe_load(file)
-    return spec
-
-
 @app.get("/api/languages")
 async def list_languages():
     return get_languages()
 
 
-@app.post("/api/translate/{source_lang}/{target_lang}")
-async def translate_handler(source_lang, target_lang, request: Request) -> TranslationResponse:
-    content = None
+@app.post("/api/translate")
+async def translate_handler(request: TranslationRequest) -> TranslationResponse:
     translator_class = None
-    request_dict = await request.json()
+    translators = [
+        translator_class
+        for translator_class in translator_classes
+        if translator_class.meta.format == request.format
+    ]
+    if translators:
+        translator_class = translators[0]
 
-    for format in formats:
-        if format in request_dict:
-            content = request_dict.get(format)
-            translators = [
-                translator_class
-                for translator_class in translator_classes
-                if translator_class.meta.format == format
-            ]
-            if translators:
-                translator_class = translators[0]
-                break
     if not translator_class:
         raise HTTPException(
             status_code=413,
@@ -130,26 +166,45 @@ async def translate_handler(source_lang, target_lang, request: Request) -> Trans
         )
 
     char_limit = translator_class.meta.character_limit
-    if len(content) > char_limit:
+    if len(request.content) > char_limit:
         raise HTTPException(
             status_code=413,
             detail=f"Request size exceeds maximum character limit {char_limit}",
         )
 
-    translator = translator_class(config, source_lang, target_lang)
+    translator = translator_class(config, request.source_language, request.target_language)
     start = time.time()
-    translation = translator.translate(content)
+    translation = translator.translate(request.content)
     end = time.time()
     translationtime = end - start
     if statsd_client:
-        statsd_client.incr(f"mt.{source_lang}.{target_lang}")
+        statsd_client.incr(f"mt.{request.source_language}.{request.target_language}")
         statsd_client.timing("mt.timing", int(translationtime * 1000))
 
     response = TranslationResponse(
         translation=translation,
         translationtime=translationtime,
-        sourcelanguage=source_lang,
-        targetlanguage=target_lang,
+        sourcelanguage=request.source_language,
+        targetlanguage=request.target_language,
         model=translator.model_name,
     )
     return response
+
+
+@app.post("/api/translate/{source_lang}/{target_lang}")
+async def translate_handler_deprecated(
+    source_lang, target_lang, request: Request
+) -> TranslationResponse:
+    content = None
+    request_dict = await request.json()
+
+    for format in formats:
+        if format in request_dict:
+            content = request_dict.get(format)
+            break
+
+    translation_request = TranslationRequest(
+        format=format, source_language=source_lang, target_language=target_lang, content=content
+    )
+
+    return await translate_handler(translation_request)
