@@ -6,6 +6,7 @@ from translator.models import (
     BaseModel,
     EnIndicTransModel,
     IndicEnTransModel,
+    IndicTransModel,
     ModelConfig,
     NLLBModel,
     NLLBWikipediaModel,
@@ -21,6 +22,7 @@ translator_cache: Dict[str, BaseModel] = {}
 def ModelFactory(translator_config: ModelConfig, src_lang: str, tgt_lang: str) -> BaseModel:
     translation_models = {
         "nllb200-600M": NLLBModel,
+        "indictrans2-indic-indic": IndicTransModel,
         "indictrans2-indic-en": IndicEnTransModel,
         "indictrans2-en-indic": EnIndicTransModel,
         "nllb-wikipedia": NLLBWikipediaModel,

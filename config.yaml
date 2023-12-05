@@ -199,6 +199,30 @@ models:
     - zh
     - zu
 
+  indictrans2-indic-indic:
+    - as
+    - bn
+    - brx
+    - doi
+    - gom
+    - gu
+    - hi
+    - kn
+    - ks
+    - mai
+    - ml
+    - mni
+    - mr
+    - ne
+    - or
+    - pa
+    - sa
+    - sat
+    - sd
+    - ta
+    - te
+    - ur
+
 # Map languages to model.
 languages:
   as:

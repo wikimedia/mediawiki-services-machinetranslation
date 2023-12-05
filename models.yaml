@@ -37,3 +37,6 @@ indictrans2-indic-en:
 indictrans2-en-indic:
   model: models/indictrans2-en-indic
   tokenizer: models/indictrans2-en-indic/model.SRC
+indictrans2-indic-indic:
+  model: models/indictrans2-indic-indic
+  tokenizer: models/indictrans2-indic-indic/model.SRC

@@ -62,6 +62,7 @@ translator_classes = TranslatorRegistry.get_translators()
 
 formats = [translator_class.meta.format for translator_class in translator_classes]
 
+
 class TranslationRequest(BaseModel):
     # FIXME Use FormatEnum type once we upgrade to python 3.11+ in production.
     # FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats)))

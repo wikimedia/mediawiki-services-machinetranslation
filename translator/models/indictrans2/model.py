@@ -1,20 +1,19 @@
 import logging
 import logging.config
-from typing import List
-
-from indicnlp.transliterate import unicode_transliterate
+from typing import Dict, List
 
 from translator.models import BaseModel, languages
+
+from .utils import postprocess_batch, preprocess_batch
 
 logging.config.fileConfig("logging.conf")
 
 
 class IndicTransModel(BaseModel):
-    MODEL = "indictrans2-en-indic"
+    MODEL = "indictrans2-indic-indic"
 
     def __init__(self, config):
         super().__init__(config)
-        self.transliterator = unicode_transliterate.UnicodeIndicTransliterator()
 
     def tokenize(self, src_lang: str, tgt_lang: str, content):
         return [
@@ -24,12 +23,6 @@ class IndicTransModel(BaseModel):
 
     def detokenize(self, content: List[str]) -> str:
         return "".join(content).replace("▁", " ").strip()
-
-    def transliterate_to_devanagari(self, sentence: str, src_lang) -> str:
-        return self.transliterator.transliterate(sentence, src_lang, "hi").replace(" ् ", "्")
-
-    def transliterate_from_devanagari(self, sentence: str, tgt_lang) -> str:
-        return self.transliterator.transliterate(sentence, "hi", tgt_lang)
 
     def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """
@@ -48,12 +41,15 @@ class IndicTransModel(BaseModel):
 
         sentences_tokenized: List[str] = []
         translated_sentences: List[str] = []
+        placeholder_entity_map_sents: Dict[str, str] = {}
+        sentences, placeholder_entity_map_sents = preprocess_batch(
+            sentences, languages.get_wikicode_from_nllb(src_lang)
+        )
 
         for sentence in sentences:
             sentence = self.preprocess(src_lang, sentence)
-            if src_lang != "en":
-                sentence = self.transliterate_to_devanagari(sentence, src_lang)
             sentences_tokenized.append(self.tokenize(src_lang, tgt_lang, sentence))
+
         results = self.model.translate_iterable(
             sentences_tokenized,
             asynchronous=True,
@@ -62,19 +58,18 @@ class IndicTransModel(BaseModel):
             beam_size=1,
             no_repeat_ngram_size=4,
         )
-        for result in results:
-            translated_sentence = self.detokenize(result.hypotheses[0])
 
-            if tgt_lang != "en":
-                translated_sentence = self.transliterate_from_devanagari(
-                    translated_sentence, tgt_lang
-                )
+        translated_sentences: List[str] = [
+            self.detokenize(result.hypotheses[0]) for result in results
+        ]
 
-            translated_sentence = translated_sentence.replace(" .", ".")
-            translated_sentence = self.postprocess(tgt_lang, translated_sentence)
-            translated_sentences.append(translated_sentence)
+        translated_sentences = postprocess_batch(
+            translated_sentences,
+            placeholder_entity_map_sents,
+            languages.get_wikicode_from_nllb(tgt_lang),
+        )
 
-        return translated_sentences
+        return [self.postprocess(tgt_lang, sentence) for sentence in translated_sentences]
 
 
 class IndicEnTransModel(IndicTransModel):

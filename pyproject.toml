@@ -21,6 +21,7 @@ dependencies = [
     "pyyaml",
     "locust",
     "indic-nlp-library",
+    "sacremoses",
     "levenshtein",
     "markdown",
     "markdownify",
