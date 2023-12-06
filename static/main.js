@@ -39,13 +39,16 @@ function doTranslate() {
         text = document.getElementById('source_content').value;
     }
     document.getElementById('status').innerText = '';
-    fetch(`/api/translate/${from}/${to}`, {
+    fetch(`/api/translate`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            [mint_format]:text
+            source_language: from,
+            target_language: to,
+            format: mint_format,
+            content: text,
         })
     }).then(response => {
         if (!response.ok) {
