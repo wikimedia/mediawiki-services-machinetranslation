@@ -31,8 +31,8 @@ for prefix in namespaces:
 class SVGTranslator(BaseTranslator):
     meta = TranslatorMeta(name="SVGTranslator", format="svg", description="Translate svg content")
 
-    def __init__(self, config, source_lang, target_lang):
-        super().__init__(config, source_lang, target_lang)
+    def __init__(self, config, source_lang, target_lang, model_name: str = None):
+        super().__init__(config, source_lang, target_lang, model_name)
         self.translatables: Dict[str, str] = {}
 
     def translate(self, svg_str: str) -> str:

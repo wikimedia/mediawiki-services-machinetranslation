@@ -1,20 +1,25 @@
 import sys
 from argparse import ArgumentParser, FileType
+from enum import StrEnum
 
 from translator import (
     TranslatorRegistry,
 )
-from translator.models import ModelConfig
+from translator.models import ModelConfiguration
 
 if __name__ == "__main__":
     translatorDefs = TranslatorRegistry.get_translators()
     formats = [translatorDef.meta.format for translatorDef in translatorDefs]
-    config = ModelConfig()
-
+    config = ModelConfiguration()
+    FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats)))
+    ModelEnum = StrEnum("ModelEnum", dict(zip(config.get_model_names(), config.get_model_names())))
     parser = ArgumentParser(prog="mint", description="Translate text between any languages")
     parser.add_argument("-s", "--source")
-    parser.add_argument("-t", "--target")
-    parser.add_argument("-f", "--format", default="text", choices=formats)
+    parser.add_argument("-t", "--target", type=str)
+    parser.add_argument("-m", "--model", type=ModelEnum, choices=ModelEnum)
+    parser.add_argument(
+        "-f", "--format", default=FormatEnum.text, type=FormatEnum, choices=FormatEnum
+    )
     parser.add_argument(
         "-i",
         "--infile",
@@ -41,7 +46,7 @@ if __name__ == "__main__":
                 for translatorDef in translatorDefs
                 if translatorDef.meta.format == format
             ]
-            translator = translators[0](config, args.source, args.target)
+            translator = translators[0](config, args.source, args.target, args.model)
             if args.url is not None:
                 content = args.url
                 print(content)

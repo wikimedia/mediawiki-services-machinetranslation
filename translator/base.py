@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 
 from translator.models import BaseModel, ModelFactory, ModelNotFoundException
+from translator.models.config import ModelConfiguration
 
 logging.config.fileConfig("logging.conf")
 
@@ -36,20 +37,24 @@ class TranslatorRegistry(type):
 class BaseTranslator(object, metaclass=TranslatorRegistry):
     meta: Optional[TranslatorMeta] = None
 
-    def __init__(self, config, source_lang, target_lang):
+    def __init__(
+        self, config: ModelConfiguration, source_lang: str, target_lang: str, model_name: str = None
+    ):
         self.config = config
         self.source_lang = source_lang
         self.target_lang = target_lang
+        self.model_name = model_name
         self.translation_model = None
         self.init()
 
     def getModel(self) -> BaseModel:
-        return ModelFactory(self.config, self.source_lang, self.target_lang)
+        return ModelFactory(self.config, self.source_lang, self.target_lang, self.model_name)
 
     def init(self):
         self.translation_model = self.getModel()
         if not self.translation_model:
             raise ModelNotFoundException
+        self.model_name = self.translation_model.MODEL
 
     def translate(self, text: str) -> str:
         """
@@ -62,10 +67,6 @@ class BaseTranslator(object, metaclass=TranslatorRegistry):
         - A string representing the translated text in the target language.
         """
         raise Exception("Not implemented")
-
-    @property
-    def model_name(self) -> str:
-        return self.translation_model.MODEL
 
 
 class InvalidContentException(Exception):

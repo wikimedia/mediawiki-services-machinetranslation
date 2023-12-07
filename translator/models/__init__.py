@@ -1,5 +1,5 @@
 from .base import BaseModel, ModelNotFoundException
-from .config import ModelConfig
+from .config import ModelConfiguration
 from .indictrans2 import EnIndicTransModel, IndicEnTransModel, IndicTransModel
 from .nllb import NLLBModel, NLLBWikipediaModel
 from .opus import OpusModel
@@ -16,7 +16,7 @@ __all__ = [
     "NLLBWikipediaModel",
     "OpusModel",
     "SoftCatalaModel",
-    "ModelConfig",
+    "ModelConfiguration",
     "ModelFactory",
     "ModelNotFoundException",
 ]
