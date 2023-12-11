@@ -1,5 +1,6 @@
+# syntax=docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v0.21.1
 version: v4
-base: docker-registry.wikimedia.org/python3-build-bullseye
+base: docker-registry.wikimedia.org/python3-build-bookworm
 # Should allow downloading models. So we need write access on file system
 runs: {insecurely: true}
 lives:
