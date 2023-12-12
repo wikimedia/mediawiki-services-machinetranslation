@@ -218,7 +218,7 @@ models:
     - pa
     - sa
     - sat
-    - sd
+    # - sd Sindhi uses Arabic script in Wikipedia. Current model does not support it.
     - ta
     - te
     - ur
