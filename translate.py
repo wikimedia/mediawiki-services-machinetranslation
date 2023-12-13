@@ -111,6 +111,14 @@ def get_languages() -> dict:
     return config.get_all_languages()
 
 
+@app.middleware("statsd")
+async def add_statsd_request_log(request: Request, call_next):
+    if statsd_client:
+        statsd_client.incr("requests")
+    response = await call_next(request)
+    return response
+
+
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
