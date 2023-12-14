@@ -265,6 +265,8 @@ URL_PATTERN = (
 EMAIL_PATTERN = r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}"
 # handles dates, time, percentages, proportion, ratio, etc
 NUMERAL_PATTERN = r"(~?\d+\.?\d*\s?%?\s?-?\s?~?\d+\.?\d*\s?%|~?\d+%|\d+[-\/.,:']\d+[-\/.,:'+]\d+(?:\.\d+)?|\d+[-\/.:'+]\d+(?:\.\d+)?)"  # noqa: E501
+# PATTERNS like (1837–1901)
+YEAR_RANGE_PATTERN = r"\([\d]{4}[-][\d]{4}\)"
 # handles upi, social media handles and hashtags
 OTHER_PATTERN = r"[A-Za-z0-9]*[#|@]\w+"
 
@@ -388,7 +390,7 @@ def normalize(
             placeholders to their original values.
     """
     if patterns is None:
-        patterns = [EMAIL_PATTERN, URL_PATTERN, NUMERAL_PATTERN, OTHER_PATTERN]
+        patterns = [EMAIL_PATTERN, URL_PATTERN, YEAR_RANGE_PATTERN, NUMERAL_PATTERN, OTHER_PATTERN]
     text = normalize_indic_numerals(text.strip("\n"))
     text, placeholder_entity_map = wrap_with_placeholders(text, patterns)
     return text, placeholder_entity_map
