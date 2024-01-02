@@ -1,13 +1,13 @@
 import logging
 import logging.config
-from typing import Dict
+from typing import Dict, List
 
 from translator.models import (
     BaseModel,
     EnIndicTransModel,
     IndicEnTransModel,
     IndicTransModel,
-    ModelConfig,
+    ModelConfiguration,
     NLLBModel,
     NLLBWikipediaModel,
     OpusModel,
@@ -19,7 +19,9 @@ logging.config.fileConfig("logging.conf")
 translator_cache: Dict[str, BaseModel] = {}
 
 
-def ModelFactory(translator_config: ModelConfig, src_lang: str, tgt_lang: str) -> BaseModel:
+def ModelFactory(
+    translator_config: ModelConfiguration, src_lang: str, tgt_lang: str, model_name: str = None
+) -> BaseModel:
     translation_models = {
         "nllb200-600M": NLLBModel,
         "indictrans2-indic-indic": IndicTransModel,
@@ -36,8 +38,10 @@ def ModelFactory(translator_config: ModelConfig, src_lang: str, tgt_lang: str) -
         "opusmt-en-ve": OpusModel,
         "softcatala": SoftCatalaModel,
     }
-    model = translator_config.language_pair_mapping[src_lang][tgt_lang]
-    if model not in translator_cache:
-        model_config = translator_config.models.get(model)
-        translator_cache[model] = translation_models.get(model)(model_config)
-    return translator_cache[model]
+    model_names: List[str] = translator_config.language_pair_mapping[src_lang][tgt_lang]
+    if not model_name:
+        model_name = model_names[-1]
+    if model_name not in translator_cache:
+        model_config = translator_config.models.get(model_name)
+        translator_cache[model_name] = translation_models.get(model_name)(model_config)
+    return translator_cache[model_name]

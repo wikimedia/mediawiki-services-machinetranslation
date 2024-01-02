@@ -2,7 +2,8 @@ import logging
 import logging.config
 import os
 import time
-from typing import Literal
+from enum import StrEnum
+from typing import Optional
 
 import statsd
 from fastapi import FastAPI, HTTPException, Request
@@ -14,7 +15,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 
 from translator import TranslatorRegistry
-from translator.models import ModelConfig, ModelFactory
+from translator.models import ModelConfiguration, ModelFactory
 
 logging.config.fileConfig("logging.conf")
 
@@ -57,21 +58,20 @@ between large number of languages.
 
 app.openapi = custom_openapi
 
-config = ModelConfig()
+config = ModelConfiguration()
 translator_classes = TranslatorRegistry.get_translators()
 
 formats = [translator_class.meta.format for translator_class in translator_classes]
+ModelEnum = StrEnum("ModelEnum", dict(zip(config.get_model_names(), config.get_model_names())))
+FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats)))
 
 
 class TranslationRequest(BaseModel):
-    # FIXME Use FormatEnum type once we upgrade to python 3.11+ in production.
-    # FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats)))
-    format: Literal["html", "json", "markdown", "text", "svg", "webpage"] = Field(
-        ..., description="The content format"
-    )
+    format: FormatEnum = Field(..., description="The content format")
     content: str = Field(..., description="The content to translate")
     source_language: str = Field(..., description="The source language")
     target_language: str = Field(..., description="The target language")
+    model: Optional[ModelEnum] = Field(None, description="The MT model to use")
 
     model_config = {
         "json_schema_extra": {
@@ -81,7 +81,7 @@ class TranslationRequest(BaseModel):
                     "content": "The Earth rotates around the Sun from west to east.",
                     "source_language": "en",
                     "target_language": "ta",
-                }
+                },
             ]
         }
     }
@@ -181,7 +181,9 @@ async def translate_handler(request: TranslationRequest) -> TranslationResponse:
             detail=f"Request size exceeds maximum character limit {char_limit}",
         )
 
-    translator = translator_class(config, request.source_language, request.target_language)
+    translator = translator_class(
+        config, request.source_language, request.target_language, request.model
+    )
     start = time.time()
     translation = translator.translate(request.content)
     end = time.time()

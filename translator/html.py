@@ -181,8 +181,8 @@ class HTMLTranslator(BaseTranslator):
         character_limit=100000,
     )
 
-    def __init__(self, config, source_lang, target_lang):
-        super().__init__(config, source_lang, target_lang)
+    def __init__(self, config, source_lang, target_lang, model_name: str = None):
+        super().__init__(config, source_lang, target_lang, model_name)
         self.translatables: Dict[str, str] = {}
         # Keep all paragraph text mapped to sentences in it.
         self.paragraphs: Dict[str, List[str]] = {}
