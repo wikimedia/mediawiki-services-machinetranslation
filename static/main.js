@@ -6,6 +6,34 @@ function getSupportedLanguages() {
     return fetch(`/api/languages`).then(response => response.json())
 }
 
+function list_models() {
+    const from = document.getElementById('source_lang').value;
+    const to = document.getElementById('target_lang').value;
+    const models =  allLanguages[from][to];
+    const model_selector = document.getElementById('mtmodel');
+    model_selector.innerHTML = '';
+
+    // Define a weight for models to sort in appropriate way
+    // Sort generic models at end.
+    const sortOrder = {
+        "nllb-wikipedia": 800,
+        "nllb200-600M": 900,
+        "madlad-400": 1000
+    }
+    models.sort((a, b) => {
+        const wa = a in sortOrder ? sortOrder[a] : models.indexOf(a);
+        const wb = b in sortOrder ? sortOrder[b] : models.indexOf(b);
+        return wa - wb;
+    })
+
+    for (let i = 0; i < models.length; i++) {
+        const el = document.createElement("option");
+        el.textContent = models[i];
+        el.value = models[i];
+        model_selector.appendChild(el);
+    }
+}
+
 function getLanguageNames() {
     return fetch('https://en.wikipedia.org/w/api.php?action=query&liprop=autonym|name&meta=languageinfo&uselang=en&format=json&origin=*')
         .then(response => response.json())
@@ -30,6 +58,7 @@ function doTranslate() {
     document.getElementById('progress').style.display = "block";
     const from = document.getElementById('source_lang').value;
     const to = document.getElementById('target_lang').value;
+    const model = document.getElementById('mtmodel').value;
     let text;
     if (mint_format=='html'){
         text = document.getElementById('source_content').innerHTML;
@@ -48,6 +77,7 @@ function doTranslate() {
             source_language: from,
             target_language: to,
             format: mint_format,
+            model: model,
             content: text,
         })
     }).then(response => {
@@ -106,6 +136,7 @@ function listSupportedTargetLanguages(sourceLang, allPairs) {
 
     tgt_selector.addEventListener("change", function () {
         document.getElementById('target_content').innerText = ""
+        list_models();
     });
 }
 
@@ -144,4 +175,5 @@ document.addEventListener("DOMContentLoaded", async () => {
             src_selector.dispatchEvent(new Event('change'));
         })
     });
+    list_models()
 });
