@@ -2,7 +2,7 @@ import logging
 import logging.config
 from typing import List
 
-from translator.models import BaseModel
+from translator.models import BaseModel, languages
 
 logging.config.fileConfig("logging.conf")
 
@@ -30,6 +30,8 @@ class MADLAD400Model(BaseModel):
         Returns:
         - List of translated sentences.
         """
+        src_lang = languages.WIKI2MADLAD.get(src_lang, src_lang)
+        tgt_lang = languages.WIKI2MADLAD.get(tgt_lang, tgt_lang)
         translated_sentences: List[str] = []
         sentences_tokenized: List[str] = []
 

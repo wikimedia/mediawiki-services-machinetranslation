@@ -252,3 +252,12 @@ def get_wikicode_from_nllb(lang):
 
 def get_wikicode_to_iso(lang):
     return WIKI2ISO[lang]
+
+
+WIKI2MADLAD = {
+    "simple": "en_xx_simple",
+    "zh-min-nan": "nan_Latn_TW",
+    "nds-nl": "nds_NL",
+    "cr": "cr_Latn",
+    "tly": "tly_IR",
+}

@@ -231,460 +231,62 @@ models:
   # MADLAD-400 is a fallback model. It has relatively low quality, but wider language coverage
   # If there is no other models, this model will be used.
   madlad-400:
-    - ace
-    - ace_Arab
-    - af
-    - am
-    - an
-    - ar
-    - ary
-    - arz
-    - as
-    - az
-    - ba
-    - ban
-    - bar
-    - be
-    - bg
-    - bho
-    - bjn
-    - bjn_Arab
-    - bm
-    - bn
-    - br
-    - bs
-    - bug
-    - ca
-    - ceb
-    - crh_Latn
-    - cs
-    - cy
-    - da
-    - de
-    - din
-    - dv
-    - dz
-    - el
-    - en
-    - eo
-    - es
-    - et
-    - eu
-    - fa
-    - fi
-    - fo
-    - fr
-    - fr_CA
-    - fur
-    - fuv
-    - fy
-    - ga
-    - gd
-    - gl
-    - gn
-    - gu
-    - ha
-    - he
-    - hi
-    - hne
-    - hr
-    - hu
-    - hy
-    - id
-    - ig
-    - io
-    - is
-    - it
-    - iu
-    - ja
-    - jv
-    - ka
-    - kk
-    - km
-    - kn
-    - ko
-    - kr
-    - kr_Arab
-    - ks
-    - ks_Deva
-    - ku
-    - ky
-    - la
-    - lb
-    - li
-    - lij
-    - lmo
-    - lt
-    - ltg
-    - lv
-    - mag
-    - mg
-    - mi
-    - mk
-    - ml
-    - mn
-    - mni
-    - mr
-    - ms
-    - mt
-    - mwl
-    - my
-    - nds
-    - nds_NL
-    - ne
-    - nl
-    - nn
-    - "no"
-    - nus
-    - oc
-    - or
-    - pa
-    - pl
-    - prs
-    - ps
-    - pt
-    - ro
-    - ru
-    - rw
-    - sc
-    - scn
-    - sd
-    - se
-    - sh
-    - shn
-    - si
-    - en_xx_simple
-    - sk
-    - sl
-    - so
-    - sq
-    - sr
-    - sv
-    - sw
-    - szl
-    - ta
-    - taq
-    - taq_Tfng
-    - te
-    - tg
-    - th
-    - tk
-    - fil
-    - tr
-    - tt
-    - tzm
-    - ug
-    - uk
-    - ur
-    - uz
-    - vec
-    - vi
-    - wa
-    - wuu
-    - xh
-    - yi
-    - yo
-    - zh
-    - zh_Hant
-    - zu
-    - abt
-    - acf
-    - ada
-    - adh
-    - ady
-    - agr
-    - ahk
-    - ak
-    - akb
-    - alt
-    - alz
-    - amu
-    - ang
-    - ann
-    - ape
-    - arn
-    - av
-    - awa
-    - ay
-    - az_RU
-    - bas
-    - bbc
-    - bci
-    - ber
-    - ber_Latn
-    - bew
-    - bg_Latn
-    - bgp
-    - bi
-    - bik
-    - bim
-    - bn_Latn
-    - bo
-    - bqc
-    - bru
-    - brx
-    - bts
-    - btx
-    - bua
-    - bus
-    - bzj
-    - cab
-    - cac
-    - cak
-    - cbk
-    - cce
-    - ce
-    - cfm
-    - ch
-    - chk
-    - chm
-    - chr
-    - ckb
-    - cnh
-    - co
-    - cr_Latn
-    - crh
-    - crs
-    - ctd_Latn
-    - ctu
-    - cuk
-    - cv
-    - dje
-    - djk
-    - dln
-    - doi
-    - dov
-    - dtp
-    - zxx_xx_dtynoise
-    - dwr
-    - dyu
-    - ee
-    - el_Latn
-    - emp
-    - enq
-    - bum
-    - ff
-    - ffm
-    - fip
-    - fj
-    - fon
-    - frp
-    - gag
-    - gbm
-    - gof
-    - gom
-    - gom_Latn
-    - gor
-    - grc
-    - gsw
-    - gu_Latn
-    - gub
-    - guc
-    - guh
-    - gui
-    - gv
-    - gvl
-    - gym
-    - haw
-    - hi_Latn
-    - hif
-    - hil
-    - hmn
-    - ho
-    - ht
-    - hui
-    - hus
-    - hvn
-    - iba
-    - ibb
-    - ify
-    - ilo
-    - inb
-    - iso
-    - ium
-    - izz
-    - jac
-    - jam
-    - jiv
-    - jvn
-    - kaa
-    - kaa_Latn
-    - kac
-    - kbd
-    - kbp
-    - kek
-    - kg
-    - kha
-    - kj
-    - kjg
-    - kjh
-    - kl
-    - kmb
-    - kmz_Latn
-    - kn_Latn
-    - knj
-    - koi
-    - kos
-    - krc
-    - kri
-    - ksd
-    - ksw
-    - ktu
-    - kum
-    - kv
-    - kw
-    - kwi
-    - laj
-    - lg
-    - lhu
-    - ln
-    - lo
-    - lrc
-    - lu
-    - lus
-    - mad
-    - mai
-    - mak
-    - mam
-    - mas
-    - maz
-    - mbt
-    - mdf
-    - meo
-    - meu
-    - mfe
-    - mgh
-    - mh
-    - min
-    - miq
-    - mkn
-    # - ml_Latn
-    - mps
-    - mqy
-    - mrj
-    - mrw
-    - ms_Arab
-    - ms_Arab_BN
-    - msb
-    - msi
-    - msm
-    - myv
-    - nan_Latn_TW
-    - ndc_ZW
-    - new
-    - ngu
-    - nhe
-    - nia
-    - nij
-    - niq
-    - nnb
-    - noa
-    - nog
-    - nr
-    - nso
-    - nut
-    - nv
-    - ny
-    - nyu
-    - nzi
-    - oj
-    - om
-    - os
-    - otq
-    - pag
-    - pap
-    - pau
-    - pck
-    - pis
-    - pon
-    - ppk
-    - qu
-    - qub
-    - quc
-    - quf
-    - quh
-    - qup
-    - quy
-    - qvc
-    - qvi
-    - qvz
-    - qxr
-    - raj
-    - rcf
-    - rki
-    - rm
-    - rmc
-    - rn
-    - rom
-    - ru_Latn
-    - rwo
-    - sa
-    - sah
-    - sat_Latn
-    - sda
-    - seh
-    - sg
-    - shp
-    - sja
-    - skr
-    - sm
-    - smt
-    - sn
-    - spp
-    - srm
-    - srn
-    - ss
-    - st
-    - stq
-    - su
-    - sus
-    - suz
-    - sxn
-    - syr
-    - ta_Latn
-    - tab
-    - taj
-    - tbz
-    - tca
-    - tcy
-    - tdx
-    - te_Latn
-    - teo
-    - tet
-    - ti
-    - tiv
-    - tks
-    - tlh
-    - tll
-    - tly_IR
-    - tn
-    - to
-    - toj
-    - trp
-    - ts
-    - tsc
-    - tsg
-    - tuc
-    - tvl
-    - twu
-    - tyv
-    - tyz
-    - tzh
-    - tzj
-    - tzo
-    - ubu
-    - udm
-    - ve
-    - wal
-    - war
-    - wo
-    - xal
-    - yap
-    - yua
-    - zap
-    - zh_Latn
-    - zne
-    - zza
+    - ady # Adyghe
+    - alt # Southern Altai
+    - an  # Aragonese
+    - ang # Old English
+    - av  # Avar
+    - bar # Bavarian (bar)
+    - bi  # Bislama
+    - br  # Breton
+    - ce  # Chechen
+    - ch  # Chamorro
+    - cr  # Cree
+    - en  # English
+    - simple # Simple English (simple)
+    - frp # Arpitan
+    - gag # Gagauz
+    - gor # Gorontalo
+    - gv  # Manx
+    - hif # Fiji Hindi
+    - io  # Ido
+    - iu  # Inuktitut
+    - jam # Jamaican Creole English
+    - kaa # Kara-Kalpak
+    - kbd # Kabardian
+    - kl  # Kalaallisut
+    - koi # Komi-Permyak
+    - krc # Karachay-Balkar
+    - kv  # Komi
+    - kw  # Cornish
+    - mad # Madurese
+    - mdf # Moksha
+    - mnw # Mon
+    - mwl # Mirandese
+    - myv # Erzya
+    - nds # Low German
+    - nds-nl # Low Saxon
+    - new # Newari
+    - nia # Nias
+    - nv  # Navajo
+    - os  # Ossetic
+    - pam # Pampanga
+    - rm  # Romansh
+    - se  # Northern Sami
+    - sh  # Serbo-Croatian
+    - skr # Saraiki
+    - srn # Sranan Tongo
+    - stq # Saterland Frisian
+    - tcy # Tulu
+    - tet # Tetum
+    - tly # Talysh
+    - tyv # Tuvinian
+    - ve  # Venda
+    - wa  # Walloon
+    - wuu # Wu Chinese
+    - xal # Kalmyk
+    - za  # Zhuang
+    - zh-min-nan # Nan
 
 # Map languages to model.
 languages:

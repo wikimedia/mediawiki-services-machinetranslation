@@ -58,8 +58,6 @@ class ModelConfiguration:
                         else:
                             self.language_pair_mapping[lang1][lang2] = [model_name]
 
-
-
     def get_all_languages(self):
         return self.language_pair_mapping
 
