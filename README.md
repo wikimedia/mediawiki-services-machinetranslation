@@ -9,6 +9,7 @@ Currently used models:
 * [OpusMT](https://github.com/Helsinki-NLP/OPUS-MT)
 * [SoftCatala](https://github.com/Softcatala/nmt-models)
 * [IndicTrans2](https://github.com/AI4Bharat/IndicTrans2)
+* [MADLAD-400](https://huggingface.co/google/madlad400-3b-mt)
 
 The models are optimized for performance using [OpenNMT CTranslate2](https://github.com/OpenNMT/CTranslate2)
 
@@ -92,3 +93,4 @@ MinT uses multiple machine translation models internally.
 * OpusMT models are licensed under [CC-BY-4.0](https://creativecommons.org/licenses/by/4.0/).
 * Softcatala models are [MIT licensed](https://github.com/Softcatala/nmt-models/blob/master/LICENSE).
 * IndicTrans2 models are [MIT licensed](https://github.com/AI4Bharat/IndicTrans2)
+* MADLAD-400 models are [Apache 2.0 licensed](https://huggingface.co/google/madlad400-3b-mt)

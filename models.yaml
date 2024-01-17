@@ -40,3 +40,6 @@ indictrans2-en-indic:
 indictrans2-indic-indic:
   model: models/indictrans2-indic-indic
   tokenizer: models/indictrans2-indic-indic/model.SRC
+madlad-400:
+  model: models/madlad400-3b-ct2
+  tokenizer: models/madlad400-3b-ct2/sentencepiece.model

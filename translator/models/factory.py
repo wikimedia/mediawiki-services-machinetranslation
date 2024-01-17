@@ -7,6 +7,7 @@ from translator.models import (
     EnIndicTransModel,
     IndicEnTransModel,
     IndicTransModel,
+    MADLAD400Model,
     ModelConfiguration,
     NLLBModel,
     NLLBWikipediaModel,
@@ -23,11 +24,12 @@ def ModelFactory(
     translator_config: ModelConfiguration, src_lang: str, tgt_lang: str, model_name: str = None
 ) -> BaseModel:
     translation_models = {
-        "nllb200-600M": NLLBModel,
-        "indictrans2-indic-indic": IndicTransModel,
-        "indictrans2-indic-en": IndicEnTransModel,
         "indictrans2-en-indic": EnIndicTransModel,
+        "indictrans2-indic-en": IndicEnTransModel,
+        "indictrans2-indic-indic": IndicTransModel,
+        "madlad-400": MADLAD400Model,
         "nllb-wikipedia": NLLBWikipediaModel,
+        "nllb200-600M": NLLBModel,
         "opusmt-en-bcl": OpusModel,
         "opusmt-en-bi": OpusModel,
         "opusmt-en-chr": OpusModel,

@@ -219,3 +219,9 @@ async def translate_handler_deprecated(
     )
 
     return await translate_handler(translation_request)
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8989)

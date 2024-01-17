@@ -70,6 +70,21 @@ do
 	fi
 done
 
+
+# MADLAD-400 NMT model for English to Catalan
+MODEL_BASE_URL=${BASE_URL}/madlad400-3b-ct2
+MODEL_DIR=${BASE_MODEL_DIR}/madlad400-3b-ct2
+for i in config.json model.bin sentencepiece.model shared_vocabulary.json
+do
+	if [ -f "${MODEL_DIR}/${i}" ]; then
+		continue
+	else
+		echo "Downloading $MODEL_BASE_URL/${i}"
+		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
+	fi
+done
+
+
 # Indictrans2 models for Indic languages to English
 MODEL_BASE_URL="${BASE_URL}/indictrans2/indictrans-indic-en"
 MODEL_DIR="${BASE_MODEL_DIR}/indictrans2-indic-en"

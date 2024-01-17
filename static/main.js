@@ -9,7 +9,7 @@ function getSupportedLanguages() {
 function list_models() {
     const from = document.getElementById('source_lang').value;
     const to = document.getElementById('target_lang').value;
-    const models =  allLanguages[from][to];
+    const models = allLanguages[from][to];
     const model_selector = document.getElementById('mtmodel');
     model_selector.innerHTML = '';
 
@@ -175,5 +175,5 @@ document.addEventListener("DOMContentLoaded", async () => {
             src_selector.dispatchEvent(new Event('change'));
         })
     });
-    list_models()
+    list_models();
 });
