@@ -33,6 +33,19 @@ class ModelConfiguration:
         with open("./config.yaml") as f:
             self.config = yaml.load(f, Loader=yaml.SafeLoader)
 
+        # First process language specific mapping
+        for src in self.config["languages"]:
+            target_languages = self.config["languages"][src]
+            for tgt_mapping in target_languages:
+                tgt, model_name = next(iter(tgt_mapping.items()))
+                if src not in self.language_pair_mapping:
+                    self.language_pair_mapping[src] = {}
+                elif tgt in self.language_pair_mapping[src]:
+                    self.language_pair_mapping[src][tgt].append(model_name)
+                else:
+                    self.language_pair_mapping[src][tgt] = [model_name]
+
+        # Then use model based language listing.
         for model_name in self.config["models"]:
             languages = self.config["models"][model_name]
             for lang1 in languages:
@@ -45,16 +58,7 @@ class ModelConfiguration:
                         else:
                             self.language_pair_mapping[lang1][lang2] = [model_name]
 
-        for src in self.config["languages"]:
-            target_languages = self.config["languages"][src]
-            for tgt_mapping in target_languages:
-                tgt, model_name = next(iter(tgt_mapping.items()))
-                if src not in self.language_pair_mapping:
-                    self.language_pair_mapping[src] = {}
-                elif tgt in self.language_pair_mapping[src]:
-                    self.language_pair_mapping[src][tgt].append(model_name)
-                else:
-                    self.language_pair_mapping[src][tgt] = [model_name]
+
 
     def get_all_languages(self):
         return self.language_pair_mapping

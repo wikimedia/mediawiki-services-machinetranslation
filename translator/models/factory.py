@@ -42,7 +42,8 @@ def ModelFactory(
     }
     model_names: List[str] = translator_config.language_pair_mapping[src_lang][tgt_lang]
     if not model_name:
-        model_name = model_names[-1]
+        # First one in the model names is the default model for the pair.
+        model_name = model_names[0]
     if model_name not in translator_cache:
         model_config = translator_config.models.get(model_name)
         translator_cache[model_name] = translation_models.get(model_name)(model_config)

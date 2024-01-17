@@ -13,19 +13,6 @@ function list_models() {
     const model_selector = document.getElementById('mtmodel');
     model_selector.innerHTML = '';
 
-    // Define a weight for models to sort in appropriate way
-    // Sort generic models at end.
-    const sortOrder = {
-        "nllb-wikipedia": 800,
-        "nllb200-600M": 900,
-        "madlad-400": 1000
-    }
-    models.sort((a, b) => {
-        const wa = a in sortOrder ? sortOrder[a] : models.indexOf(a);
-        const wb = b in sortOrder ? sortOrder[b] : models.indexOf(b);
-        return wa - wb;
-    })
-
     for (let i = 0; i < models.length; i++) {
         const el = document.createElement("option");
         el.textContent = models[i];

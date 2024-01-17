@@ -3,6 +3,36 @@
 # below.
 # Use two letter language codes everywhere.
 models:
+  # The order of models has meaning. The should be listed in the
+  # decreasing order of preference.
+  # When a language has multiple models, language specific model mapping
+  # would be checked as first step. If not, models listed here would be
+  # tried. The first model that matches for the pair would be the default
+  # model for the language pair.
+  indictrans2-indic-indic:
+    - as
+    - bn
+    - brx
+    - doi
+    - gom
+    - gu
+    - hi
+    - kn
+    - ks
+    - mai
+    - ml
+    - mni
+    - mr
+    - ne
+    - or
+    - pa
+    - sa
+    - sat
+    # - sd Sindhi uses Arabic script in Wikipedia. Current model does not support it.
+    - ta
+    - te
+    - ur
+
   nllb200-600M:
     - ace
     - acm
@@ -198,31 +228,8 @@ models:
     - yo
     - zh
     - zu
-
-  indictrans2-indic-indic:
-    - as
-    - bn
-    - brx
-    - doi
-    - gom
-    - gu
-    - hi
-    - kn
-    - ks
-    - mai
-    - ml
-    - mni
-    - mr
-    - ne
-    - or
-    - pa
-    - sa
-    - sat
-    # - sd Sindhi uses Arabic script in Wikipedia. Current model does not support it.
-    - ta
-    - te
-    - ur
-
+  # MADLAD-400 is a fallback model. It has relatively low quality, but wider language coverage
+  # If there is no other models, this model will be used.
   madlad-400:
     - ace
     - ace_Arab
