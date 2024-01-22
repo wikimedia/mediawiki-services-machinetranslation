@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     src_selector.addEventListener("change", () => {
         const from = document.getElementById('source_lang').value;
         listSupportedTargetLanguages(from, allLanguages)
+        list_models();
     });
 
     sourceElement.addEventListener("input", () => {
