@@ -40,23 +40,22 @@ class ModelConfiguration:
                 tgt, model_name = next(iter(tgt_mapping.items()))
                 if src not in self.language_pair_mapping:
                     self.language_pair_mapping[src] = {}
-                elif tgt in self.language_pair_mapping[src]:
-                    self.language_pair_mapping[src][tgt].append(model_name)
-                else:
-                    self.language_pair_mapping[src][tgt] = [model_name]
+                if tgt not in self.language_pair_mapping[src]:
+                    self.language_pair_mapping[src][tgt] = []
+                self.language_pair_mapping[src][tgt].append(model_name)
 
         # Then use model based language listing.
         for model_name in self.config["models"]:
             languages = self.config["models"][model_name]
-            for lang1 in languages:
-                for lang2 in languages:
-                    if lang1 != lang2:
-                        if lang1 not in self.language_pair_mapping:
-                            self.language_pair_mapping[lang1] = {}
-                        elif lang2 in self.language_pair_mapping[lang1]:
-                            self.language_pair_mapping[lang1][lang2].append(model_name)
-                        else:
-                            self.language_pair_mapping[lang1][lang2] = [model_name]
+            for src in languages:
+                for tgt in languages:
+                    if src == tgt:
+                        continue
+                    if src not in self.language_pair_mapping:
+                        self.language_pair_mapping[src] = {}
+                    if tgt not in self.language_pair_mapping[src]:
+                        self.language_pair_mapping[src][tgt] = []
+                    self.language_pair_mapping[src][tgt].append(model_name)
 
     def get_all_languages(self):
         return self.language_pair_mapping
