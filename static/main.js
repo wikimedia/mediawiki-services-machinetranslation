@@ -15,10 +15,16 @@ function list_models() {
 
     for (let i = 0; i < models.length; i++) {
         const el = document.createElement("option");
-        el.textContent = models[i];
+        if (i == 0 && models.length > 1) {
+            el.textContent = `${models[i]} (default)`;
+        } else {
+            el.textContent = models[i];
+        }
         el.value = models[i];
         model_selector.appendChild(el);
     }
+    // Disable selector if there is only one model
+    model_selector.disabled = models.length === 1;
 }
 
 function getLanguageNames() {
