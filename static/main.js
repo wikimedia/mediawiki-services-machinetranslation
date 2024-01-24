@@ -114,14 +114,15 @@ function listSupportedTargetLanguages(sourceLang, allPairs) {
     let languageNameMap = new Map()
 
     for (langCode in targetLangs) {
-        languageNameMap.set(langCode,  languageNames[langCode]?.name || langCode);
+        languageNameMap.set(languageNames[langCode]?.name || langCode, langCode);
     }
-    languageNameMap = new Map(Array.from(languageNameMap).sort((a, b) => a[1].toLowerCase() > b[1].toLowerCase()));
-    for (const [langCode, displayName] of languageNameMap) {
+    const sortedLanguageNames = [...languageNameMap.keys()].sort(Intl.Collator().compare);
+    for (const displayName of sortedLanguageNames) {
+        const langCode = languageNameMap.get(displayName);
         const el = document.createElement("option");
         el.textContent = displayName;
         el.value = langCode;
-        if (langCode == currentSelection ) {
+        if (langCode == currentSelection) {
             el.selected = true;
         }
         tgt_selector.appendChild(el);
@@ -144,10 +145,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     let languageNameMap = new Map()
 
     for (langCode in allLanguages) {
-        languageNameMap.set(langCode, languageNames[langCode]?.name || langCode);
+        languageNameMap.set(languageNames[langCode]?.name || langCode, langCode);
     }
-    languageNameMap = new Map(Array.from(languageNameMap).sort((a, b) => a[1].toLowerCase() > b[1].toLowerCase()));
-    for (const [langCode, displayName] of languageNameMap) {
+    const sortedLanguageNames = [...languageNameMap.keys()].sort(Intl.Collator().compare);
+    for (const displayName of sortedLanguageNames) {
+        const langCode = languageNameMap.get(displayName);
         const el = document.createElement("option");
         el.textContent = displayName;
         el.value = langCode;
