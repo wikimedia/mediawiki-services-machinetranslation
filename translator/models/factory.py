@@ -32,6 +32,7 @@ def ModelFactory(
         "nllb200-600M": NLLBModel,
         "opusmt-en-bcl": OpusModel,
         "opusmt-en-bi": OpusModel,
+        "opusmt-en-fr-br": OpusModel,
         "opusmt-en-chr": OpusModel,
         "opusmt-en-guw": OpusModel,
         "opusmt-en-srn": OpusModel,

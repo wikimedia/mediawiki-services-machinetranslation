@@ -10,6 +10,9 @@ opusmt-en-bi:
 opusmt-en-bcl:
   model: models/opusmt-en-bcl
   tokenizer: models/opusmt-en-bcl/source.spm
+opusmt-en-fr-br:
+  model: models/opusmt-en-fr-br
+  tokenizer: models/opusmt-en-fr-br/source.spm
 opusmt-en-to:
   model: models/opusmt-en-to
   tokenizer: models/opusmt-en-to/source.spm
