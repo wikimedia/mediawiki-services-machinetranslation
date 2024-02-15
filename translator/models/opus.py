@@ -47,7 +47,7 @@ class OpusModel(BaseModel):
         )
 
         for result in results:
-            translated_sentence = self.detokenize(result.hypotheses[0][1:])
+            translated_sentence = self.detokenize(result.hypotheses[0])
             translated_sentence = self.postprocess(tgt_lang, translated_sentence)
             translated_sentences.append(translated_sentence)
 
