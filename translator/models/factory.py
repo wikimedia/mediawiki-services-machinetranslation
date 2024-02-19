@@ -38,6 +38,7 @@ def ModelFactory(
         "opusmt-en-to": OpusModel,
         "opusmt-en-ty": OpusModel,
         "opusmt-en-ve": OpusModel,
+        "opusmt-sv-fi": OpusModel,
         "softcatala": SoftCatalaModel,
     }
     model_names: List[str] = translator_config.language_pair_mapping[src_lang][tgt_lang]
