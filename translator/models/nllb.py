@@ -1,8 +1,9 @@
 import logging
 import logging.config
-from typing import List
+from typing import Dict, List
 
 from translator.models import BaseModel, languages
+from translator.models.utils import apply_missing_references, extract_potential_references
 
 logging.config.fileConfig("logging.conf")
 
@@ -41,7 +42,11 @@ class NLLBModel(BaseModel):
         translated_sentences: List[str] = []
         target_prefixes = []
         assert self.model
+
+        reference_map: Dict[str, List[str]] = {}
+
         for sentence in sentences:
+            reference_map[sentence] = extract_potential_references(sentence)
             sentence = self.preprocess(src_lang, sentence)
             sentences_tokenized.append(self.tokenize(src_lang, tgt_lang, sentence))
             target_prefix = self.get_target_prefixes(tgt_lang)
@@ -61,6 +66,8 @@ class NLLBModel(BaseModel):
             translated_sentence = self.detokenize(result.hypotheses[0][1:])
             translated_sentence = self.postprocess(tgt_lang, translated_sentence)
             translated_sentences.append(translated_sentence)
+
+        translated_sentences = apply_missing_references(reference_map, translated_sentences)
 
         return translated_sentences
 

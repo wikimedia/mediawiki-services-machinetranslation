@@ -13,7 +13,7 @@ with patch.object(
 
 tests = {
     "The quick brown fox jumps over the lazy dog": "dog lazy the over jumps fox brown quick The",
-    "War is peace. Freedom is slavery.": "peace is War. slavery is Freedom.",
+    "War is peace. Freedom is slavery. [12]": "peace is War. slavery is Freedom. [12]",
 }
 
 

@@ -3,6 +3,7 @@ import logging.config
 from typing import Dict, List
 
 from translator.models import BaseModel, languages
+from translator.models.utils import apply_missing_references, extract_potential_references
 
 from .utils import postprocess_batch, preprocess_batch
 
@@ -42,11 +43,16 @@ class IndicTransModel(BaseModel):
         sentences_tokenized: List[str] = []
         translated_sentences: List[str] = []
         placeholder_entity_map_sents: Dict[str, str] = {}
-        sentences, placeholder_entity_map_sents = preprocess_batch(
+        reference_map: Dict[str, List[str]] = {}
+
+        for sentence in sentences:
+            reference_map[sentence] = extract_potential_references(sentence)
+
+        pre_processed_sentences, placeholder_entity_map_sents = preprocess_batch(
             sentences, languages.get_wikicode_from_nllb(src_lang)
         )
 
-        for sentence in sentences:
+        for sentence in pre_processed_sentences:
             sentence = self.preprocess(src_lang, sentence)
             sentences_tokenized.append(self.tokenize(src_lang, tgt_lang, sentence))
 
@@ -62,6 +68,8 @@ class IndicTransModel(BaseModel):
         translated_sentences: List[str] = [
             self.detokenize(result.hypotheses[0]) for result in results
         ]
+
+        translated_sentences = apply_missing_references(reference_map, translated_sentences)
 
         translated_sentences = postprocess_batch(
             translated_sentences,

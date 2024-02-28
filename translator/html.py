@@ -123,7 +123,6 @@ def fuzzy_find(text, key, search_start=0) -> Tuple[int, str]:
         # Avoid approx match for numbers.
         if bool(re.match(r"^\d+$", phrase)):
             continue
-        # print(f"phrase {phrase}")
         if (
             distance(phrase.lower(), re.sub(r"[^\w\s]", "", key).lower(), score_cutoff=score_cutoff)
             < score_cutoff
