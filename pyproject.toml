@@ -42,7 +42,7 @@ line-length = 100
 
 [tool.ruff]
 line-length = 100
-select = [
+lint.select = [
     "E",  # pycodestyle errors
     "W",  # pycodestyle warnings
     "F",  # pyflakes
@@ -50,7 +50,7 @@ select = [
     "C",  # flake8-comprehensions
     "B",  # flake8-bugbear
 ]
-ignore = [
+lint.ignore = [
     "B008",  # do not perform function calls in argument defaults
     "C901",  # too complex
 ]
