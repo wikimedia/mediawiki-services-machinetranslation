@@ -120,9 +120,14 @@ def fuzzy_find(text, key, search_start=0) -> Tuple[int, str]:
     ngram_words: List[str]
     for ngram_words in ngram(context, number_of_words_in_key):
         phrase = " ".join(ngram_words)
+        # Avoid approx match for numbers.
+        if bool(re.match(r"^\d+$", phrase)):
+            continue
+        # print(f"phrase {phrase}")
         if (
             distance(phrase.lower(), re.sub(r"[^\w\s]", "", key).lower(), score_cutoff=score_cutoff)
             < score_cutoff
+            and len(phrase) > score_cutoff
         ):
             candidates.append(phrase)
 
