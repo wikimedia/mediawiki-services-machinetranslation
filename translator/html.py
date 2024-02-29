@@ -190,6 +190,7 @@ class HTMLTranslator(BaseTranslator):
         self.translatables: Dict[str, str] = {}
         # Keep all paragraph text mapped to sentences in it.
         self.paragraphs: Dict[str, List[str]] = {}
+        self.match_location_cache: Dict[str, int] = {}
 
     def translate(self, html: str) -> str:
         """
@@ -219,6 +220,7 @@ class HTMLTranslator(BaseTranslator):
         )
         self.translatables = dict(zip(sentences, translated_sentences))
         # Now apply the translation on same json object
+        self.match_location_cache = {}  # Clear the cache
         self.traverse(doc, mode="apply")
 
     def traverse(self, doc: BeautifulSoup, mode="extract") -> None:
@@ -272,7 +274,11 @@ class HTMLTranslator(BaseTranslator):
                     node_html = str(node)
 
                     # Locate node_text in doc_inner_content
-                    # print("\t", doc.name, ">", node.name, ">", node_text)
+                    if node_text in self.match_location_cache:
+                        # This node_text was once located. So this is a repeated occurrence of same
+                        # text somewhere else in the document.
+                        # So start the search after previous location.
+                        search_start = self.match_location_cache.get(node_text)
                     (match, translation_start, translation_end) = fuzzy_find(
                         doc_inner_content, node_text, search_start=search_start
                     )
@@ -292,7 +298,12 @@ class HTMLTranslator(BaseTranslator):
                             doc_inner_content[translation_end:],
                         ]
                     )
-                    search_start = translation_start + len(node_html)
+
+                    # Remember that this node_text was once found at a location.
+                    # If this node_text is appearing again the document, don't apply html wrapping
+                    # again since that will result invalid content like:
+                    # `<b><b>abc</b></b> another abc`
+                    self.match_location_cache[node_text] = translation_start + len(node_html)
 
             doc.clear()
             doc.insert(

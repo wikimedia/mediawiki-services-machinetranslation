@@ -111,6 +111,16 @@ title="Tesla coil (ഇതുവരെ എഴുതപ്പെട്ടിട്
 </p>\
 """
 
+test_repeated_element = """\
+<p><a href="./GNU">GNU</a> is an abbreviation of \
+<a href="./GNU">GNU</a> is not <a href="./Unix">Unix</a></p>
+"""
+
+translated__repeated_element = """\
+<p><a href="./Unix">Unix</a> not is <a href="./GNU">GNU</a> of \
+abbreviation an is <a href="./GNU">GNU</a></p>
+"""
+
 tests = [
     {"source": test_dodo_html, "translation": translated_dodo_html},
     {"source": test_dodo_html, "translation": translated_dodo_html},
@@ -123,6 +133,10 @@ tests = [
     {
         "source": test_references_ml,
         "translation": translated_references_ml,
+    },
+    {
+        "source": test_repeated_element,
+        "translation": translated__repeated_element,
     },
 ]
 
