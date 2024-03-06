@@ -28,4 +28,11 @@ African-American music traditions.
       """
         src = "en"
         tgt = random.choice(languages)
-        self.client.post(f"/api/translate/{src}/{tgt}", json={"text": text})
+
+        payload = {
+            "format": "text",
+            "content": text,
+            "source_language": src,
+            "target_language": tgt,
+        }
+        self.client.post("/api/translate", json=payload)
