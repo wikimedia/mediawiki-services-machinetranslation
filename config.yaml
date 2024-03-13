@@ -235,6 +235,7 @@ models:
   # If there is no other models, this model will be used.
   madlad-400:
     - ady # Adyghe
+    - alt # Southern Altai
     - an  # Aragonese
     - ang # Old English
     - av  # Avar
@@ -256,6 +257,7 @@ models:
     - jam # Jamaican Creole English
     - kaa # Kara-Kalpak
     - kbd # Kabardian
+    - kl  # Kalaallisut
     - koi # Komi-Permyak
     - krc # Karachay-Balkar
     - kv  # Komi
@@ -269,11 +271,15 @@ models:
     - nds-nl # Low Saxon
     - new # Newari
     - nia # Nias
+    - nv  # Navajo
     - os  # Ossetic
     - pam # Pampanga
+    - rm  # Romansh
+    - se  # Northern Sami
     - sh  # Serbo-Croatian
     - skr # Saraiki
     - srn # Sranan Tongo
+    - stq # Saterland Frisian
     - tcy # Tulu
     - tet # Tetum
     - tly # Talysh
