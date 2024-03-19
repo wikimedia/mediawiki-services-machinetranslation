@@ -260,5 +260,5 @@ WIKI2MADLAD = {
     "nds-nl": "nds_NL",
     "cr": "cr_Latn",
     "tly": "tly_IR",
-    "zh-yue": "zh_Hant"
+    "zh-yue": "zh_Hant",
 }
