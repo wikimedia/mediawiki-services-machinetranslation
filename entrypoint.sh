@@ -53,10 +53,13 @@ do
 	fi
 done
 
-# Softcatala NMT model for English to Catalan
+# Softcatala NMT models
 MODEL_BASE_URL=${BASE_URL}/softcatala
 MODEL_DIR=${BASE_MODEL_DIR}
-for i in softcatala-en-ca.zip
+for i in softcatala-de-ca.zip softcatala-en-ca.zip softcatala-es-ca.zip softcatala-fr-ca.zip softcatala-gl-ca.zip \
+         softcatala-ca-de.zip softcatala-ca-en.zip softcatala-ca-es.zip softcatala-ca-fr.zip softcatala-ca-gl.zip \
+         softcatala-it-ca.zip softcatala-ja-ca.zip softcatala-nl-ca.zip softcatala-oc-ca.zip softcatala-pt-ca.zip \
+         softcatala-ca-it.zip softcatala-ca-ja.zip softcatala-ca-nl.zip softcatala-ca-oc.zip softcatala-ca-pt.zip
 do
 	if [ -d "${MODEL_DIR}/${i%.zip}" ]; then
 		continue
