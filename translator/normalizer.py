@@ -81,6 +81,12 @@ patterns_replacements["gu"] = {
     r"([0-9])": lambda match: chr(int(match.group(1)) + 0x0AE6)
 }
 
+patterns_replacements["or"] = {
+    # Replace English numerical with Odia numericals in MT.
+    # 0x0B66 is Odia number 0
+    r"([0-9])": lambda match: chr(int(match.group(1)) + 0x0B66)
+}
+
 
 def normalize(language: str, text: str) -> str:
     if language in patterns_replacements:
