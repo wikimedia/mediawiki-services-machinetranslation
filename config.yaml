@@ -300,7 +300,18 @@ languages:
   brx:
     - en: indictrans2-indic-en
   ca:
-    - oc: nllb-wikipedia
+    - de: softcatala-ca-de
+    - es: softcatala-ca-es
+    - en: softcatala-ca-en
+    - fr: softcatala-ca-fr
+    - gl: softcatala-ca-gl
+    - it: softcatala-ca-it
+    - ja: softcatala-ca-ja
+    - nl: softcatala-ca-nl
+    - oc: softcatala-ca-oc
+    - pt: softcatala-ca-pt
+  de:
+    - ca: softcatala-de-ca
   doi:
     - en: indictrans2-indic-en
   en:
@@ -312,7 +323,7 @@ languages:
     - bi: opusmt-en-bi
     - bn: indictrans2-en-indic
     - brx: indictrans2-en-indic  # Bodo
-    - ca: softcatala
+    - ca: softcatala-en-ca
     - chr: opusmt-en-chr
     - ckb: nllb-wikipedia
     - doi: indictrans2-en-indic  # Dogri
@@ -384,6 +395,7 @@ languages:
     - ast: nllb-wikipedia
     - ay: nllb-wikipedia
     - ba: nllb-wikipedia
+    - ca: softcatala-fr-ca
     - ckb: nllb-wikipedia
     - ha: nllb-wikipedia
     - ig: nllb-wikipedia
@@ -402,12 +414,18 @@ languages:
     - wo: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
+  gl:
+    - ca: softcatala-gl-ca
   gom:
     - en: indictrans2-indic-en
   gu:
     - en: indictrans2-indic-en
   hi:
     - en: indictrans2-indic-en
+  it:
+    - ca: softcatala-ti-ca
+  ja:
+    - ca: softcatala-ja-ca
   kn:
     - en: indictrans2-indic-en
   ks:
@@ -422,12 +440,15 @@ languages:
     - en: indictrans2-indic-en
   ne:
     - en: indictrans2-indic-en
+  nl:
+    - ca: softcatala-nl-ca
   or:
     - en: indictrans2-indic-en
   pa:
     - en: indictrans2-indic-en
   pt:
     - oc: nllb-wikipedia
+    - ca: softcatala-pt-ca
   sa:
     - en: indictrans2-indic-en
   sat:

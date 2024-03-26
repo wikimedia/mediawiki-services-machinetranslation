@@ -31,9 +31,66 @@ opusmt-en-ve:
 opusmt-sv-fi:
   model: models/opusmt-sv-fi
   tokenizer: models/opusmt-sv-fi/source.spm
-softcatala:
+softcatala-en-ca:
   model: models/softcatala-en-ca
   tokenizer: models/softcatala-en-ca/sp_m.model
+softcatala-es-ca:
+  model: models/softcatala-es-ca
+  tokenizer: models/softcatala-es-ca/sp_m.model
+softcatala-de-ca:
+  model: models/softcatala-de-ca
+  tokenizer: models/softcatala-de-ca/sp_m.model
+softcatala-fr-ca:
+  model: models/softcatala-fr-ca
+  tokenizer: models/softcatala-fr-ca/sp_m.model
+softcatala-gl-ca:
+  model: models/softcatala-gl-ca
+  tokenizer: models/softcatala-gl-ca/sp_m.model
+softcatala-it-ca:
+  model: models/softcatala-it-ca
+  tokenizer: models/softcatala-it-ca/sp_m.model
+softcatala-ja-ca:
+  model: models/softcatala-ja-ca
+  tokenizer: models/softcatala-ja-ca/sp_m.model
+softcatala-oc-ca:
+  model: models/softcatala-oc-ca
+  tokenizer: models/softcatala-oc-ca/sp_m.model
+softcatala-nl-ca:
+  model: models/softcatala-nl-ca
+  tokenizer: models/softcatala-nl-ca/sp_m.model
+softcatala-pt-ca:
+  model: models/softcatala-pt-ca
+  tokenizer: models/softcatala-pt-ca/sp_m.model
+softcatala-ca-en:
+  model: models/softcatala-ca-en
+  tokenizer: models/softcatala-ca-en/sp_m.model
+softcatala-ca-es:
+  model: models/softcatala-ca-es
+  tokenizer: models/softcatala-ca-es/sp_m.model
+softcatala-ca-de:
+  model: models/softcatala-ca-de
+  tokenizer: models/softcatala-ca-de/sp_m.model
+softcatala-ca-fr:
+  model: models/softcatala-ca-fr
+  tokenizer: models/softcatala-ca-fr/sp_m.model
+softcatala-ca-gl:
+  model: models/softcatala-ca-gl
+  tokenizer: models/softcatala-ca-gl/sp_m.model
+softcatala-ca-it:
+  model: models/softcatala-ca-it
+  tokenizer: models/softcatala-ca-it/sp_m.model
+softcatala-ca-ja:
+  model: models/softcatala-ca-ja
+  tokenizer: models/softcatala-ca-ja/sp_m.model
+softcatala-ca-oc:
+  model: models/softcatala-ca-oc
+  tokenizer: models/softcatala-ca-oc/sp_m.model
+softcatala-ca-nl:
+  model: models/softcatala-ca-nl
+  tokenizer: models/softcatala-ca-nl/sp_m.model
+softcatala-ca-pt:
+  model: models/softcatala-ca-pt
+  tokenizer: models/softcatala-ca-pt/sp_m.model
 indictrans2-indic-en:
   model: models/indictrans2-indic-en
   tokenizer: models/indictrans2-indic-en/model.SRC
