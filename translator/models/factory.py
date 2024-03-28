@@ -38,6 +38,7 @@ def ModelFactory(
         "opusmt-en-to": OpusModel,
         "opusmt-en-ty": OpusModel,
         "opusmt-en-ve": OpusModel,
+        "opusmt-fr-ty": OpusModel,
         "opusmt-sv-fi": OpusModel,
         "softcatala-ca-de": SoftCatalaModel,
         "softcatala-ca-en": SoftCatalaModel,

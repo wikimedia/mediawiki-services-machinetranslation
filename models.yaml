@@ -28,6 +28,9 @@ opusmt-en-ty:
 opusmt-en-ve:
   model: models/opusmt-en-ve
   tokenizer: models/opusmt-en-ve/source.spm
+opusmt-fr-ty:
+  model: models/opusmt-fr-ty
+  tokenizer: models/opusmt-fr-ty/source.spm
 opusmt-sv-fi:
   model: models/opusmt-sv-fi
   tokenizer: models/opusmt-sv-fi/source.spm

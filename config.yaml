@@ -411,6 +411,7 @@ languages:
     - ti: nllb-wikipedia
     - tn: nllb-wikipedia
     - ts: nllb-wikipedia
+    - ty: opusmt-fr-ty
     - wo: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
