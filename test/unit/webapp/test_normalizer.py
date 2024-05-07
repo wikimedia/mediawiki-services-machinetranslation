@@ -46,6 +46,16 @@ def test_normalize_ja():
     )
 
 
+def test_normalize_bn():
+    assert (
+        normalize(
+            "bn",
+            "ছোটবেলায় রায়শই",
+        )
+        == "ছোটবেলায় রায়শই"
+    )
+
+
 def test_normalize_other():
     assert (
         normalize("es", "Hola. ¿Cómo estás?") == "Hola. ¿Cómo estás?"

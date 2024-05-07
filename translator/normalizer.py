@@ -87,6 +87,11 @@ patterns_replacements["or"] = {
     r"([0-9])": lambda match: chr(int(match.group(1)) + 0x0B66)
 }
 
+patterns_replacements["bn"] = {
+    # Replace BENGALI LETTER YA + NUKTA with BENGALI LETTER YYA
+    r"\u09AF\u09BC": "\u09df",
+}
+
 
 def normalize(language: str, text: str) -> str:
     if language in patterns_replacements:
