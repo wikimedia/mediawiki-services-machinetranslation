@@ -43,7 +43,7 @@ class JSONTranslator(BaseTranslator):
         translated_sentences = self.translation_model.translate(
             self.source_lang, self.target_lang, sentences
         )
-        self.translatables = dict(zip(sentences, translated_sentences))
+        self.translatables = dict(zip(sentences, translated_sentences, strict=False))
         # Now apply the translation on same json object
         translated_obj = self.traverse(json_obj, mode="apply")
         return json.dumps(translated_obj, indent=2, ensure_ascii=False)

@@ -1,4 +1,5 @@
 """A translation model that translates by reversing words in sentences. Used for unit tests"""
+
 import logging
 import logging.config
 import re

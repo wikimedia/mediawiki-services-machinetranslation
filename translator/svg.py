@@ -52,7 +52,7 @@ class SVGTranslator(BaseTranslator):
         translated_sentences = self.translation_model.translate(
             self.source_lang, self.target_lang, sentences
         )
-        self.translatables = dict(zip(sentences, translated_sentences))
+        self.translatables = dict(zip(sentences, translated_sentences, strict=False))
         translated_svg = self.traverse(root, mode="apply")
         return ElementTree.tostring(translated_svg, encoding="unicode")
 

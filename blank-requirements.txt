@@ -1,0 +1,2 @@
+# Blank requirements file to enable the Blubber Python
+# builder without actually installing additional packages.

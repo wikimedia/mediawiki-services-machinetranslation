@@ -1,4 +1,5 @@
 .venv
 models
 .git
+.tox
 __pycache__

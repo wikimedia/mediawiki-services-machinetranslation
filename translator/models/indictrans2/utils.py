@@ -465,7 +465,7 @@ def preprocess(sents: List[str], lang: str):
     )
 
     processed_sents, placeholder_entity_map_sents = zip(
-        *[preprocess_sent(sent, normalizer, lang) for sent in sents]
+        *[preprocess_sent(sent, normalizer, lang) for sent in sents], strict=False
     )
 
     return processed_sents, placeholder_entity_map_sents

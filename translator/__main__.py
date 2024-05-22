@@ -11,8 +11,10 @@ if __name__ == "__main__":
     translatorDefs = TranslatorRegistry.get_translators()
     formats = [translatorDef.meta.format for translatorDef in translatorDefs]
     config = ModelConfiguration()
-    FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats)))
-    ModelEnum = StrEnum("ModelEnum", dict(zip(config.get_model_names(), config.get_model_names())))
+    FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats, strict=False)))
+    ModelEnum = StrEnum(
+        "ModelEnum", dict(zip(config.get_model_names(), config.get_model_names(), strict=False))
+    )
     parser = ArgumentParser(prog="mint", description="Translate text between any languages")
     parser.add_argument("-s", "--source")
     parser.add_argument("-t", "--target", type=str)

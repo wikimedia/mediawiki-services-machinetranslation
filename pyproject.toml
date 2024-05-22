@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "machinetranslation"
 classifiers = ["Private :: Do Not Upload"]
 version = "0"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 dependencies = [
     "beautifulsoup4",
     "ctranslate2",

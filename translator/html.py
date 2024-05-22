@@ -218,7 +218,7 @@ class HTMLTranslator(BaseTranslator):
         translated_sentences = self.translation_model.batch_translate(
             self.source_lang, self.target_lang, sentences
         )
-        self.translatables = dict(zip(sentences, translated_sentences))
+        self.translatables = dict(zip(sentences, translated_sentences, strict=False))
         # Now apply the translation on same json object
         self.match_location_cache = {}  # Clear the cache
         self.traverse(doc, mode="apply")

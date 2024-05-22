@@ -62,8 +62,10 @@ config = ModelConfiguration()
 translator_classes = TranslatorRegistry.get_translators()
 
 formats = [translator_class.meta.format for translator_class in translator_classes]
-ModelEnum = StrEnum("ModelEnum", dict(zip(config.get_model_names(), config.get_model_names())))
-FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats)))
+ModelEnum = StrEnum(
+    "ModelEnum", dict(zip(config.get_model_names(), config.get_model_names(), strict=False))
+)
+FormatEnum = StrEnum("FormatEnum", dict(zip(formats, formats, strict=False)))
 
 
 class TranslationRequest(BaseModel):
