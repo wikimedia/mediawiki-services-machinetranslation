@@ -37,6 +37,15 @@ def test_normalize_de():
     )
 
 
+def test_normalize_ja():
+    assert (
+        normalize(
+            "ja", "ジャズは西アフリカ文化・音楽表現とアフリカ系アメリカ音楽伝統に根ざしています."
+        )
+        == "ジャズは西アフリカ文化・音楽表現とアフリカ系アメリカ音楽伝統に根ざしています。"
+    )
+
+
 def test_normalize_other():
     assert (
         normalize("es", "Hola. ¿Cómo estás?") == "Hola. ¿Cómo estás?"

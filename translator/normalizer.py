@@ -62,7 +62,7 @@ patterns_replacements["ur"] = {
 
 patterns_replacements["ja"] = {
     ",": "、",  # Replace comma with 、 U+3001 IDEOGRAPHIC COMMA
-    "\.": "。",  # Replace fullstop with 、 U+3002 IDEOGRAPHIC FULL STOP  # noqa: W605
+    r"\.": "。",  # Replace fullstop with 、 U+3002 IDEOGRAPHIC FULL STOP  # noqa: W605
 }
 
 patterns_replacements["ks"] = patterns_replacements["ur"]
