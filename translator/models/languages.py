@@ -201,6 +201,7 @@ WIKI2NLLBCODES = {
     "xh": "xho_Latn",
     "yi": "ydd_Hebr",
     "yo": "yor_Latn",
+    "zgh": "tzm_Tfng",
     # "zh": "zho_Hans",  # Chinese Simplified
     "zh": "zho_Hant",  # Chinese Traditional
     "zu": "zul_Latn",
