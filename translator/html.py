@@ -263,6 +263,7 @@ class HTMLTranslator(BaseTranslator):
 
             else:
                 # Mark up fixups
+                self.match_location_cache = {}
                 doc_inner_content: str = self.get_translation(text)
                 for index, node in enumerate(child_nodes):
                     if isinstance(node, NavigableString):

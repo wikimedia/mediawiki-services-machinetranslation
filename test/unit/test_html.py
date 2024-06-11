@@ -116,9 +116,31 @@ test_repeated_element = """\
 <a href="./GNU">GNU</a> is not <a href="./Unix">Unix</a></p>
 """
 
-translated__repeated_element = """\
+translated_repeated_element = """\
 <p><a href="./Unix">Unix</a> not is <a href="./GNU">GNU</a> of \
 abbreviation an is <a href="./GNU">GNU</a></p>
+"""
+
+test_repeated_element_across_sentences = """\
+<section id="cxTargetSection0" data-mw-cx-source="undefined" data-mw-section-number="0">
+<p id="mwAg">
+<span data-segmentid="4" class="cx-segment"><a href="./Unix">Unix</a> not is \
+<a href="./GNU">GNU</a> of abbreviation an is <a href="./GNU">GNU</a></span>
+<span data-segmentid="4" class="cx-segment"><a href="./Unix">Unix</a> not is \
+<a href="./GNU">GNU</a> of abbreviation an is <a href="./GNU">GNU</a></span>
+</p>
+</section>
+"""
+
+translated_repeated_element_across_sentences = """\
+<section data-mw-cx-source="undefined" data-mw-section-number="0" id="cxTargetSection0">\
+<p id="mwAg">\
+<span class="cx-segment" data-segmentid="4"><a href="./GNU">GNU</a> is an abbreviation of \
+<a href="./GNU">GNU</a> is not <a href="./Unix">Unix</a></span>\
+<span class="cx-segment" data-segmentid="4"><a href="./GNU">GNU</a> is an abbreviation of \
+<a href="./GNU">GNU</a> is not <a href="./Unix">Unix</a></span>\
+</p>\
+</section>
 """
 
 tests = [
@@ -136,7 +158,11 @@ tests = [
     },
     {
         "source": test_repeated_element,
-        "translation": translated__repeated_element,
+        "translation": translated_repeated_element,
+    },
+    {
+        "source": test_repeated_element_across_sentences,
+        "translation": translated_repeated_element_across_sentences,
     },
 ]
 
