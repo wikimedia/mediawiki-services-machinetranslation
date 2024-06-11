@@ -124,8 +124,9 @@ async def add_statsd_request_log(request: Request, call_next):
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request) -> HTMLResponse:
     return templates.TemplateResponse(
-        "index.html",
-        {"request": request, "format": "text", "formats": formats, "languages": get_languages()},
+        request=request,
+        name="index.html",
+        context={"format": "text", "formats": formats, "languages": get_languages()},
     )
 
 
@@ -142,9 +143,9 @@ async def health():
 async def format_page(request: Request, format: str):
     if format in formats:
         return templates.TemplateResponse(
-            "index.html",
-            {
-                "request": request,
+            request=request,
+            name="index.html",
+            context={
                 "format": format,
                 "formats": formats,
                 "languages": get_languages(),
