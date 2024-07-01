@@ -26,6 +26,10 @@ class PlainTextTranslator(BaseTranslator):
         Returns:
         - A string representing the translated text in the target language.
         """
+
+        # strip whitespace from the text
+        text = text.strip()
+
         sentences: List[str] = list(segment(self.source_lang, text))
 
         translated_sentences = self.translation_model.translate(
