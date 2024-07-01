@@ -1,4 +1,4 @@
-# syntax=docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v0.23.0
+# syntax=docker-registry.wikimedia.org/repos/releng/blubber/buildkit:v0.24.0
 version: v4
 base: docker-registry.wikimedia.org/python3-build-bookworm
 # Should allow downloading models. So we need write access on file system
@@ -14,7 +14,7 @@ variants:
   test:
     includes: [build]
     python:
-      requirements: [blank-requirements.txt]
+      requirements: []
     entrypoint: ["tox"]
   production:
     includes: [build]
