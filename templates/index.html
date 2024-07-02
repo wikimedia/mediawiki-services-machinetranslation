@@ -18,21 +18,23 @@
         </header>
         <main>
             <nav class="nav">
-            {% for format in formats %}<a href="/{{format}}">{{format}}</a>{% endfor %}
+            {% for fmt in formats %}
+            {% if fmt == format %}
+            <a class="selected" href="/{{fmt}}">{{fmt}}</a>
+            {% else %}
+            <a href="/{{fmt}}">{{fmt}}</a>
+            {% endif %}
+            {% endfor %}
             </nav>
             <section class="container">
-
+                <section class="source_container">
                 <select id="source_lang">
                     <option value="en">English</option>
-                </select>
-
-                <select id="target_lang">
-                    <option value="es">Spanish</option>
                 </select>
                 {% if format == 'webpage' %}
                 <input id="source_content" placeholder="Enter a webpage URL"
                     value="https://en.m.wikivoyage.org/wiki/Ponmudi" />
-                <div id="target_content"></div>
+
                 {% elif format == 'html' %}
                 <div contenteditable="" id="source_content">
                     <p id="mwCw">The <b id="mwDA">dodo</b> (<i id="mwDQ"><b id="mwDg">Raphus cucullatus</b></i>) is an
@@ -59,14 +61,14 @@
                         merely confusion based on the also-extinct <a rel="mw:WikiLink" href="./Réunion_ibis"
                             title="Réunion ibis" id="mwHg">Réunion ibis</a> and paintings of white dodos.</p>
                 </div>
-                <div id="target_content"></div>
+
                 {% elif format == 'markdown' %}
                 <textarea class="text-monospace"  id="source_content">
 # Heading
 
 This is  a [link to Wikipedia](https://wikipedia.org)
                 </textarea>
-                <textarea class="text-monospace"  id="target_content" ></textarea>
+
                 {% elif format == 'json' %}
                 <textarea class="text-monospace" id="source_content">
 {
@@ -76,7 +78,6 @@ This is  a [link to Wikipedia](https://wikipedia.org)
     "ingredients": [ "Vegetable oil", "Garlic", "Ginger" ,"Rice"]
 }
                 </textarea>
-                <textarea class="text-monospace" id="target_content" ></textarea>
                 {% elif format == 'svg' %}
                 <div class="svg" contenteditable="" id="source_content">
                     <svg viewBox="0 0 240 100" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -93,13 +94,38 @@ This is  a [link to Wikipedia](https://wikipedia.org)
                         </text>
                       </svg>
                 </div>
-                <div class="svg" id="target_content"></div>
+
                 {% else %}
                 <textarea id="source_content">
 Jazz is a music genre that originated in the African-American communities of New Orleans, Louisiana, United States, in the late 19th and early 20th centuries, with its roots in blues and ragtime. Since the 1920s Jazz Age, it has been recognized as a major form of musical expression in traditional and popular music, linked by the common bonds of African-American and European-American musical parentage. Jazz is characterized by swing and blue notes, complex chords, call and response vocals, polyrhythms and improvisation. Jazz has roots in West African cultural and musical expression, and in African-American music traditions.
                 </textarea>
-                <textarea id="target_content" ></textarea>
                 {% endif %}
+                </section>
+                <section class="target_container">
+                <select id="target_lang">
+                    <option value="es">Spanish</option>
+                </select>
+
+                {% if format == 'webpage' %}
+
+                <div id="target_content"></div>
+                {% elif format == 'html' %}
+
+                <div id="target_content"></div>
+                {% elif format == 'markdown' %}
+
+                <textarea class="text-monospace"  id="target_content" ></textarea>
+                {% elif format == 'json' %}
+
+                <textarea class="text-monospace" id="target_content" ></textarea>
+                {% elif format == 'svg' %}
+
+                <div class="svg" id="target_content"></div>
+                {% else %}
+                <textarea id="target_content"></textarea>
+                {% endif %}
+
+            </section>
             </section>
             <section class="mtmodel-container">
                 <label for="mtmodel">Translation model:
