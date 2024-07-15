@@ -3,6 +3,7 @@
 import logging
 import logging.config
 import re
+import string
 from typing import Dict, List, Tuple
 
 from bs4 import BeautifulSoup, NavigableString, PageElement
@@ -60,6 +61,13 @@ def is_translatable(node: PageElement) -> bool:
         if classes and "notranslate" in classes:
             return False
 
+    # MediaWiki specific tags
+    if "mw:Transclusion" in node.attrs.get("typeof", ""):
+        return False
+
+    if node.attrs.get("data-mw"):
+        return False
+
     return True
 
 
@@ -110,6 +118,10 @@ def fuzzy_find(text, key, search_start=0) -> Tuple[int, str]:
 
     if not len(key):
         # logging.debug(f"Error: Could not locate [{key}] in [{context}]")
+        return (None, -1, -1)
+
+    if key in string.punctuation:
+        # Avoid fuzzy matching punctuations as they are not translatable.
         return (None, -1, -1)
 
     candidates = [key]
