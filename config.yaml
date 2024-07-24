@@ -229,9 +229,11 @@ models:
     - zgh # Standard Moroccan Tamazight
     - zh
     - zu
+
   opusmt-sv-fi:
     - sv
     - fi
+
   # MADLAD-400 is a fallback model. It has relatively low quality, but wider language coverage
   # If there is no other models, this model will be used.
   madlad-400:
@@ -390,8 +392,10 @@ languages:
     - ts: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
+  es:
+    - ca: softcatala-es-ca
   fi:
-      - sv: nllb200-600M
+    - sv: nllb200-600M
   fr:
     - as: nllb-wikipedia
     - ast: nllb-wikipedia
