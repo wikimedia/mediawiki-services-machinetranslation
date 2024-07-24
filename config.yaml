@@ -427,7 +427,7 @@ languages:
   hi:
     - en: indictrans2-indic-en
   it:
-    - ca: softcatala-ti-ca
+    - ca: softcatala-it-ca
   ja:
     - ca: softcatala-ja-ca
   kn:
