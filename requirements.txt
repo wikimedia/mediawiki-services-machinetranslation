@@ -47,6 +47,8 @@ configargparse==1.7
     # via locust
 ctranslate2==4.2.1
     # via machinetranslation (pyproject.toml)
+diskcache==5.6.3
+    # via machinetranslation (pyproject.toml)
 distlib==0.3.8
     # via virtualenv
 dnspython==2.6.1

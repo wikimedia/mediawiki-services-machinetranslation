@@ -9,6 +9,7 @@ version = "0"
 requires-python = ">=3.11"
 dependencies = [
     "beautifulsoup4",
+    "diskcache",
     "ctranslate2",
     "sentencepiece",
     "sentencex",

@@ -9,12 +9,13 @@ import statsd
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 
 from translator import TranslatorRegistry
+from translator.cache import get_cache
 from translator.models import ModelConfiguration, ModelFactory
 
 logging.config.fileConfig("logging.conf")
@@ -34,6 +35,8 @@ except Exception:
     logging.warning(f"Could not connect to statsd host {statsd_host}:{statsd_port}")
 
 app = FastAPI()
+
+translation_cache = get_cache()
 
 
 def custom_openapi():
@@ -74,6 +77,9 @@ class TranslationRequest(BaseModel):
     source_language: str = Field(..., description="The source language")
     target_language: str = Field(..., description="The target language")
     model: Optional[ModelEnum] = Field(None, description="The MT model to use")
+    stash: Optional[bool] = Field(
+        False, description="Whether to save the translation in cache or not"
+    )
 
     model_config = {
         "json_schema_extra": {
@@ -163,6 +169,8 @@ async def list_languages():
 @app.post("/api/translate")
 async def translate_handler(request: TranslationRequest) -> TranslationResponse:
     translator_class = None
+    cache_hit = False
+
     translators = [
         translator_class
         for translator_class in translator_classes
@@ -188,7 +196,13 @@ async def translate_handler(request: TranslationRequest) -> TranslationResponse:
         config, request.source_language, request.target_language, request.model
     )
     start = time.time()
-    translation = translator.translate(request.content)
+    translation = translation_cache.get(
+        request.source_language, request.target_language, translator.model_name, request.content
+    )
+    if translation:
+        cache_hit = True
+    else:
+        translation = translator.translate(request.content)
     end = time.time()
     translationtime = end - start
     if statsd_client:
@@ -202,7 +216,21 @@ async def translate_handler(request: TranslationRequest) -> TranslationResponse:
         targetlanguage=request.target_language,
         model=translator.model_name,
     )
-    return response
+    if request.stash:
+        translation_cache.set(
+            request.source_language,
+            request.target_language,
+            translator.model_name,
+            request.content,
+            translation,
+        )
+    # Create a JSONResponse with custom headers
+    headers = {
+        "X-Cache-Hit": "true" if cache_hit else "false",
+        "X-Cache-Status": "HIT" if cache_hit else "MISS",
+    }
+
+    return JSONResponse(content=response.model_dump(), headers=headers)
 
 
 @app.post("/api/translate/{source_lang}/{target_lang}")
