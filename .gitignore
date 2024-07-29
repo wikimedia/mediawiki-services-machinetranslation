@@ -2,3 +2,8 @@
 __pycache__
 .venv
 .cache
+*.pyc
+.ruff_cache
+.pytest_cache
+.tox
+.vscode
