@@ -92,6 +92,12 @@ patterns_replacements["bn"] = {
     r"\u09AF\u09BC": "\u09df",
 }
 
+patterns_replacements["sat"] = {
+    # Replace English numeical with Santali numericals in MT.
+    # 0x1C50 is Santali number 0
+    r"([0-9])": lambda match: chr(int(match.group(1)) + 0x1C50)
+}
+
 
 def normalize(language: str, text: str) -> str:
     if language in patterns_replacements:

@@ -56,6 +56,16 @@ def test_normalize_bn():
     )
 
 
+def test_normalize_sat():
+    assert (
+        normalize(
+            "sat",
+            "1 2 3 4",
+        )
+        == "᱑ ᱒ ᱓ ᱔"
+    )
+
+
 def test_normalize_other():
     assert (
         normalize("es", "Hola. ¿Cómo estás?") == "Hola. ¿Cómo estás?"
