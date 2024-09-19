@@ -376,6 +376,7 @@ languages:
     - ast: nllb-wikipedia
     - ay: nllb-wikipedia
     - ba: nllb-wikipedia
+    - ca: softcatala-es-ca
     - ckb: nllb-wikipedia
     - ha: nllb-wikipedia
     - ig: nllb-wikipedia
@@ -393,8 +394,6 @@ languages:
     - ts: nllb-wikipedia
     - zh: nllb-wikipedia
     - zu: nllb-wikipedia
-  es:
-    - ca: softcatala-es-ca
   fi:
     - sv: nllb200-600M
   fr:
