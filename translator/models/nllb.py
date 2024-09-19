@@ -13,7 +13,7 @@ class NLLBModel(BaseModel):
 
     def tokenize(self, src_lang: str, tgt_lang: str, content):
         return (
-            [languages.get_wikicode_from_nllb(src_lang)]
+            [languages.get_nllb_language_code(src_lang)]
             + self.tokenizer.encode(content, out_type=str)
             + ["</s>"]
         )
@@ -22,7 +22,7 @@ class NLLBModel(BaseModel):
         return self.tokenizer.decode(content)
 
     def get_target_prefixes(self, tgt_lang: str):
-        return [languages.get_wikicode_from_nllb(tgt_lang)]
+        return [languages.get_nllb_language_code(tgt_lang)]
 
     def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """

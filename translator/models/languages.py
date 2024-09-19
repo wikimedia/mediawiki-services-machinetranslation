@@ -1,5 +1,4 @@
-# NLLB model's language codes are different from Wikipedia's codes.
-WIKI2NLLBCODES = {
+WIKI2BCP47CODES = {
     "ace": "ace_Latn",
     "acm": "acm_Arab",
     "acq": "acq_Arab",
@@ -247,8 +246,22 @@ WIKI2ISO = {
 }
 
 
-def get_wikicode_from_nllb(lang):
-    return WIKI2NLLBCODES[lang]
+def get_nllb_language_code(lang: str) -> str:
+    """
+    Get the NLLB internal language code for a given Wikipedia language code.
+    """
+    if lang == "sat":
+        # NLLB uses this language code even though the script in corpus is Ol Chiki
+        # See https://phabricator.wikimedia.org/T335725
+        return "sat_Beng"
+    return WIKI2BCP47CODES.get(lang)
+
+
+def get_indictrans_language_code(lang: str) -> str:
+    """
+    Get the IndicTrans2 internal language code for a given Wikipedia language code.
+    """
+    return WIKI2BCP47CODES.get(lang)
 
 
 def get_wikicode_to_iso(lang):

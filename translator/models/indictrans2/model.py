@@ -18,8 +18,8 @@ class IndicTransModel(BaseModel):
 
     def tokenize(self, src_lang: str, tgt_lang: str, content):
         return [
-            languages.get_wikicode_from_nllb(src_lang),
-            languages.get_wikicode_from_nllb(tgt_lang),
+            languages.get_indictrans_language_code(src_lang),
+            languages.get_indictrans_language_code(tgt_lang),
         ] + self.tokenizer.encode(content, out_type=str)
 
     def detokenize(self, content: List[str]) -> str:
@@ -49,7 +49,7 @@ class IndicTransModel(BaseModel):
             reference_map[sentence] = extract_potential_references(sentence)
 
         pre_processed_sentences, placeholder_entity_map_sents = preprocess_batch(
-            sentences, languages.get_wikicode_from_nllb(src_lang)
+            sentences, languages.get_indictrans_language_code(src_lang)
         )
 
         for sentence in pre_processed_sentences:
@@ -74,7 +74,7 @@ class IndicTransModel(BaseModel):
         translated_sentences = postprocess_batch(
             translated_sentences,
             placeholder_entity_map_sents,
-            languages.get_wikicode_from_nllb(tgt_lang),
+            languages.get_indictrans_language_code(tgt_lang),
         )
 
         return [self.postprocess(tgt_lang, sentence) for sentence in translated_sentences]
