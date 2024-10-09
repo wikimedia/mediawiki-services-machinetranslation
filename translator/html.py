@@ -143,17 +143,21 @@ def fuzzy_find(text, key, search_start=0) -> Tuple[int, str]:
             candidates.append(phrase)
 
     for candidate in candidates:
-        start = search_start + context.find(candidate)
-        end = start + len(candidate)
-        if start >= 0:
-            if end == len(text):
-                return (text[start:], start, end)
+        candidate_location = context.find(candidate)
+        if candidate_location < 0:
+            continue
 
-            for i in range(end, len(text)):
-                # Find nearest space or terminators
-                if text[i] in WORD_STOPS:
-                    selection = text[start:i]
-                    return (selection, start, i)
+        start = search_start + candidate_location
+        end = start + len(candidate)
+
+        if end == len(text):
+            return (text[start:], start, end)
+
+        for i in range(end, len(text)):
+            # Find nearest space or terminators
+            if text[i] in WORD_STOPS:
+                selection = text[start:i]
+                return (selection, start, i)
 
     # print(f"Error: Could not locate [{key}] in [{context}]")
     return (None, -1, -1)

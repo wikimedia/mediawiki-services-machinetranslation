@@ -4,6 +4,7 @@ from unittest.mock import patch
 from reverse import ReverseTransModel
 
 from translator import HTMLTranslator
+from translator.html import fuzzy_find
 
 config = {}
 with patch.object(
@@ -180,3 +181,101 @@ def test_translator():
         print(test["translation"])
         print("--")
         assert normalize(translation) == normalize(test["translation"])
+
+
+def test_fuzzy_find():
+    # Test exact match
+    text = "The quick brown fox jumps over the lazy dog."
+    key = "quick brown fox"
+    expected = ("quick brown fox", 4, 19)
+    assert fuzzy_find(text, key) == expected
+
+    # Test fuzzy match with minor differences
+    text = "The quick brown fox jumps over the lazy dog."
+    key = "quick brown fix"
+    expected = ("quick brown fox", 4, 19)
+    assert fuzzy_find(text, key) == expected
+
+    # Test fuzzy match with major differences
+    text = "The quick brown fox jumps over the lazy dog."
+    key = "quick brown fixes"
+    expected = (None, -1, -1)
+    assert fuzzy_find(text, key) == expected
+
+    # Test fuzzy match with punctuation
+    text = "The quick brown fox jumps over the lazy dog."
+    key = "."
+    expected = (None, -1, -1)
+    assert fuzzy_find(text, key) == expected
+
+    # Test no match
+    text = "The quick brown fox jumps over the lazy dog."
+    key = "slow green turtle"
+    expected = (None, -1, -1)
+    assert fuzzy_find(text, key) == expected
+
+    # Test match with numbers
+    text = "The year is 2023 and the month is October."
+    key = "2023"
+    expected = ("2023", 12, 16)
+    assert fuzzy_find(text, key) == expected
+
+    # Test match with numbers, approximation not applied for numbers
+    text = "The year is 2023 and the month is October."
+    key = "2024"
+    expected = (None, -1, -1)
+    assert fuzzy_find(text, key) == expected
+
+    # Test match with reference
+    text = "The year is 2023 and the month is October[12]."
+    key = "[12]"
+    expected = ("[12]", 41, 45)
+    assert fuzzy_find(text, key) == expected
+
+    # Test match with reference - no approximation
+    text = "The year is 2023 and the month is October[12345]."
+    key = "[12435]"
+    expected = (None, -1, -1)
+    assert fuzzy_find(text, key) == expected
+
+    # Test match with special characters
+    text = "Hello, world! Welcome to the universe."
+    key = "World!"
+    expected = ("world!", 7, 13)
+    assert fuzzy_find(text, key) == expected
+
+    # Test match with leading and trailing spaces
+    text = "   The quick brown fox jumps over the lazy dog.   "
+    key = "quick brown fox"
+    expected = ("quick brown fox", 7, 22)
+    assert fuzzy_find(text, key) == expected
+
+    # Test match with multiple occurrences
+    text = "The quick brown fox and the quick brown fox."
+    key = "quick brown fox"
+    expected = ("quick brown fox", 4, 19)
+    assert fuzzy_find(text, key) == expected
+
+    # Test match with search_start parameter
+    text = "The quick brown fox and the quick brown fox."
+    key = "quick brown fox"
+    expected = ("quick brown fox", 28, 43)
+    assert fuzzy_find(text, key, search_start=20) == expected
+
+    # Test match with search_start parameter and prefix
+    text = "The quick brown fox and the quick brown fox."
+    key = "quick brow"
+    expected = ("quick brown", 28, 39)
+    assert fuzzy_find(text, key, search_start=20) == expected
+
+    # Test match with search_start parameter and prefix
+    text = "The quick brown fox and the quick brownification! fox."
+    key = "quick bro"
+    expected = ("quick brownification", 28, 48)
+    assert fuzzy_find(text, key, search_start=20) == expected
+
+    # Test match with search_start parameter and no match
+    text = "The quick brown fox"
+    key = "something else"
+    expected = (None, -1, -1)
+    assert fuzzy_find(text, key, search_start=20) == expected
