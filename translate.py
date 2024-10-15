@@ -208,6 +208,11 @@ async def translate_handler(request: TranslationRequest) -> TranslationResponse:
     if statsd_client:
         statsd_client.incr(f"mt.{request.source_language}.{request.target_language}")
         statsd_client.timing("mt.timing", int(translationtime * 1000))
+        # Increment cache hit/miss stats
+        if cache_hit:
+            statsd_client.incr("mt.cache.hit")
+        else:
+            statsd_client.incr("mt.cache.miss")
 
     response = TranslationResponse(
         translation=translation,
