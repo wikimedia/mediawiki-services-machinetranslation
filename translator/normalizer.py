@@ -84,7 +84,10 @@ patterns_replacements["gu"] = {
 patterns_replacements["or"] = {
     # Replace English numerical with Odia numericals in MT.
     # 0x0B66 is Odia number 0
-    r"([0-9])": lambda match: chr(int(match.group(1)) + 0x0B66)
+    r"([0-9])": lambda match: chr(int(match.group(1)) + 0x0B66),
+    # Replace Odia letter JA + NUKTA (ଯ଼) with Odia letter YA (ୟ).
+    # https://phabricator.wikimedia.org/T347929
+    r"\u0B2F\u0B3C": "\u0b5f",
 }
 
 patterns_replacements["bn"] = {
