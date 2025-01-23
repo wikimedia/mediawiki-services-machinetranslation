@@ -10,15 +10,17 @@ mkdir -p $BASE_MODEL_DIR
 # The big generic model
 MODEL_BASE_URL="${BASE_URL}/nllb/nllb200-600M"
 MODEL_DIR="${BASE_MODEL_DIR}/nllb200-600M"
-for i in config.json model.bin sentencepiece.bpe.model shared_vocabulary.txt
-do
-	if [ -f "${MODEL_DIR}/${i}" ]; then
-		continue
-	else
-		echo "Downloading $MODEL_BASE_URL/${i}"
-		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
-	fi
-done
+mkdir -p $MODEL_DIR
+if [ -d "${MODEL_DIR}" ] && [ "$(ls -A $MODEL_DIR)" ]; then
+	echo "Model already exists, skipping download."
+else
+	echo "Downloading $MODEL_BASE_URL/nllb200-600M.tgz"
+	wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}/nllb200-600M.tgz" -P $BASE_MODEL_DIR
+	pushd $BASE_MODEL_DIR
+	tar xvzf "nllb200-600M.tgz"
+	rm -rf "nllb200-600M.tgz"
+	popd
+fi
 
 # Wikipedia optimized model with limited languages
 MODEL_BASE_URL="${BASE_URL}/nllb/nllb-wikipedia"
@@ -74,20 +76,20 @@ do
 	fi
 done
 
-
-# MADLAD-400 NMT model for English to Catalan
-MODEL_BASE_URL=${BASE_URL}/madlad400-3b-ct2
-MODEL_DIR=${BASE_MODEL_DIR}/madlad400-3b-ct2
-for i in config.json model.bin sentencepiece.model shared_vocabulary.json
-do
-	if [ -f "${MODEL_DIR}/${i}" ]; then
-		continue
-	else
-		echo "Downloading $MODEL_BASE_URL/${i}"
-		wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}"/${i} -P $MODEL_DIR
-	fi
-done
-
+# MADLAD-400 NMT model
+MODEL_BASE_URL="${BASE_URL}/madlad400-3b-ct2"
+MODEL_DIR="${BASE_MODEL_DIR}/madlad400-3b-ct2"
+mkdir -p $MODEL_DIR
+if [ -d "${MODEL_DIR}" ] && [ "$(ls -A $MODEL_DIR)" ]; then
+	echo "Model already exists, skipping download."
+else
+	echo "Downloading $MODEL_BASE_URL/madlad400-3b-ct2.tgz"
+	wget -N --no-verbose --show-progress --progress=bar:force:noscroll "${MODEL_BASE_URL}/madlad400-3b-ct2.tgz" -P $BASE_MODEL_DIR
+	pushd $BASE_MODEL_DIR
+	tar xvzf "madlad400-3b-ct2.tgz"
+	rm -rf "madlad400-3b-ct2.tgz"
+	popd
+fi
 
 # Indictrans2 models for Indic languages to English
 MODEL_BASE_URL="${BASE_URL}/indictrans2/indictrans-indic-en"
