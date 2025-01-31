@@ -241,6 +241,7 @@ models:
     - ady # Adyghe
     - alt # Southern Altai
     - an  # Aragonese
+    - ann # Obolo
     - ang # Old English
     - av  # Avar
     - bar # Bavarian (bar)
@@ -249,6 +250,7 @@ models:
     - ce  # Chechen
     - ch  # Chamorro
     - cr  # Cree
+    - dtp # Central Dusun
     - en  # English
     - simple # Simple English (simple)
     - frp # Arpitan
@@ -256,6 +258,7 @@ models:
     - gor # Gorontalo
     - gv  # Manx
     - hif # Fiji Hindi
+    - iba # Iban
     - io  # Ido
     - iu  # Inuktitut
     - jam # Jamaican Creole English
@@ -275,6 +278,7 @@ models:
     - nds-nl # Low Saxon
     - new # Newari
     - nia # Nias
+    - nr  # South Ndebele
     - nv  # Navajo
     - os  # Ossetic
     - pam # Pampanga
