@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  machinetranslation:
+    build:
+      context: ./
+    ports:
+      - "8989:8989"
+    volumes:
+      - ./models:/app/models
+    environment:
+      - CT2_USE_EXPERIMENTAL_PACKED_GEMM=1
+      - GUNICORN_CMD_ARGS=--timeout=600
+    restart: unless-stopped
