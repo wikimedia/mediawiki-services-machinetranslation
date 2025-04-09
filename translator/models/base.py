@@ -51,7 +51,7 @@ class BaseModel:
         self.model = self.getModel()
         self.tokenizer = self.getTokenizer()
         logging.info(f"{self.__class__.__name__} initialized.")
-        logging.info(f"inter_threads: { self.inter_threads}, intra_threads: {self.intra_threads} ")
+        logging.info(f"inter_threads: {self.inter_threads}, intra_threads: {self.intra_threads} ")
 
     def translate(self, src_lang: str, tgt_lang: str, sentences: List[str]) -> List[str]:
         """
