@@ -26,6 +26,7 @@ dependencies = [
     "levenshtein",
     "markdown",
     "markdownify",
+    "s3cmd",
 ]
 
 [project.optional-dependencies]

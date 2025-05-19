@@ -20,7 +20,7 @@ The models are optimized for performance using [OpenNMT CTranslate2](https://git
 Clone the repository. Install the system dependencies:
 
 ```bash
-sudo apt install wget unzip build-essential cmake
+sudo apt install build-essential cmake git python3-venv s3cmd unzip wget
 ```
 
 Create a python virtual environment and install dependencies
@@ -56,6 +56,8 @@ Open http://0.0.0.0:8989/ using browser
 - `CT2_INTRA_THREADS`: number of computation threads that is used per batch Refer https://opennmt.net/CTranslate2/parallel.html. Default is `0`(auto)
 
 For above configurations, Use a value less than or equal to the available CPU cores.
+
+- `USE_S3CMD`: This is used for Wikimedia production purpose where models can be download from s3 storage. Default value is false.
 
 ### Monitoring
 
