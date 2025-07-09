@@ -4,7 +4,6 @@ set -e
 
 BASE_URL="${BASE_URL:-https://analytics.wikimedia.org/published/wmf-ml-models/mint/20250514081434}"
 BASE_MODEL_DIR="models"
-mkdir -p "$BASE_MODEL_DIR"
 
 MAX_JOBS="${MAX_JOBS:-4}"
 job_control() {
@@ -13,9 +12,16 @@ job_control() {
 	done
 }
 
-# Generate ~/.s3cfg
+log() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"
+}
+
+# Generate s3 config if needed
+mkdir -p "$BASE_MODEL_DIR" # Ensure base model dir exists
+S3CMD_CONFIG="${S3CMD_CONFIG:-$BASE_MODEL_DIR/.s3cfg}"
+
 generate_s3cfg() {
-	cat > ~/.s3cfg <<EOF
+	cat > "$S3CMD_CONFIG" <<EOF
 [default]
 access_key = ${AWS_ACCESS_KEY_ID}
 secret_key = ${AWS_SECRET_ACCESS_KEY}
@@ -24,10 +30,9 @@ host_bucket = https://thanos-swift.discovery.wmnet
 use_https = True
 signature_v2 = False
 EOF
-}
 
-log() {
-    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"
+	chmod 600 "$S3CMD_CONFIG"
+	log "s3cfg written to $S3CMD_CONFIG"
 }
 
 download_models() {
@@ -41,7 +46,7 @@ download_models() {
 
 	if [ "${USE_S3CMD:-false}" = true ]; then
 		log "Downloading using s3cmd: $url"
-		s3cmd get "$url" "$dest_path"
+		s3cmd --config "$S3CMD_CONFIG" get "$url" "$dest_path"
 	else
 		log "Downloading using wget: $url"
 		wget --no-verbose --show-progress --progress=bar:force:noscroll "$url" -O "$dest_path"
@@ -78,7 +83,7 @@ download_zipped_models() {
 }
 
 if [ "${USE_S3CMD:-false}" = true ]; then
-	log "Generating ~/.s3cfg ..."
+	log "Generating s3 config..."
 	generate_s3cfg
 fi
 
