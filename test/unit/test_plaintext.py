@@ -13,7 +13,9 @@ with patch.object(
 
 tests = {
     "The quick brown fox jumps over the lazy dog": "dog lazy the over jumps fox brown quick The",
-    "War is peace. Freedom is slavery. [12]": "peace is War. slavery is Freedom. [12]",
+    # sentencex keeps [12] with the preceding sentence, so the dummy model reverses
+    # it along with the words and leaves the now-internal period on "slavery.".
+    "War is peace. Freedom is slavery. [12]": "peace is War. [12] slavery. is Freedom.",
 }
 
 
